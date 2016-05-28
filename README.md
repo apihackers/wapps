@@ -1,3 +1,3 @@
-# wapps
+# WApps
 
 Wagtail reusable applications

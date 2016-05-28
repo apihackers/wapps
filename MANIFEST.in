@@ -1,0 +1,4 @@
+include README.rst CHANGELOG.rst MANIFEST.in LICENSE
+recursive-include wapps *
+
+global-exclude *.pyc

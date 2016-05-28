@@ -1,0 +1,4 @@
+-e .
+invoke
+flake8
+pep8-naming
