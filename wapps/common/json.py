@@ -15,3 +15,10 @@ class WappsEncoder(DjangoJSONEncoder):
 def dumps(*args, **kwargs):
     kwargs['cls'] = WappsEncoder
     return json.dumps(*args, **kwargs)
+
+
+class WappsJsonLDEncoder(WappsEncoder):
+    def default(self, obj):
+        # if isinstance(obj, Promise):
+        #     return force_text(obj)
+        return super(WappsJsonLDEncoder, self).default(obj)

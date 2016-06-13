@@ -2,3 +2,5 @@
 invoke
 flake8
 pep8-naming
+pytest
+pytest-django

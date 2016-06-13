@@ -31,17 +31,21 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'wapps.common',
+
+    # Django required apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',
 
+    # Some Wagtail dependencies
     'taggit',
     'modelcluster',
 
+    # Wagtail apps
     'wagtail.wagtailcore',
     'wagtail.wagtailadmin',
     'wagtail.wagtaildocs',
@@ -53,9 +57,6 @@ INSTALLED_APPS = [
     'wagtail.wagtailredirects',
     'wagtail.wagtailforms',
     'wagtail.wagtailsites',
-
-    'wapps.common',
-    'wapps.blog',
 ]
 
 MIDDLEWARE_CLASSES = [

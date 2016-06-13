@@ -1,3 +1,2 @@
-wagtail>=1.4.3
-wagtailmodeladmin==2.5.7
+wagtail>=1.5
 wagtailfontawesome==1.0.5

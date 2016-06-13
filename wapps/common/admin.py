@@ -4,8 +4,8 @@ from django.core.urlresolvers import reverse
 from wagtail.wagtailadmin.menu import MenuItem
 from wagtail.wagtailcore.models import Page
 
-from wagtailmodeladmin.helpers import PagePermissionHelper
-from wagtailmodeladmin.options import WagtailRegisterable
+from wagtail.contrib.modeladmin.helpers import PagePermissionHelper
+from wagtail.contrib.modeladmin.options import WagtailRegisterable
 
 
 class PageEditAdmin(WagtailRegisterable):
