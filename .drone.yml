@@ -4,22 +4,25 @@ build:
   #   commands:
   #       - npm install
   #       - npm run build
-  # test:
-  #   image: apihackers/wagtail:1.5
-  #   commands:
-  #     - pip install pytest pytest-django
-      # - py.test
-  package:
+  test:
     image: apihackers/wagtail:1.5
     commands:
-      - pip install -e . wheel
-      - ./manage.py compilemessages
-      - python3 setup.py egg_info -b $DRONE_BUILD_NUMBER bdist_wheel
+      - pip install -e . pytest pytest-django
+      # - py.test
+
   flake8:
     image: python:3.5-alpine
     commands:
-      - pip install flake8
-      - flake8 wapps
+    - pip install flake8
+    - flake8 wapps
+
+  package:
+    image: apihackers/wagtail:1.5
+    commands:
+      - pip install wheel
+      - ./manage.py compilemessages
+      - python3 setup.py egg_info -b $DRONE_BUILD_NUMBER sdist bdist_wheel
+
 
 publish:
   devpi:
@@ -27,6 +30,10 @@ publish:
     index: apihackers/sublime
     username: $$DEVPI_USER
     password: $$DEVPI_PASSWORD
+    tag: $$DRONE_BUILD_NUMBER
+    distributions:
+      - sdist
+      - bdist_wheel
 
 compose:
   database:
