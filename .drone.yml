@@ -1,43 +1,48 @@
 build:
+  flake8:
+    image: apihackers/flake8
+    commands:
+      - flake8 wapps
+
   # assets:
   #   image: node:6
   #   commands:
-  #       - npm install
-  #       - npm run build
-  test:
-    image: apihackers/wagtail:1.5
-    commands:
-      - pip install -e . pytest pytest-django
-      # - py.test
-
-  flake8:
-    image: python:3.5-alpine
-    commands:
-    - pip install flake8
-    - flake8 wapps
+  #     - npm install
+  #     - npm run build
 
   package:
+    environment:
+      PY_INDEX: $$DEVPI_SERVER$$DEVPI_INDEX/
+      DJANGO_SETTINGS: drone_settings
     image: apihackers/wagtail:1.5
     commands:
-      - pip install wheel
-      - ./manage.py compilemessages
+      # Make installed packages cacheable
+      - export PYTHONUSERBASE=$DRONE_DIR/py-user-base
+      # Install, build and package
+      - pip3 install --user -i $PY_INDEX -e . wheel pytest pytest-django
+      # - py.test
+      - python3 manage.py compilemessages
       - python3 setup.py egg_info -b $DRONE_BUILD_NUMBER sdist bdist_wheel
-
 
 publish:
   devpi:
-    server: https://pypi.noirbizarre.info/
-    index: apihackers/sublime
+    image: apihackers/drone-devpi
+    server: $$DEVPI_SERVER
+    index: $$DEVPI_INDEX
     username: $$DEVPI_USER
     password: $$DEVPI_PASSWORD
-    tag: $$DRONE_BUILD_NUMBER
-    distributions:
-      - sdist
-      - bdist_wheel
+    files:
+      - dist/sublime-*.whl
+      - dist/sublime-*.tar.gz
+
+cache:
+  mount:
+    - node_modules
+    - py-user-base
 
 compose:
   database:
-    image: postgres:9.4
+    image: postgres:9.5
     environment:
       - POSTGRES_USER=wapps
       - POSTGRES_PASSWORD=wapps
