@@ -32,8 +32,8 @@ publish:
     username: $$DEVPI_USER
     password: $$DEVPI_PASSWORD
     files:
-      - dist/sublime-*.whl
-      - dist/sublime-*.tar.gz
+      - dist/wapps-*.whl
+      - dist/wapps-*.tar.gz
 
 cache:
   mount:
