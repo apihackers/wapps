@@ -72,7 +72,7 @@ class PageEditAdmin(WagtailRegisterable):
         return self.permission_helper.can_edit_object(request.user, self.get_page())
 
     def get_admin_urls_for_registration(self):
-        return []
+        return tuple()
 
     def get_menu_item(self, order=None):
         """
