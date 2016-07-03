@@ -20,7 +20,7 @@ def jsonld(context, data):
     if data and hasattr(data, '__jsonld__'):
         return mark_safe(''.join((
             '<script type="application/ld+json">',
-            json.dumps(data.__jsonld__(context['request']),
+            json.dumps(data.__jsonld__(context['request'])),
             '</script>'
         )))
     else:
@@ -37,8 +37,8 @@ def now():
 @jinja2.contextfunction
 def pager_for(page, previous_label=None, next_label=None):
     return {
+        "page": page,
         'previous_label': previous_label,
         'next_label': next_label,
-        "page": page,
         # "querystring": querystring,
     }
