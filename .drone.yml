@@ -22,7 +22,7 @@ build:
       - pip3 install --user -i $PY_INDEX -e . wheel pytest pytest-django
       # - py.test
       - python3 manage.py compilemessages
-      - python3 setup.py egg_info -b $DRONE_BUILD_NUMBER sdist bdist_wheel
+      - python3 setup.py egg_info -b $DRONE_BUILD_NUMBER bdist_wheel
 
 publish:
   devpi:
@@ -33,7 +33,6 @@ publish:
     password: $$DEVPI_PASSWORD
     files:
       - dist/wapps-*.whl
-      - dist/wapps-*.tar.gz
 
 cache:
   mount:
