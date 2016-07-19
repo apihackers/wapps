@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'wapps.common',
+    'wapps',
 
     # Django required apps
     'django.contrib.admin',

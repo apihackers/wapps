@@ -18,9 +18,21 @@ def json_encode(data):
 @jinja2.contextfunction
 def jsonld(context, data):
     if data and hasattr(data, '__jsonld__'):
+        data_jsonld = data.__jsonld__(context)
+        if not data_jsonld:
+            return ''
+        elif isinstance(data_jsonld, dict):
+            jsonld = data_jsonld
+            if '@context' not in jsonld:
+                jsonld['@context'] = 'http://schema.org/'
+        else:
+            jsonld = {
+                "@context": 'http://schema.org/',
+                "@graph": data_jsonld
+            }
         return mark_safe(''.join((
             '<script type="application/ld+json">',
-            json.dumps(data.__jsonld__(context['request'])),
+            json.dumps(jsonld),
             '</script>'
         )))
     else:
