@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-12 13:20+0000\n"
+"POT-Creation-Date: 2016-07-27 15:10+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,50 +18,78 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: wapps/common/image_formats.py:15
+#: image_formats.py:15
 msgid "Full width"
 msgstr ""
 
-#: wapps/common/image_formats.py:16
+#: image_formats.py:16
 msgid "Left-aligned"
 msgstr ""
 
-#: wapps/common/image_formats.py:17
+#: image_formats.py:17
 msgid "Right-aligned"
 msgstr ""
 
-#: wapps/common/image_formats.py:20
+#: image_formats.py:20
 msgid "Centered"
 msgstr ""
 
-#: wapps/common/image_formats.py:21
+#: image_formats.py:21
 msgid "Centered portrait"
 msgstr ""
 
-#: wapps/common/image_formats.py:22
+#: image_formats.py:22
 msgid "Thumbnail"
 msgstr ""
 
-#: wapps/common/image_formats.py:23
+#: image_formats.py:23
 msgid "Big thumbnail"
 msgstr ""
 
-#: wapps/common/models.py:16
+#: mixins.py:16
 msgid "External link"
 msgstr ""
 
-#: wapps/common/models.py:111
+#: mixins.py:111
 msgid "Carousel item"
 msgstr ""
 
-#: wapps/common/models.py:112
+#: mixins.py:112
 msgid "Carousel items"
 msgstr ""
 
-#: wapps/common/models.py:125
+#: mixins.py:125
 msgid "Related link"
 msgstr ""
 
-#: wapps/common/models.py:126
+#: mixins.py:126
 msgid "Related links"
+msgstr ""
+
+#: models.py:25
+msgid "Identity"
+msgstr ""
+
+#: models.py:27
+msgid "Name"
+msgstr ""
+
+#: models.py:28
+msgid "The entity public name"
+msgstr ""
+
+#: models.py:30
+msgid "Description"
+msgstr ""
+
+#: models.py:31
+msgid "A short entity description"
+msgstr ""
+
+#: models.py:33
+msgid "Tags"
+msgstr ""
+
+#: models.py:39
+msgid "Social networks"
 msgstr ""
