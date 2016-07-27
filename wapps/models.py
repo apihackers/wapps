@@ -8,8 +8,7 @@ from modelcluster.contrib.taggit import ClusterTaggableManager
 from taggit.models import TaggedItemBase
 
 from wagtail.contrib.settings.models import BaseSetting, register_setting
-from wagtail.wagtailcore.models import Orderable
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel, InlinePanel, FieldRowPanel
+from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel
 
 from .mixins import SocialFields
 from .utils import mark_safe_lazy
@@ -32,7 +31,7 @@ class IdentitySettings(SocialFields, ClusterableModel, BaseSetting):
 
     tags = ClusterTaggableManager(_('Tags'), through=IdentityTag, blank=True)
 
-    panels =  [
+    panels = [
         FieldPanel('name'),
         FieldPanel('description'),
         FieldPanel('tags'),
