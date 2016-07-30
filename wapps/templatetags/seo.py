@@ -39,8 +39,8 @@ class Metadata(object):
     def description(self):
         if self.kwargs.get('description'):
             return self.kwargs['description']
-        elif getattr(self.page, 'seo_description', None):
-            return self.page.seo_description
+        elif getattr(self.page, 'search_description', None):
+            return self.page.search_description
         elif getattr(self.page, 'description', None):
             return self.page.description
         else:
