@@ -2,8 +2,6 @@ import jinja2
 
 from django_jinja import library
 
-from jinja2.ext import Extension
-
 from ..models import IdentitySettings
 
 
