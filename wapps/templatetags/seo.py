@@ -25,11 +25,13 @@ class Metadata(object):
             return self.page.seo_title or self.page.title
 
     @property
+    def site_title(self):
+        return self.identity.name or self.context.get('WAGTAIL_SITE_NAME')
+
+    @property
     def full_title(self):
-        if self.identity.name:
-            return ' | '.join((self.title, self.identity.name))
-        elif self.context.get('WAGTAIL_SITE_NAME'):
-            return ' | '.join((self.title, self.context['WAGTAIL_SITE_NAME']))
+        if self.site_title:
+            return ' | '.join((self.title, self.site_title))
         else:
             return self.title
 

@@ -14,6 +14,15 @@ def menu():
 
 @library.global_function
 @jinja2.contextfunction
+def is_site_root(context, page):
+    if 'request' not in context or not context['request'].site:
+        return False
+    site = context['request'].site
+    return site.root_page.pk == page.pk
+
+
+@library.global_function
+@jinja2.contextfunction
 def render_stream(context, stream_child):
     # Use the django_jinja to get the template content based on its name
     template = get_template(stream_child.block.meta.template)
