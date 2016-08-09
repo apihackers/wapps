@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-27 15:10+0200\n"
+"POT-Creation-Date: 2016-08-09 16:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,50 +46,78 @@ msgstr ""
 msgid "Big thumbnail"
 msgstr ""
 
-#: mixins.py:16
+#: mixins.py:19
 msgid "External link"
 msgstr ""
 
-#: mixins.py:111
+#: mixins.py:114
 msgid "Carousel item"
 msgstr ""
 
-#: mixins.py:112
+#: mixins.py:115
 msgid "Carousel items"
 msgstr ""
 
-#: mixins.py:125
+#: mixins.py:128
 msgid "Related link"
 msgstr ""
 
-#: mixins.py:126
+#: mixins.py:129
 msgid "Related links"
 msgstr ""
 
-#: models.py:25
+#: models/identity.py:17
 msgid "Identity"
 msgstr ""
 
-#: models.py:27
+#: models/identity.py:19
 msgid "Name"
 msgstr ""
 
-#: models.py:28
+#: models/identity.py:20
 msgid "The entity public name"
 msgstr ""
 
-#: models.py:30
+#: models/identity.py:22
 msgid "Description"
 msgstr ""
 
-#: models.py:31
+#: models/identity.py:23
 msgid "A short entity description"
 msgstr ""
 
-#: models.py:33
+#: models/identity.py:31
+msgid "Logo"
+msgstr ""
+
+#: models/identity.py:34
 msgid "Tags"
 msgstr ""
 
-#: models.py:39
+#: models/identity.py:41
 msgid "Social networks"
+msgstr ""
+
+#: models/image.py:13
+msgid "Credit"
+msgstr ""
+
+#: models/image.py:14
+msgid "Credit URL"
+msgstr ""
+
+#: models/pages.py:34
+msgid "Fully sized image"
+msgstr ""
+
+#: models/pages.py:35
+msgid "Use the fully sized image"
+msgstr ""
+
+#: models/pages.py:46
+msgid "Main image"
+msgstr ""
+
+#: models/pages.py:54
+msgid "Static Page"
 msgstr ""
