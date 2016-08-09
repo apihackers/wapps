@@ -12,7 +12,7 @@ from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailimages.models import Image, AbstractImage, AbstractRendition
 
 from .mixins import SocialFields
-from .utils import mark_safe_lazy
+from .utils import mark_safe_lazy, get_image_model
 
 
 @register_setting(icon='fa-universal-access')
@@ -27,7 +27,7 @@ class IdentitySettings(SocialFields, BaseSetting):
                                   help_text=mark_safe_lazy(_('A short entity description')))
 
     logo = models.ForeignKey(
-        'wagtailimages.Image',
+        get_image_model(),
         null=True,
         blank=True,
         on_delete=models.SET_NULL,

@@ -1,9 +1,12 @@
+from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel, PageChooserPanel
 from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+
+from .utils import get_image_model
 
 
 class LinkFields(models.Model):
@@ -91,7 +94,7 @@ class SocialFields(models.Model):
 
 class CarouselItem(LinkFields):
     image = models.ForeignKey(
-        'wagtailimages.Image',
+        get_image_model(),
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -129,7 +132,7 @@ class RelatedLink(LinkFields):
 
 class TopImage(models.Model):
     top_image = models.ForeignKey(
-        'wagtailimages.Image',
+        get_image_model(),
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
