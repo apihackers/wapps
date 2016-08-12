@@ -21,33 +21,45 @@ class StaticPageTag(TaggedItemBase):
 
 
 class StaticPage(Page):
-    intro = models.TextField(blank=True, null=True)
-    body = RichTextField()
+    intro = models.TextField(_('Introduction'), blank=True, null=True,
+                             help_text=_('An optional introduction used as page heading and summary'))
+    body = RichTextField(_('Body'),
+                         help_text=_('The main page content'))
     image = models.ForeignKey(
         get_image_model(),
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+'
+        related_name='+',
+        help_text=_('The main page image (seen when shared)')
     )
 
     image_full = models.BooleanField(_('Fully sized image'), default=False,
                                      help_text=_('Use the fully sized image'))
 
+    SEO_TYPES = [
+        ('article', _('Article')),
+        ('service', _('Service')),
+    ]
+
+    seo_type = models.CharField(_('Search engine type'), choices=SEO_TYPES, max_length=10,
+                                help_text=_('What does this page represents'))
+
     tags = ClusterTaggableManager(through=StaticPageTag, blank=True)
 
     content_panels = [
         FieldPanel('title', classname="full title"),
-        FieldPanel('intro', classname='full'),
-        FieldPanel('body', classname='full'),
         MultiFieldPanel([
             ImageChooserPanel('image'),
             FieldPanel('image_full'),
         ], heading=_('Main image'), classname='collapsible'),
+        FieldPanel('intro', classname='full'),
+        FieldPanel('body', classname='full'),
     ]
 
     promote_panels = Page.promote_panels + [
         FieldPanel('tags'),
+        FieldPanel('seo_type')
     ]
 
     class Meta:
@@ -57,9 +69,22 @@ class StaticPage(Page):
         request = context['request']
         data = {
             '@context': 'http://schema.org',
-            '@type': 'Article',
             '@id': self.full_url,
             'name': self.seo_title or self.title,
+        }
+        if self.image:
+            data['image'] = request.site.root_url + self.image.get_rendition('original').url
+
+        jsonld_method_name = 'get_jsonld_{0}'.format(self.seo_type)
+        jsonld_method = getattr(self, jsonld_method_name, None)
+        if jsonld_method:
+            data = jsonld_method(context, data)
+
+        return data
+
+    def get_jsonld_article(self, context, data):
+        data.update({
+            '@type': 'Article',
             'datePublished': self.first_published_at.isoformat(),
             'dateModified': self.latest_revision_created_at.isoformat(),
             'headline': Truncator(strip_tags(self.search_description or str(self.intro))).chars(100),
@@ -68,7 +93,21 @@ class StaticPage(Page):
                 '@type': 'Person',
                 'name': self.owner.get_full_name()
             },
+        })
+        return data
+
+    def get_jsonld_service(self, context, data):
+        # request = context['request']
+        data = {
+            '@type': 'Service',
+            # 'author': {
+            #     '@type': 'Person',
+            #     'name': self.owner.get_full_name()
+            # },
+
+            # 'datePublished': self.first_published_at.isoformat(),
+            # 'dateModified': self.latest_revision_created_at.isoformat(),
+            # 'headline': Truncator(strip_tags(self.search_description or str(self.intro))).chars(100),
+            # 'articleBody': str(self.body),
         }
-        if self.image:
-            data['image'] = request.site.root_url + self.image.get_rendition('original').url
         return data

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-09 16:08+0200\n"
-"PO-Revision-Date: 2016-08-09 16:10+0200\n"
+"POT-Creation-Date: 2016-08-12 02:12+0200\n"
+"PO-Revision-Date: 2016-08-12 02:13+0200\n"
 "Last-Translator: Axel Haustant <noirbizarre@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -68,7 +68,7 @@ msgstr "Liens contextuels"
 
 #: models/identity.py:17
 msgid "Identity"
-msgstr "Indentité"
+msgstr "Identité"
 
 #: models/identity.py:19
 msgid "Name"
@@ -106,18 +106,54 @@ msgstr "Crédit"
 msgid "Credit URL"
 msgstr "Lien du crédit"
 
+#: models/pages.py:24
+msgid "Introduction"
+msgstr "Introduction"
+
+#: models/pages.py:25
+msgid "An optional introduction used as page heading and summary"
+msgstr "Une introduction facultative utilisée comme chapeau de page et résumé"
+
+#: models/pages.py:26
+msgid "Body"
+msgstr "Corps"
+
+#: models/pages.py:27
+msgid "The main page content"
+msgstr "Le contenu principal de la page"
+
 #: models/pages.py:34
+msgid "The main page image (seen when shared)"
+msgstr "L'image principale de la page (vue lors du partage)"
+
+#: models/pages.py:37
 msgid "Fully sized image"
 msgstr "Image pleine taille"
 
-#: models/pages.py:35
+#: models/pages.py:38
 msgid "Use the fully sized image"
 msgstr "Utilise une image pleine taille"
 
+#: models/pages.py:41
+msgid "Article"
+msgstr "Article"
+
+#: models/pages.py:42
+msgid "Service"
+msgstr "Service"
+
+#: models/pages.py:45
+msgid "Search engine type"
+msgstr "Type de la recherche"
+
 #: models/pages.py:46
+msgid "What does this page represents"
+msgstr "Ce que cette page représente"
+
+#: models/pages.py:55
 msgid "Main image"
 msgstr "Image principale"
 
-#: models/pages.py:54
+#: models/pages.py:66
 msgid "Static Page"
 msgstr "Page statique"
