@@ -1,3 +1,3 @@
-from .identity import IdentitySettings
-from .image import WappsImage, WappsRendition
-from .pages import StaticPage
+from .identity import IdentitySettings  # noqa
+from .image import WappsImage, WappsRendition  # noqa
+from .pages import StaticPage  # noqa

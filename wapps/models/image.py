@@ -6,8 +6,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from wagtail.wagtailimages.models import Image, AbstractImage, AbstractRendition
 
-from wapps.utils import get_image_model
-
 
 class WappsImage(AbstractImage):
     credit = models.CharField(_('Credit'), max_length=255, blank=True)
