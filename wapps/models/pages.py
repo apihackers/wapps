@@ -42,7 +42,8 @@ class StaticPage(Page):
         ('service', _('Service')),
     ]
 
-    seo_type = models.CharField(_('Search engine type'), choices=SEO_TYPES, max_length=10,
+    seo_type = models.CharField(_('Search engine type'), max_length=10,
+                                choices=SEO_TYPES, default='article',
                                 help_text=_('What does this page represents'))
 
     tags = ClusterTaggableManager(through=StaticPageTag, blank=True)
