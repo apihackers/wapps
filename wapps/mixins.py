@@ -1,4 +1,6 @@
 from django.db import models
+from django.template.loader import render_to_string
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel, PageChooserPanel
@@ -158,3 +160,27 @@ class TopImage(models.Model):
 #
 #     def __str__(self):
 #         return self.default_top_image.title
+
+
+class ContextBlock(object):
+    '''
+    Mixin adding `page_context` kwarg to `get_context`.
+
+    Temporary fix until https://github.com/torchbox/wagtail/issues/2824
+    is adressed
+    '''
+    def render(self, value, context=None):
+        """
+        Copy-pasted from 'wagtailcore.blocks.base'
+        """
+        template = getattr(self.meta, 'template', None)
+        if not template:
+            return self._render_basic_with_context(value, context=context)
+
+        if context is None:
+            new_context = self.get_context(value)
+        else:
+            new_context = dict(context)
+            new_context.update(self.get_context(value, page_context=context))
+
+        return mark_safe(render_to_string(template, new_context))
