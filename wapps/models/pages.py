@@ -86,15 +86,19 @@ class StaticPage(Page):
     def get_jsonld_article(self, context, data):
         data.update({
             '@type': 'Article',
-            'datePublished': self.first_published_at.isoformat(),
-            'dateModified': self.latest_revision_created_at.isoformat(),
             'headline': Truncator(strip_tags(self.search_description or str(self.intro))).chars(100),
             'articleBody': str(self.body),
-            'author': {
+        })
+        if self.first_published_at:
+            data.update({
+                'datePublished': self.first_published_at.isoformat(),
+                'dateModified': self.latest_revision_created_at.isoformat(),
+            })
+        if self.owner:
+            data.update(author={
                 '@type': 'Person',
                 'name': self.owner.get_full_name()
-            },
-        })
+            })
         return data
 
     def get_jsonld_service(self, context, data):
