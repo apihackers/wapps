@@ -62,6 +62,10 @@ def get_network(name):
 
 @library.global_function
 def social_url(network, value):
+    if value.startswith('http://'):
+        return value.replace('http://', 'https://')
+    elif value.startswith('https://'):
+        return value
     return get_network(network)['url'].format(user=value)
 
 
