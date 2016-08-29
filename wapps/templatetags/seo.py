@@ -12,7 +12,7 @@ class Metadata(object):
     def __init__(self, context, **kwargs):
         self.context = context
         self.kwargs = kwargs
-        self.page = context['page']
+        self.page = context.get('page', None)
         self.request = context['request']
         self.site = self.request.site
         self.identity = IdentitySettings.for_site(self.site)
@@ -21,7 +21,7 @@ class Metadata(object):
     def title(self):
         if self.kwargs.get('title'):
             return self.kwargs['title']
-        else:
+        elif self.page:
             return self.page.seo_title or self.page.title
 
     @property
@@ -30,9 +30,11 @@ class Metadata(object):
 
     @property
     def full_title(self):
-        if self.site_title:
+        if self.site_title and self.title:
             return ' | '.join((self.title, self.site_title))
-        else:
+        elif self.site_title:
+            return self.site_title
+        elif self.title:
             return self.title
 
     @property
