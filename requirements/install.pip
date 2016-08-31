@@ -1,2 +1,3 @@
-wagtail>=1.5
+Django>=1.10.0
+wagtail>=1.6.1
 wagtailfontawesome==1.0.5
