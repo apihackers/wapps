@@ -1,6 +1,6 @@
 from django.apps import apps
 from django.db import models
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+# from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils.translation import ugettext_lazy as _
 
 from wagtail.wagtailcore.fields import RichTextField
