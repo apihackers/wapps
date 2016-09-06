@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'wapps',
+    'wapps.gallery',
 
     # Django required apps
     'django.contrib.admin',

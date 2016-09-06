@@ -1,0 +1,85 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-09-06 02:07+0200\n"
+"PO-Revision-Date: 2016-09-06 02:10+0200\n"
+"Last-Translator: Axel Haustant <noirbizarre@gmail.com>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 1.8.8\n"
+
+#: models.py:24 models.py:82
+msgid "Introduction"
+msgstr "Introduction"
+
+#: models.py:25
+msgid "A text to be displayed before albums"
+msgstr "Un texte à afficher avant les albums"
+
+#: models.py:55
+msgid "Gallery"
+msgstr "Gallerie"
+
+#: models.py:68 models.py:157
+msgid "SEO and metadata"
+msgstr "SEO et métadonnées"
+
+#: models.py:83
+msgid "A text to be displayed before images"
+msgstr "Un texte à afficher avant les images"
+
+#: models.py:85
+msgid "Display details"
+msgstr "Afficher les détails"
+
+#: models.py:86
+msgid "Display image title and details"
+msgstr "Affiche le titre de l'image et ses détails"
+
+#: models.py:89
+msgid "Slide"
+msgstr "Glissement"
+
+#: models.py:90
+msgid "Fade"
+msgstr "Fondu"
+
+#: models.py:93
+msgid "Animation"
+msgstr "Animation"
+
+#: models.py:101
+msgid "Image"
+msgstr "Image"
+
+#: models.py:102
+msgid "The image seen on gallery browser and when sharing this album"
+msgstr ""
+"L'image vue dans lors du parcours des galleries et lorsque cet album est "
+"partagé"
+
+#: models.py:144
+msgid "Album"
+msgstr "Album"
+
+#: models.py:153
+msgid "Options"
+msgstr "Options"
+
+#: models.py:237
+msgid "Manual album"
+msgstr "Album manuel"
+
+#: models.py:241
+msgid "Images"
+msgstr "Images"

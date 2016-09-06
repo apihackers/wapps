@@ -52,6 +52,8 @@ class Metadata(object):
     def image(self):
         if self.kwargs.get('image'):
             return self.kwargs['image']
+        elif getattr(self.page, 'feed_image', None):
+            return self.site.root_url + self.page.feed_image.get_rendition('original').url
         elif getattr(self.page, 'image', None):
             return self.site.root_url + self.page.image.get_rendition('original').url
         elif self.identity.logo:

@@ -1,3 +1,4 @@
+from django import forms
 from django.conf import settings
 from django.db import models
 from django.db.models.signals import pre_save, pre_delete
@@ -10,10 +11,12 @@ from wagtail.wagtailimages.models import Image, AbstractImage, AbstractRendition
 class WappsImage(AbstractImage):
     credit = models.CharField(_('Credit'), max_length=255, blank=True)
     credit_url = models.URLField(_('Credit URL'), max_length=255, blank=True)
+    details = models.TextField(_('Details'), blank=True, null=True)
 
     admin_form_fields = Image.admin_form_fields + (
         'credit',
         'credit_url',
+        'details',
     )
 
 
