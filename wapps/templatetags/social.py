@@ -16,14 +16,14 @@ NETWORKS = {
     'linkedin': {
         'name': 'LinkedIn',
         'icon': 'fa-linkedin',
-        'url': 'https://twitter.com/{user}',
-        'url': 'http://www.linkedin.com/shareArticle?url={url}&title={title}',
+        'url': 'https://www.linkedin.com/in/{user}',
+        'share': 'https://www.linkedin.com/shareArticle?url={url}&title={title}',
     },
     'facebook': {
         'name': 'Facebook',
         'icon': 'fa-facebook',
         'url': 'https://facebook.com/{user}',
-        'share': 'http://www.facebook.com/sharer.php?u={url}',
+        'share': 'https://www.facebook.com/sharer.php?u={url}',
     },
     'google': {
         'name': 'Google',
@@ -43,7 +43,7 @@ NETWORKS = {
     },
     'reddit': {
         'name': 'Reddit',
-        'share': 'http://reddit.com/submit?url={url}&title={title}',
+        'share': 'https://reddit.com/submit?url={url}&title={title}',
     },
     'email': {
         'name': 'email',
@@ -66,7 +66,7 @@ def social_url(network, value):
         return value.replace('http://', 'https://')
     elif value.startswith('https://'):
         return value
-    return get_network(network)['url'].format(user=value)
+    return get_network(network).get('url', '').format(user=value)
 
 
 @library.global_function
