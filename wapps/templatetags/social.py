@@ -5,6 +5,8 @@ from django_jinja import library
 
 from jinja2.ext import Extension
 
+from wapps.utils import get_image_url
+
 
 NETWORKS = {
     'twitter': {
@@ -87,7 +89,7 @@ def social_share_urls(context, page):
     request = context['request']
     data = []
     if page.image:
-        image = request.site.root_url + page.image.get_rendition('original').url
+        image = request.site.root_url + get_image_url(page.image, 'original')
     else:
         image = None
     params = {

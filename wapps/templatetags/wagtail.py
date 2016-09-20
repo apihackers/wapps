@@ -23,7 +23,6 @@ def is_site_root(context, page):
 
 
 @library.global_function
-@jinja2.contextfunction
 def image_url(image, specs):
     return get_image_url(image, specs)
 

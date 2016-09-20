@@ -2,7 +2,8 @@ import jinja2
 
 from django_jinja import library
 
-from ..models import IdentitySettings
+from wapps.models import IdentitySettings
+from wapps.utils import get_image_url
 
 
 class Metadata(object):
@@ -53,11 +54,18 @@ class Metadata(object):
         if self.kwargs.get('image'):
             return self.kwargs['image']
         elif getattr(self.page, 'feed_image', None):
-            return self.site.root_url + self.page.feed_image.get_rendition('original').url
+            return self.page.feed_image
         elif getattr(self.page, 'image', None):
-            return self.site.root_url + self.page.image.get_rendition('original').url
+            return self.page.image
         elif self.identity.logo:
-            return self.site.root_url + self.identity.logo.get_rendition('original').url
+            return self.identity.logo
+
+    @property
+    def image_url(self):
+        if self.kwargs.get('image_url'):
+            return self.kwargs['image_url']
+        elif self.image:
+            return self.site.root_url + get_image_url(self.image, 'original')
 
     @property
     def tags(self):
