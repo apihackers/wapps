@@ -1,0 +1,22 @@
+{% set identity = settings('wapps.IdentitySettings') %}
+<link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{ identity.favicon_url(57) }}" />
+<link rel="apple-touch-icon-precomposed" sizes="60x60" href="{{ identity.favicon_url(60) }}" />
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ identity.favicon_url(72) }}" />
+<link rel="apple-touch-icon-precomposed" sizes="76x76" href="{{ identity.favicon_url(76) }}" />
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ identity.favicon_url(114) }}" />
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="{{ identity.favicon_url(120) }}" />
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ identity.favicon_url(144) }}" />
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="{{ identity.favicon_url(152) }}" />
+<link rel="icon" type="image/png" sizes="16x16" href="{{ identity.favicon_url(16) }}" />
+<link rel="icon" type="image/png" sizes="32x32" href="{{ identity.favicon_url(32) }}" />
+<link rel="icon" type="image/png" sizes="96x96" href="{{ identity.favicon_url(96) }}" />
+<link rel="icon" type="image/png" sizes="128x128" href="{{ identity.favicon_url(128) }}" />
+<link rel="icon" type="image/png" sizes="196x196" href="{{ identity.favicon_url(196) }}" />
+<meta name="application-name" content="{{ identity.name or request.site.name }}"/>
+<meta name="theme-color" content="{{ identity.bg_color }}" />
+<meta name="msapplication-TileColor" content="{{ identity.bg_color}}" />
+<meta name="msapplication-TileImage" content="{{ identity.favicon_url(144) }}" />
+<meta name="msapplication-square70x70logo" content="{{ identity.favicon_url(70) }}" />
+<meta name="msapplication-square150x150logo" content="{{ identity.favicon_url(150) }}" />
+<meta name="msapplication-wide310x150logo" content="{{ identity.favicon_url(310, 150) }}" />
+<meta name="msapplication-square310x310logo" content="{{ identity.favicon_url(310) }}" />

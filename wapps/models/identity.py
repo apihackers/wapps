@@ -7,8 +7,10 @@ from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
+from colorful.fields import RGBColorField
+
 from wapps.mixins import SocialFields
-from wapps.utils import mark_safe_lazy, get_image_model
+from wapps.utils import mark_safe_lazy, get_image_model, get_image_url
 
 
 @register_setting(icon='fa-universal-access')
@@ -31,12 +33,51 @@ class IdentitySettings(SocialFields, BaseSetting):
         verbose_name=_('Logo'),
     )
 
+    favicon = models.ForeignKey(
+        get_image_model(),
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name=_('Favicon'),
+        help_text=mark_safe_lazy(_('The icon displayed in tab'))
+    )
+
+    favicon_large = models.ForeignKey(
+        get_image_model(),
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name=_('Large favicon'),
+        help_text=mark_safe_lazy(_('The icon displayed on mobile device and desktop'))
+    )
+
+    bg_color = RGBColorField(_('Background color'), default='#fff',
+                             help_text=mark_safe_lazy(_('The background color used to tint the browser')))
+
     tags = TaggableManager(_('Tags'), blank=True)
 
     panels = [
         FieldPanel('name'),
         FieldPanel('description'),
         FieldPanel('tags'),
-        ImageChooserPanel('logo'),
+        MultiFieldPanel([
+            ImageChooserPanel('logo'),
+            ImageChooserPanel('favicon'),
+            ImageChooserPanel('favicon_large'),
+            FieldPanel('bg_color'),
+        ], heading=_('Visual'), classname='collapsible'),
         MultiFieldPanel(SocialFields.panels, heading=_('Social networks'), classname='collapsible'),
     ]
+
+    def favicon_url(self, width, height=None):
+        height = height or width
+        specs = 'fill-{width}x{height}'.format(width=width, height=height)
+        if self.favicon and self.favicon.width >= width:
+            image = self.favicon
+        elif self.favicon_large:
+            image = self.favicon_large
+        elif self.logo:
+            image = self.logo
+        return get_image_url(image, specs)

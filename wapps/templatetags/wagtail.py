@@ -5,6 +5,8 @@ from django_jinja import library
 from jinja2.ext import Extension
 from wagtail.wagtailcore.models import Page
 
+from wapps.utils import get_image_url
+
 
 @library.global_function
 def menu():
@@ -18,6 +20,12 @@ def is_site_root(context, page):
         return False
     site = context['request'].site
     return site.root_page.pk == page.pk
+
+
+@library.global_function
+@jinja2.contextfunction
+def image_url(image, specs):
+    return get_image_url(image, specs)
 
 
 @library.extension
