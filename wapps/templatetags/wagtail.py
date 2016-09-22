@@ -4,6 +4,9 @@ from django.conf import settings
 from django_jinja import library
 from jinja2.ext import Extension
 from wagtail.wagtailcore.models import Page
+from wagtail.contrib.wagtailroutablepage.templatetags.wagtailroutablepage_tags import (
+    routablepageurl as dj_routablepageurl
+)
 
 from wapps.utils import get_image_url
 
@@ -25,6 +28,12 @@ def is_site_root(context, page):
 @library.global_function
 def image_url(image, specs):
     return get_image_url(image, specs)
+
+
+@library.global_function
+@jinja2.contextfunction
+def routablepageurl(context, page, name, *args, **kwargs):
+    return dj_routablepageurl(context, page, name, *args, **kwargs)
 
 
 @library.extension
