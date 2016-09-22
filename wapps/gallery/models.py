@@ -54,6 +54,7 @@ class Gallery(Page):
     class Meta:
         verbose_name = _('Gallery')
 
+    type_icon = 'fa-picture-o'
     subpage_types = [
         'gallery.Album',
         'gallery.ManualAlbum'
@@ -164,6 +165,7 @@ class Album(Page):
 
     # parent_page_types = []
     subpage_types = []
+    type_icon = 'fa-picture-o'
 
     def __jsonld__(self, context):
         request = context['request']

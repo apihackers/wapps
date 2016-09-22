@@ -63,6 +63,8 @@ class StaticPage(Page):
         FieldPanel('seo_type')
     ]
 
+    type_icon = 'fa-file-text-o'
+
     class Meta:
         verbose_name = _('Static Page')
 

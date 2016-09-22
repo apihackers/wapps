@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-06 02:07+0200\n"
+"POT-Creation-Date: 2016-09-20 04:27+0200\n"
 "PO-Revision-Date: 2016-09-06 02:10+0200\n"
 "Last-Translator: Axel Haustant <noirbizarre@gmail.com>\n"
 "Language-Team: \n"
@@ -18,68 +18,68 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 1.8.8\n"
 
-#: models.py:24 models.py:82
+#: gallery/models.py:24 gallery/models.py:83
 msgid "Introduction"
 msgstr "Introduction"
 
-#: models.py:25
+#: gallery/models.py:25
 msgid "A text to be displayed before albums"
 msgstr "Un texte à afficher avant les albums"
 
-#: models.py:55
+#: gallery/models.py:55
 msgid "Gallery"
 msgstr "Gallerie"
 
-#: models.py:68 models.py:157
+#: gallery/models.py:69 gallery/models.py:158
 msgid "SEO and metadata"
 msgstr "SEO et métadonnées"
 
-#: models.py:83
+#: gallery/models.py:84
 msgid "A text to be displayed before images"
 msgstr "Un texte à afficher avant les images"
 
-#: models.py:85
+#: gallery/models.py:86
 msgid "Display details"
 msgstr "Afficher les détails"
 
-#: models.py:86
+#: gallery/models.py:87
 msgid "Display image title and details"
 msgstr "Affiche le titre de l'image et ses détails"
 
-#: models.py:89
+#: gallery/models.py:90
 msgid "Slide"
 msgstr "Glissement"
 
-#: models.py:90
+#: gallery/models.py:91
 msgid "Fade"
 msgstr "Fondu"
 
-#: models.py:93
+#: gallery/models.py:94
 msgid "Animation"
 msgstr "Animation"
 
-#: models.py:101
+#: gallery/models.py:102
 msgid "Image"
 msgstr "Image"
 
-#: models.py:102
+#: gallery/models.py:103
 msgid "The image seen on gallery browser and when sharing this album"
 msgstr ""
 "L'image vue dans lors du parcours des galleries et lorsque cet album est "
 "partagé"
 
-#: models.py:144
+#: gallery/models.py:145
 msgid "Album"
 msgstr "Album"
 
-#: models.py:153
+#: gallery/models.py:154
 msgid "Options"
 msgstr "Options"
 
-#: models.py:237
+#: gallery/models.py:240
 msgid "Manual album"
 msgstr "Album manuel"
 
-#: models.py:241
+#: gallery/models.py:244
 msgid "Images"
 msgstr "Images"
