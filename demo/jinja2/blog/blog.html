@@ -1,0 +1,115 @@
+{% extends 'demo/base.html' %}
+
+{% block main_content %}
+<!-- Page Content -->
+<div class="container">
+
+    <div class="row">
+
+        <!-- Blog Entries Column -->
+        <div class="col-md-8">
+
+            <h1 class="page-header">
+                {{ page.title }}
+                <small>Secondary Text</small>
+            </h1>
+
+            {# Blog Posts #}
+            {% for post in posts.object_list %}
+            <h2>
+                <a href="{{ pageurl(post) }}">{{ post.title }}</a>
+            </h2>
+            <p class="lead">
+                by <a href="index.php">{{ post.owner }}</a>
+            </p>
+            <p><span class="fa fa-clock-o"></span> Posted on August 28, 2013 at 10:00 PM</p>
+            <hr>
+            {% if post.image %}
+            {{ image(post.image, 'fill-900x300', class='img-responsive') }}
+            <hr>
+            {% endif %}
+            <p>{{ post.excerpt|richtext }}</p>
+            <a class="btn btn-primary" href="{{ pageurl(post) }}">
+                {{ _('Read More') }}
+                <span class="fa fa-chevron-right"></span>
+            </a>
+
+            <hr>
+            {% endfor %}
+
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li {% if not posts.has_previous() %}class="disabled"{% endif %}>
+                        <a {% if posts.has_previous() %}
+                            href="{{ pageurl(page) }}?page={{ posts.previous_page_number() }}"
+                            {% endif %}
+                            aria-label="{{ _('Previous') }}">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    {% for page_num in posts.paginator.page_range %}
+                    <li {% if page_num == posts.number %}class="active"{% endif %}>
+                        <a {% if not page_num == posts.number %}href="{{ pageurl(page) }}?page={{page_num}}"{% endif %}>{{ page_num }}</a>
+                    </li>
+                    {% endfor %}
+                    <li {% if not posts.has_next() %}class="disabled"{% endif %}>
+                        <a {% if posts.has_next() %}
+                            href="{{ pageurl(page) }}?page={{ posts.next_page_number() }}"
+                            {% endif %}
+                            aria-label="{{ _('Next') }}">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+
+        <!-- Blog Sidebar Widgets Column -->
+        <div class="col-md-4">
+
+            <!-- Blog Search Well -->
+            <div class="well">
+                <h4>Blog Search</h4>
+                <form action="{{ url('wagtailsearch_search') }}">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="q">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">
+                                <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                        </span>
+                    </div>
+                </form>
+                <!-- /.input-group -->
+            </div>
+
+            <!-- Blog Categories Well -->
+            <div class="well">
+                <h4>{{ _('Categories') }}</h4>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <ul class="list-unstyled">
+                            {% for category in all_categories %}
+                            <li><a href="#">{{ category.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+
+            <!-- Side Widget Well -->
+            <div class="well">
+                <h4>Side Widget Well</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, perspiciatis adipisci accusamus laudantium odit aliquam repellat tempore quos aspernatur vero.</p>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- /.row -->
+
+
+</div>
+{% endblock %}

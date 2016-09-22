@@ -1,0 +1,33 @@
+{% extends "demo/base.html" %}
+
+{% if page.image %}
+{% set image_specs = 'width-1100' if page.image_full else 'fill-1100x580' %}
+{% set image_class = 'content-top-img-full' if page.image_full else 'content-top-img' %}
+{% set page_image = image(page.image, image_specs, class=image_class) %}
+{% set meta_image = page_image.url %}
+{% endif %}
+
+{% block main_content %}
+<section class="container">
+
+    <div class="row">
+
+        <div class="col-lg-12">
+            <h1 class="page-header">{{ page.title }}</h1>
+            {% if page.intro %}{{ page.intro|richtext }}{% endif %}
+        </div>
+
+        {% for album in albums %}
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <a href="{{ pageurl(album) }}" class="thumbnail" title="{{ album.title }}">
+                {{ image(album.image, 'fill-400x380', alt=album.title, class='img-responsive') }}
+                <div class="caption">
+                    <h3>{{ album.title }}</h3>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+
+    </div>
+</section>
+{% endblock %}

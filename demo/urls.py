@@ -1,3 +1,5 @@
+import os
+
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.conf import settings
@@ -9,17 +11,20 @@ from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from wagtail.wagtailsearch.urls import frontend as wagtailsearch_frontend_urls
 from wagtail.wagtailsearch.signal_handlers import register_signal_handlers as wagtailsearch_register_signal_handlers
-import os
+
+from wapps import urls as wapps_urls
+
 wagtailsearch_register_signal_handlers()
 
 
 urlpatterns = [
-    # url(r'^blog/', include('blog.urls', namespace="blog")),
     url(r'^django-admin/', include(admin.site.urls)),
     url(r'^admin/', include(wagtailadmin_urls)),
-    # url(r'^comments/', include('django_comments_xtd.urls')),
-    url(r'', include(wagtail_urls)),
     url(r'^docs/', include(wagtaildocs_urls)),
+    url(r'^search/', include(wagtailsearch_frontend_urls)),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
+    url(r'', include(wapps_urls)),
+    url(r'', include(wagtail_urls)),
 ]
 
 if settings.DEBUG:

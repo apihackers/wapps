@@ -1,0 +1,37 @@
+body {
+    padding-top: 70px;
+    /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+}
+
+.search-result {
+    position: relative;
+    margin-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px dotted #ccc;
+}
+
+.search-result:first-child {
+    margin-top: 0;
+}
+
+.search-result .thumbnail {
+    margin: 0;
+}
+
+.search-result .metadata {
+    border-right: 1px dotted #ccc;
+}
+
+.search-result .metadata .fa-li {
+    color: #248dc1;
+}
+
+.search-result .excerpt .title {
+    margin-top: 0;
+}
+
+.search-result .btn-more {
+    position: absolute;
+    bottom: 25px;
+    right: 20px;
+}
