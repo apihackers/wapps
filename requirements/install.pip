@@ -2,3 +2,4 @@ Django>=1.10.0
 wagtail>=1.6.1
 wagtailfontawesome==1.0.5
 django-colorful
+django-jinja
