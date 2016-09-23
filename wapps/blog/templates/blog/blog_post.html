@@ -1,0 +1,29 @@
+{% load static i18n wagtailcore_tags wagtailimages_tags %}
+<!DOCTYPE html>
+<html lang="{{lang|default:'en'}}">
+<head>
+	<meta charset="utf-8">
+
+	<title>{{ page.title }}</title>
+
+	<meta name="description" content="{{ page.excerpt }}">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body>
+
+    <h1>{{ page.title }}</h1>
+
+    {% if page.image %}
+    {% image page.image fill-1100x580 %}
+    {% endif %}
+
+    {{ page.body|richtext }}
+
+    <label class="post_meta">
+        Posted by {{ page.owner }} on {{ page.first_published_at }}
+    </label>
+
+</body>
+</html>
