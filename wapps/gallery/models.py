@@ -1,12 +1,10 @@
 from django.apps import apps
 from django.db import models
-# from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils.translation import ugettext_lazy as _
 
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailcore.models import Page, Orderable
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel, InlinePanel
-# from wagtail.wagtailimages.models import Image
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsearch import index
 
@@ -129,17 +127,6 @@ class Album(Page):
                 images = images | img
 
         return images
-
-        # Pagination
-        # page = request.GET.get('page')
-        # paginator = Paginator(images, 20)  # Show 20 images per page
-        # try:
-        #     images = paginator.page(page)
-        # except PageNotAnInteger:
-        #     images = paginator.page(1)
-        # except EmptyPage:
-        #     images = paginator.page(paginator.num_pages)
-        # return images
 
     class Meta:
         verbose_name = _('Album')

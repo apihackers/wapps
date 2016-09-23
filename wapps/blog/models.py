@@ -199,6 +199,15 @@ class BlogPost(Page):
         ], heading=_('Metadata')),
     ]
 
+    # Page promote_panels without show in menu
+    promote_panels = [
+        MultiFieldPanel([
+            FieldPanel('slug'),
+            FieldPanel('seo_title'),
+            FieldPanel('search_description'),
+        ], _('Common page configuration')),
+    ]
+
     settings_panels = Page.settings_panels + [
         FieldPanel('date'),
         FieldPanel('owner'),
