@@ -19,7 +19,7 @@ def menu():
 @library.global_function
 @jinja2.contextfunction
 def is_site_root(context, page):
-    if 'request' not in context or not context['request'].site:
+    if 'request' not in context or not context['request'].site or not page:
         return False
     site = context['request'].site
     return site.root_page.pk == page.pk
