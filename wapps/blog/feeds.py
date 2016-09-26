@@ -1,25 +1,16 @@
 from urllib import parse
 
-from django.contrib.syndication.views import Feed
-
-from wagtail.wagtailcore.models import Site
-
-from wapps.feed import ExtendedAtomFeed
-from wapps.templatetags.seo import Metadata
+from wapps.feed import SiteFeed
 from wapps.utils import get_image_url
 
 
-class BlogFeed(Feed):
-    feed_type = ExtendedAtomFeed
-
+class BlogFeed(SiteFeed):
     def __init__(self, blog, *args, **kwargs):
         self.blog = blog
         super().__init__(*args, **kwargs)
 
     def __call__(self, request, *args, **kwargs):
-        self.request = request
-        self.site = Site.find_for_request(self.request)
-        self.meta = Metadata(request=request, page=self.blog, site=self.site)
+        kwargs['page'] = self.blog
         return super().__call__(request, *args, **kwargs)
 
     def title(self):
@@ -60,3 +51,6 @@ class BlogFeed(Feed):
     def item_enclosure_length(self, item):
         if item.image:
             return 0
+
+    def item_content(self, item):
+        return str(item.body)

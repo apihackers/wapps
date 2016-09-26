@@ -53,6 +53,8 @@ class IdentitySettings(SocialFields, BaseSetting):
         help_text=mark_safe_lazy(_('The icon displayed on mobile device and desktop'))
     )
 
+    svg_logo = models.FileField(_('SVG Logo'), null=True, blank=True)
+
     bg_color = RGBColorField(_('Background color'), default='#fff',
                              help_text=mark_safe_lazy(_('The background color used to tint the browser')))
 
@@ -66,6 +68,7 @@ class IdentitySettings(SocialFields, BaseSetting):
             ImageChooserPanel('logo'),
             ImageChooserPanel('favicon'),
             ImageChooserPanel('favicon_large'),
+            FieldPanel('svg_logo'),
             FieldPanel('bg_color'),
         ], heading=_('Visual'), classname='collapsible'),
         MultiFieldPanel(SocialFields.panels, heading=_('Social networks'), classname='collapsible'),

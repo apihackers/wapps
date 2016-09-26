@@ -13,7 +13,7 @@ class Metadata(object):
     Extract metadata from a Page object
     '''
     def __init__(self, context=None, **kwargs):
-        self.context = context
+        self.context = context or {}
         self.kwargs = kwargs
         self.request = kwargs.get('request', None) or context.get('request', None)
         self.page = kwargs.get('page', None) or context.get('page', None)
