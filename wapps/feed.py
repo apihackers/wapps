@@ -31,16 +31,28 @@ class ExtendedAtomFeed(Atom1Feed):
         super(ExtendedAtomFeed, self).add_root_elements(handler)
 
         if self.feed.get('image'):
+            # Feedly cover image
             handler.addQuickElement('webfeeds:cover', '', {
                 'image': get_image_url(self.feed['image'], 'fill-1920x1080'),
             })
         if self.feed.get('svg_logo'):
+            # Feedly SVG Logo
             handler.addQuickElement('webfeeds:logo', self.feed['svg_logo'])
+        if self.feed.get('favicon'):
+            # Feedly Favicon
+            handler.addQuickElement('webfeeds:icon', self.feed['favicon'])
         if self.feed.get('color'):
+            # Feedly link color
             handler.addQuickElement('webfeeds:accentColor', '', {
                 'image': self.feed['color'],
             })
+        # Feedly related content
+        handler.addQuickElement('webfeeds:related', '', {
+            'layout': 'card',
+            'target': 'browser',
+        })
         if self.feed.get('googleanalytics_id'):
+            # Feedly Google Analytics
             handler.addQuickElement('webfeeds:analytics', '', {
                 'id': self.feed['googleanalytics_id'],
                 'engine': 'GoogleAnalytics',
@@ -83,6 +95,8 @@ class SiteFeed(Feed):
             kwargs['image'] = self.meta.image
         if self.identity.bg_color:
             kwargs['color'] = self.identity.bg_color
+        if self.identity.favicon:
+            kwargs['favicon'] = get_image_url(self.identity.favicon, 'fill-16x16')
         if self.identity.svg_logo:
             kwargs['svg_logo'] = self.identity.svg_logo.url
         if getattr(settings, 'GOOGLE_ANALYTICS_ID', None):

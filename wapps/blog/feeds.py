@@ -22,7 +22,7 @@ class BlogFeed(SiteFeed):
     subtitle = description
 
     def link(self):
-        return self.blog.slug
+        return self.blog.full_url
 
     def items(self):
         return self.blog.get_queryset()[:20]
