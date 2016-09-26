@@ -1,4 +1,4 @@
 {% for blog in blogs %}
 <link rel="alternate" type="application/atom+xml" title="{{ meta.site_title }} » {{ blog.title }}"
-    href="{{ blog.reverse_subpage('feed') }}">
+    href="{{ routablepageurl(blog, 'feed') }}" />
 {% endfor %}

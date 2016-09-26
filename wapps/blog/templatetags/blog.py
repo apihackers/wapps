@@ -11,10 +11,9 @@ from ..models import Blog
 @library.render_with('blog/metadata.html')
 @jinja2.contextfunction
 def blog_meta(context):
+    ctx = context.get_all()
     request = context['request']
     site = request.site
-    blogs = (b for b in Blog.objects.live() if b.get_site().pk == site.pk)
-    return {
-        'blogs': blogs,
-        'meta': Metadata(context),
-    }
+    ctx['blogs'] = (b for b in Blog.objects.live() if b.get_site().pk == site.pk)
+    ctx['meta'] = Metadata(ctx)
+    return ctx
