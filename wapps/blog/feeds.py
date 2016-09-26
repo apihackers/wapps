@@ -1,23 +1,34 @@
 from urllib import parse
 
 from django.contrib.syndication.views import Feed
-from django.utils.feedgenerator import Atom1Feed
 
 from wagtail.wagtailcore.models import Site
 
+from wapps.feed import ExtendedAtomFeed
+from wapps.templatetags.seo import Metadata
+from wapps.utils import get_image_url
 
-class BlogRssFeed(Feed):
+
+class BlogFeed(Feed):
+    feed_type = ExtendedAtomFeed
+
+    def __init__(self, blog, *args, **kwargs):
+        self.blog = blog
+        super().__init__(*args, **kwargs)
+
     def __call__(self, request, *args, **kwargs):
-        from .models import Blog
         self.request = request
-        self.blog = kwargs.get('blog') or Blog.objects.first()
-        return super(BlogRssFeed, self).__call__(request, *args, **kwargs)
+        self.site = Site.find_for_request(self.request)
+        self.meta = Metadata(request=request, page=self.blog, site=self.site)
+        return super().__call__(request, *args, **kwargs)
 
     def title(self):
-        return self.blog.title
+        return self.meta.full_title
 
     def description(self):
-        return self.blog.intro
+        return self.meta.description
+
+    subtitle = description
 
     def link(self):
         return self.blog.slug
@@ -39,11 +50,13 @@ class BlogRssFeed(Feed):
 
     def item_enclosure_url(self, item):
         if item.image:
-            site = Site.find_for_request(self.request)
-            return parse.urljoin(site.root_url, item.image.file.url)
-        return None
+            image_url = get_image_url(item.image, 'original')
+            return parse.urljoin(self.site.root_url, image_url)
 
+    def item_enclosure_mime_type(self, item):
+        if item.image:
+            return 'image/png'
 
-class BlogAtomFeed(BlogRssFeed):
-    feed_type = Atom1Feed
-    subtitle = BlogRssFeed.description
+    def item_enclosure_length(self, item):
+        if item.image:
+            return 0

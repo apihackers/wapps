@@ -1,6 +1,4 @@
-{% if blog and meta %}
-<link rel="alternate" type="application/rss+xml" title="{{ meta.site_title }} » RSS"
-    href="{{ blog.reverse_subpage('rss') }}">
-<link rel="alternate" type="application/atom+xml" title="{{ meta.site_title }} » Atom"
-    href="{{ blog.reverse_subpage('atom') }}">
-{% endif %}
+{% for blog in blogs %}
+<link rel="alternate" type="application/atom+xml" title="{{ meta.site_title }} » {{ blog.title }}"
+    href="{{ blog.reverse_subpage('feed') }}">
+{% endfor %}

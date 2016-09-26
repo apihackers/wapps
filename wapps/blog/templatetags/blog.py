@@ -13,10 +13,8 @@ from ..models import Blog
 def blog_meta(context):
     request = context['request']
     site = request.site
-    for blog in Blog.objects.live():
-        if blog.get_site().pk == site.pk:
-            return {
-                'blog': blog,
-                'meta': Metadata(context)
-            }
-    return {}
+    blogs = (b for b in Blog.objects.live() if b.get_site().pk == site.pk)
+    return {
+        'blogs': blogs,
+        'meta': Metadata(context),
+    }

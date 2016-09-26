@@ -24,7 +24,7 @@ from wapps.models import Category
 from wapps.mixins import RelatedLink
 from wapps.utils import get_image_model
 
-from .feeds import BlogRssFeed, BlogAtomFeed
+from .feeds import BlogFeed
 
 ImageModel = get_image_model()
 
@@ -101,7 +101,7 @@ class Blog(RoutablePageMixin, Page):
             self.filter_term = date_format(date(int(year), int(month), int(day)))
         return Page.serve(self, request, *args, **kwargs)
 
-    @route(r'^tag/(?P<tag>[-\w]+)/$')
+    @route(r'^tag/(?P<tag>[-_\w]+)/$')
     def by_tag(self, request, tag, *args, **kwargs):
         self.filter_type = _('tag')
         self.filter_term = tag
@@ -122,16 +122,9 @@ class Blog(RoutablePageMixin, Page):
         self.posts = self.get_queryset().filter(owner__username=author)
         return Page.serve(self, request, *args, **kwargs)
 
-    @route(r'^rss/$')
-    def rss(self, request, *args, **kwargs):
-        feed = BlogRssFeed()
-        kwargs['blog'] = self
-        return feed(request, *args, **kwargs)
-
-    @route(r'^atom/$')
-    def atom(self, request, *args, **kwargs):
-        feed = BlogAtomFeed()
-        kwargs['blog'] = self
+    @route(r'^feed/$')
+    def feed(self, request, *args, **kwargs):
+        feed = BlogFeed(self)
         return feed(request, *args, **kwargs)
 
     subpage_types = ['blog.BlogPost']
@@ -232,10 +225,6 @@ class BlogPost(Page):
         # Find closest ancestor which is a blog index
         return self.get_ancestors().type(Blog).last().specific
 
-    # @property
-    # def date(self):
-    #     return self.first_published_at
-
     def get_context(self, request):
         context = super(BlogPost, self).get_context(request)
         context = get_common_context(context)
@@ -280,5 +269,5 @@ class BlogBlock(blocks.PageChooserBlock):
 
     class Meta:
         label = _('Blog')
-        icon = 'fa-newspaper-o'
-        # template = 'sublime/blocks/blog-section.html'
+        icon = 'fa-rss'
+        template = 'blog/blocks/blog-section.html'

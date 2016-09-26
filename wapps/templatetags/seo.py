@@ -1,5 +1,7 @@
 import jinja2
 
+from django.utils.html import strip_tags
+
 from django_jinja import library
 
 from wapps.models import IdentitySettings
@@ -10,12 +12,12 @@ class Metadata(object):
     '''
     Extract metadata from a Page object
     '''
-    def __init__(self, context, **kwargs):
+    def __init__(self, context=None, **kwargs):
         self.context = context
         self.kwargs = kwargs
-        self.page = context.get('page', None)
-        self.request = context['request']
-        self.site = self.request.site
+        self.request = kwargs.get('request', None) or context.get('request', None)
+        self.page = kwargs.get('page', None) or context.get('page', None)
+        self.site = kwargs.get('site', None) or self.request.site
         self.identity = IdentitySettings.for_site(self.site)
 
     @property
@@ -44,8 +46,12 @@ class Metadata(object):
             return self.kwargs['description']
         elif getattr(self.page, 'search_description', None):
             return self.page.search_description
+        elif getattr(self.page, 'excerpt', None):
+            return self.page.excerpt
+        elif getattr(self.page, 'intro', None):
+            return strip_tags(self.page.intro)
         elif getattr(self.page, 'description', None):
-            return self.page.description
+            return strip_tags(self.page.description)
         else:
             return self.identity.description
 
