@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-20 04:27+0200\n"
-"PO-Revision-Date: 2016-09-20 04:27+0200\n"
+"POT-Creation-Date: 2016-09-26 19:52+0200\n"
+"PO-Revision-Date: 2016-09-26 19:54+0200\n"
 "Last-Translator: Axel Haustant <noirbizarre@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -119,22 +119,26 @@ msgid "The icon displayed on mobile device and desktop"
 msgstr "L'icône affichée sur les périphériques mobiles et le bureau"
 
 #: models/identity.py:56
+msgid "SVG Logo"
+msgstr "Logo SVG"
+
+#: models/identity.py:58
 msgid "Background color"
 msgstr "Couleur de fond"
 
-#: models/identity.py:57
+#: models/identity.py:59
 msgid "The background color used to tint the browser"
 msgstr "La couleur de fond utilisée pour teinter le navigateur"
 
-#: models/identity.py:59
+#: models/identity.py:61
 msgid "Tags"
 msgstr "Mots-clés"
 
-#: models/identity.py:70
+#: models/identity.py:73
 msgid "Visual"
 msgstr "Visuel"
 
-#: models/identity.py:71
+#: models/identity.py:74
 msgid "Social networks"
 msgstr "Réseaux sociaux"
 

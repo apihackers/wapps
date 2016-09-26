@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-20 04:27+0200\n"
-"PO-Revision-Date: 2016-09-16 23:18+0200\n"
+"POT-Creation-Date: 2016-09-26 19:52+0200\n"
+"PO-Revision-Date: 2016-09-26 19:53+0200\n"
 "Last-Translator: Axel Haustant <noirbizarre@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -18,27 +18,43 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 1.8.9\n"
 
-#: blog/models.py:96
+#: blog/models.py:93
+msgid "date"
+msgstr "date"
+
+#: blog/models.py:106
+msgid "tag"
+msgstr "mot-clé"
+
+#: blog/models.py:113
+msgid "category"
+msgstr "catégorie"
+
+#: blog/models.py:120
+msgid "author"
+msgstr "auteur"
+
+#: blog/models.py:138
 msgid "Category"
 msgstr "Catégorie"
 
-#: blog/models.py:112
+#: blog/models.py:154
 msgid "Blog post"
 msgstr "Article de blog"
 
-#: blog/models.py:113
+#: blog/models.py:155
 msgid "Blog posts"
 msgstr "Articles de blog"
 
-#: blog/models.py:115
+#: blog/models.py:157
 msgid "body"
 msgstr "corps"
 
-#: blog/models.py:116
+#: blog/models.py:158
 msgid "excerpt"
 msgstr "extrait"
 
-#: blog/models.py:117
+#: blog/models.py:159
 msgid ""
 "Entry excerpt to be displayed on entries list. If this field is not filled, "
 "a truncate version of body text will be used."
@@ -46,15 +62,31 @@ msgstr ""
 "Extrait de l'article à afficher dans la liste des articles. Si ce champs "
 "n'est pas rempli, un version tronquée du corps de l'article sera utilisée."
 
-#: blog/models.py:145
+#: blog/models.py:162
+msgid "Post date"
+msgstr "Date de publication"
+
+#: blog/models.py:187
+msgid "Content"
+msgstr "Contenu"
+
+#: blog/models.py:190
 msgid "Categories"
 msgstr "Catégories"
 
-#: blog/models.py:146
+#: blog/models.py:191
 msgid "Related links"
 msgstr "Liens connexes"
 
-#: blog/models.py:199
+#: blog/models.py:192
+msgid "Metadata"
+msgstr "Metadonnées"
+
+#: blog/models.py:201
+msgid "Common page configuration"
+msgstr ""
+
+#: blog/models.py:271 blog/wagtail_hooks.py:14
 msgid "Blog"
 msgstr "Blog"
 

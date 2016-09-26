@@ -47,7 +47,7 @@ class Metadata(object):
         elif getattr(self.page, 'search_description', None):
             return self.page.search_description
         elif getattr(self.page, 'excerpt', None):
-            return self.page.excerpt
+            return strip_tags(self.page.excerpt)
         elif getattr(self.page, 'intro', None):
             return strip_tags(self.page.intro)
         elif getattr(self.page, 'description', None):

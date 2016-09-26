@@ -155,11 +155,12 @@ class BlogPost(Page):
         verbose_name_plural = _('Blog posts')
 
     body = RichTextField(verbose_name=_('body'))
-    excerpt = RichTextField(verbose_name=_('excerpt'), blank=True,
-                            help_text=_("Entry excerpt to be displayed on entries list. "
-                                        "If this field is not filled, a truncate version of body text will be used."))
+    excerpt = models.CharField(verbose_name=_('excerpt'), blank=True, max_length=255,
+                               help_text=_("Entry excerpt to be displayed on entries list. "
+                                           "If this field is not filled, a truncate version "
+                                           "of body text will be used."))
 
-    date = models.DateTimeField(verbose_name=_("Post date"), default=datetime.today)
+    date = models.DateTimeField(verbose_name=_('Post date'), default=datetime.today)
 
     tags = ClusterTaggableManager(through=BlogPostTag, blank=True)
     categories = models.ManyToManyField(Category, through=BlogPostCategory, blank=True)
@@ -182,8 +183,8 @@ class BlogPost(Page):
         MultiFieldPanel([
             FieldPanel('title', classname="title"),
             ImageChooserPanel('image'),
-            FieldPanel('body', classname="full"),
             FieldPanel('excerpt', classname="full"),
+            FieldPanel('body', classname="full"),
         ], heading=_('Content')),
         MultiFieldPanel([
             FieldPanel('tags'),
