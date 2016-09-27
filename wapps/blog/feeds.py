@@ -14,7 +14,7 @@ class BlogFeed(SiteFeed):
         return super().__call__(request, *args, **kwargs)
 
     def title(self):
-        return self.meta.full_title
+        return ' » '.join((self.meta.site_title, self.blog.title))
 
     def description(self):
         return self.meta.description

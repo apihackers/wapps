@@ -17,3 +17,13 @@ def blog_meta(context):
     ctx['blogs'] = (b for b in Blog.objects.live() if b.get_site().pk == site.pk)
     ctx['meta'] = Metadata(ctx)
     return ctx
+
+
+@library.global_function
+@jinja2.contextfunction
+def blog_feed_url(context):
+    request = context['request']
+    site = request.site
+    for blog in Blog.objects.live():
+        if blog.get_site().pk == site.pk:
+            return blog.full_url + blog.reverse_subpage('feed')
