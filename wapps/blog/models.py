@@ -22,7 +22,7 @@ from wagtail.utils.pagination import paginate
 
 from wapps.models import Category
 from wapps.mixins import RelatedLink
-from wapps.utils import get_image_model
+from wapps.utils import get_image_model, get_image_url
 
 from .feeds import BlogFeed
 
@@ -72,6 +72,10 @@ class Blog(RoutablePageMixin, Page):
 
         return qs
 
+    @property
+    def queryset(self):
+        return self.get_queryset()
+
     def get_context(self, request):
         context = super(Blog, self).get_context(request)
 
@@ -79,6 +83,10 @@ class Blog(RoutablePageMixin, Page):
         context['posts'] = posts
         context = get_common_context(context)
         return context
+
+    @property
+    def posts_with_image(self):
+        return self.queryset.filter(image__isnull=False)
 
     @route(r'^$')
     def all_posts(self, request, *args, **kwargs):
@@ -244,7 +252,7 @@ class BlogPost(Page):
             'name': self.seo_title or self.title,
             'datePublished': self.first_published_at.isoformat(),
             'dateModified': self.latest_revision_created_at.isoformat(),
-            'headline': self.summarize(100),
+            'headline': self.summarize(140),
             'articleBody': str(self.body),
             'author': {
                 '@type': 'Person',
@@ -252,7 +260,7 @@ class BlogPost(Page):
             },
         }
         if self.image:
-            data['image'] = request.site.root_url + self.image.get_rendition('original').url
+            data['image'] = request.site.root_url + get_image_url(self.image, 'original')
         return data
 
 BlogPost._meta.get_field('owner').editable = True
@@ -271,4 +279,4 @@ class BlogBlock(blocks.PageChooserBlock):
     class Meta:
         label = _('Blog')
         icon = 'fa-rss'
-        template = 'blog/blocks/blog-section.html'
+        template = 'blog/blog-block.html'
