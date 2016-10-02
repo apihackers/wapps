@@ -1,3 +1,5 @@
+import re
+
 from datetime import date, datetime
 
 from django.db import models
@@ -137,6 +139,18 @@ class Blog(RoutablePageMixin, Page):
 
     subpage_types = ['blog.BlogPost']
 
+    def __jsonld__(self, context):
+        data = {
+            '@type': 'Blog',
+            '@id': self.full_url,
+            'url': self.full_url,
+            'name': self.seo_title or self.title,
+            'datePublished': self.first_published_at.isoformat(),
+            'dateModified': self.latest_revision_created_at.isoformat(),
+            'description': strip_tags(self.intro),
+        }
+        return data
+
 
 class BlogPostRelatedLink(Orderable, RelatedLink):
     page = ParentalKey('blog.BlogPost', related_name='related_links')
@@ -245,15 +259,19 @@ class BlogPost(Page):
 
     def __jsonld__(self, context):
         request = context['request']
+        body = str(self.body)
         data = {
-            '@context': 'http://schema.org',
             '@type': 'BlogPosting',
             '@id': self.full_url,
+            'url': self.full_url,
             'name': self.seo_title or self.title,
-            'datePublished': self.first_published_at.isoformat(),
+            'datePublished': self.date.isoformat(),
             'dateModified': self.latest_revision_created_at.isoformat(),
-            'headline': self.summarize(140),
-            'articleBody': str(self.body),
+            'headline': self.excerpt,
+            'keywords': ','.join(t.name for t in self.tags.all()),
+            'articleBody': body,
+            'description': self.summarize(140),
+            'wordCount': len(re.findall(r'\w+', strip_tags(body))),
             'author': {
                 '@type': 'Person',
                 'name': self.owner.get_full_name()

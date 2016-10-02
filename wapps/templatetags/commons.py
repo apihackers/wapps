@@ -6,6 +6,7 @@ from django.utils.safestring import mark_safe
 from django_jinja import library
 
 from .. import json
+from ..jsonld import graph
 
 
 @library.filter(name='json')
@@ -16,27 +17,17 @@ def json_encode(data):
 @library.filter
 @library.global_function
 @jinja2.contextfunction
-def jsonld(context, data):
-    if data and hasattr(data, '__jsonld__'):
-        data_jsonld = data.__jsonld__(context)
-        if not data_jsonld:
-            return ''
-        elif isinstance(data_jsonld, dict):
-            jsonld = data_jsonld
-            if '@context' not in jsonld:
-                jsonld['@context'] = 'http://schema.org/'
-        else:
-            jsonld = {
-                "@context": 'http://schema.org/',
-                "@graph": data_jsonld
-            }
-        return mark_safe(''.join((
-            '<script type="application/ld+json">',
-            json.dumps(jsonld),
-            '</script>'
-        )))
-    else:
-        return ''
+def jsonld(context, *data):
+    if 'page' in context and hasattr(context['page'], '__jsonld__'):
+        page = context['page']
+        if page not in data:
+            data = [page, *data]
+
+    return mark_safe(''.join((
+        '<script type="application/ld+json">',
+        json.dumps(graph(context, *data)),
+        '</script>'
+    )))
 
 
 @library.global_function

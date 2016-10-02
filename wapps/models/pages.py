@@ -71,9 +71,9 @@ class StaticPage(Page):
     def __jsonld__(self, context):
         request = context['request']
         data = {
-            '@context': 'http://schema.org',
             '@id': self.full_url,
             'name': self.seo_title or self.title,
+            'keywords': ','.join(t.name for t in self.tags.all()),
         }
         if self.image:
             data['image'] = request.site.root_url + self.image.get_rendition('original').url

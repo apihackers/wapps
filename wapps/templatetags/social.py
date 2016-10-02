@@ -7,80 +7,22 @@ from jinja2.ext import Extension
 
 from wapps.utils import get_image_url
 
-
-NETWORKS = {
-    'twitter': {
-        'name': 'Twitter',
-        'icon': 'fa-twitter',
-        'url': 'https://twitter.com/{user}',
-        'share': 'https://twitter.com/share?url={url}&text={title}',
-    },
-    'linkedin': {
-        'name': 'LinkedIn',
-        'icon': 'fa-linkedin',
-        'url': 'https://www.linkedin.com/in/{user}',
-        'share': 'https://www.linkedin.com/shareArticle?url={url}&title={title}',
-    },
-    'facebook': {
-        'name': 'Facebook',
-        'icon': 'fa-facebook',
-        'url': 'https://facebook.com/{user}',
-        'share': 'https://www.facebook.com/sharer.php?u={url}',
-    },
-    'google': {
-        'name': 'Google',
-        'share': 'https://plus.google.com/share?url={url}',
-    },
-    'instagram': {
-        'name': 'Instagram',
-        'icon': 'fa-instagram',
-        'url': 'https://www.instagram.com/{user}',
-    },
-    'pinterest': {
-        'name': 'PInterest',
-        'icon': 'fa-pinterest',
-        'url': 'https://pinterest.com/{user}',
-        'share': ('https://pinterest.com/pin/create/bookmarklet/'
-                  '?media={image}&url={url}&description={title}'),
-    },
-    'reddit': {
-        'name': 'Reddit',
-        'share': 'https://reddit.com/submit?url={url}&title={title}',
-    },
-    'email': {
-        'name': 'email',
-        'icon': 'fa-envelope',
-        'url': 'mailto:{user}',
-        'share': 'mailto:?subject={title}&body={url}',
-    },
-}
-
-
-def get_network(name):
-    if name not in NETWORKS:
-        raise ValueError('Unknown social network "{name}"'.format(name=name))
-    return NETWORKS[name]
+from wapps import social
 
 
 @library.global_function
 def social_url(network, value):
-    if value.startswith('http://'):
-        return value.replace('http://', 'https://')
-    elif value.startswith('https://'):
-        return value
-    return get_network(network).get('url', '').format(user=value)
+    return social.user_url(network, value)
 
 
 @library.global_function
 def social_icon(network):
-    return get_network(network).get('icon')
+    return social.icon(network)
 
 
 @library.global_function
 def social_share_url(network, url, title=None):
-    template = get_network(network).get('share')
-    if template:
-        return template.format(url=url, title=title)
+    return social.share_url(network, url, title)
 
 
 @library.global_function
@@ -97,7 +39,7 @@ def social_share_urls(context, page):
         'title': quote_plus(page.seo_title or page.title),
         'image': image
     }
-    for network, attrs in NETWORKS.items():
+    for network, attrs in social.NETWORKS.items():
         if 'share' in attrs:
             shareurl = attrs['share'].format(**params)
             data.append((attrs['name'], shareurl, attrs.get('icon')))
@@ -108,4 +50,4 @@ def social_share_urls(context, page):
 class SocialSettings(Extension):
     def __init__(self, environment):
         super(SocialSettings, self).__init__(environment)
-        environment.globals['SOCIAL_NETWORKS'] = NETWORKS.keys()
+        environment.globals['SOCIAL_NETWORKS'] = social.NETWORKS.keys()

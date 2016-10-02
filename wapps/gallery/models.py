@@ -157,7 +157,6 @@ class Album(Page):
     def __jsonld__(self, context):
         request = context['request']
         data = {
-            '@context': 'http://schema.org',
             '@type': 'ImageGallery',
             '@id': self.full_url,
             'name': self.seo_title or self.title,
