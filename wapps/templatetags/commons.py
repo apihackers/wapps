@@ -21,7 +21,7 @@ def jsonld(context, *data):
     if 'page' in context and hasattr(context['page'], '__jsonld__'):
         page = context['page']
         if page not in data:
-            data = [page, *data]
+            data = [page] + list(data)
 
     return mark_safe(''.join((
         '<script type="application/ld+json">',
