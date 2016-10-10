@@ -1,3 +1,4 @@
+from django.conf import settings
 from wagtail.wagtailcore.models import Page
 
 from . import social
@@ -55,32 +56,40 @@ def breadcrumb(context):
     }
 
 
+ADDRESS_MAPPING = {
+    'address': 'streetAddress',
+    'post_code': 'postalCode',
+    'city': 'addressLocality',
+    'country': 'addressCountry',
+}
+
+
 def organization(context):
     request = context['request']
     site = request.site
     identity = IdentitySettings.for_site(site)
     org = {
         "@type": "Organization",
-        "address": [
-            {
-                "@type": "PostalAddress",
-                "addressLocality": "Paris, France",
-            },
-            {
-                "@type": "PostalAddress",
-                "addressLocality": "Melun, France",
-            }
-        ],
         "url": site.root_url,
-        # "email": "lesly(at)lamarieesublimee.fr",
-        # "founder": {
-        #     "@type": "Person",
-        #     "name": "Lesly T."
-        # },
         "name": identity.name,
     }
     if identity.logo:
         org['logo'] = site.root_url + identity.logo.get_rendition('original').url
+    if identity.email:
+        org['email'] = identity.email
+    if identity.telephone:
+        org['telephone'] = identity.telephone
+
+    address = {
+        'streetAddress': ', '.join(a for a in (identity.address_1, identity.address_2) if a),
+        'postalCode': identity.post_code,
+        'addressLocality': identity.city,
+        'addressCountry': identity.country,
+    }
+
+    if any(address.values()):
+        org['address'] = dict((k, v) for k, v in address.items() if v)
+
     same_as = []
     for network in social.NETWORKS.keys():
         username = getattr(identity, network, None)
@@ -89,6 +98,9 @@ def organization(context):
             same_as.append(network_url)
     if same_as:
         org['sameAs'] = same_as
+
+    from_settings = getattr(settings, 'JSONLD_ORG', {})
+    org.update(from_settings)
     return org
 
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-26 19:52+0200\n"
+"POT-Creation-Date: 2016-10-04 10:11+0200\n"
 "PO-Revision-Date: 2016-09-06 02:10+0200\n"
 "Last-Translator: Axel Haustant <noirbizarre@gmail.com>\n"
 "Language-Team: \n"
@@ -76,10 +76,10 @@ msgstr "Album"
 msgid "Options"
 msgstr "Options"
 
-#: gallery/models.py:227
+#: gallery/models.py:226
 msgid "Manual album"
 msgstr "Album manuel"
 
-#: gallery/models.py:231
+#: gallery/models.py:230
 msgid "Images"
 msgstr "Images"

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-26 19:52+0200\n"
-"PO-Revision-Date: 2016-09-26 19:54+0200\n"
+"POT-Creation-Date: 2016-10-04 10:11+0200\n"
+"PO-Revision-Date: 2016-10-04 10:12+0200\n"
 "Last-Translator: Axel Haustant <noirbizarre@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -49,6 +49,30 @@ msgstr "Grande vignette"
 #: mixins.py:20
 msgid "External link"
 msgstr "Lien externe"
+
+#: mixins.py:54
+msgid "Phone"
+msgstr "Téléphone"
+
+#: mixins.py:56
+msgid "Address"
+msgstr "Adresse"
+
+#: mixins.py:57
+msgid "Address (complement)"
+msgstr "Adresse (complément)"
+
+#: mixins.py:58
+msgid "Postal code"
+msgstr "Code postal"
+
+#: mixins.py:59
+msgid "City"
+msgstr "Ville"
+
+#: mixins.py:60
+msgid "Country"
+msgstr "Pays"
 
 #: mixins.py:115
 msgid "Carousel item"
@@ -141,6 +165,10 @@ msgstr "Visuel"
 #: models/identity.py:74
 msgid "Social networks"
 msgstr "Réseaux sociaux"
+
+#: models/identity.py:75
+msgid "Contact"
+msgstr "Contact"
 
 #: models/image.py:11
 msgid "Credit"

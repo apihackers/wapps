@@ -51,20 +51,20 @@ class LinkFields(models.Model):
 
 
 class ContactFields(models.Model):
-    telephone = models.CharField(max_length=20, blank=True)
+    telephone = models.CharField(_('Telephone'), max_length=20, blank=True)
     email = models.EmailField(blank=True)
-    address_1 = models.CharField(max_length=255, blank=True)
-    address_2 = models.CharField(max_length=255, blank=True)
-    city = models.CharField(max_length=255, blank=True)
-    country = models.CharField(max_length=255, blank=True)
-    post_code = models.CharField(max_length=10, blank=True)
+    address_1 = models.CharField(_('Address'), max_length=255, blank=True)
+    address_2 = models.CharField(_('Address (complement)'), max_length=255, blank=True)
+    post_code = models.CharField(_('Postal code'), max_length=10, blank=True)
+    city = models.CharField(_('City'), max_length=255, blank=True)
+    country = models.CharField(_('Country'), max_length=255, blank=True)
 
     panels = [
         FieldPanel('address_1'),
         FieldPanel('address_2'),
+        FieldPanel('post_code'),
         FieldPanel('city'),
         FieldPanel('country'),
-        FieldPanel('post_code'),
         FieldPanel('telephone'),
         FieldPanel('email'),
     ]

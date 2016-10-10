@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-26 19:52+0200\n"
+"POT-Creation-Date: 2016-10-04 10:11+0200\n"
 "PO-Revision-Date: 2016-09-26 19:53+0200\n"
 "Last-Translator: Axel Haustant <noirbizarre@gmail.com>\n"
 "Language-Team: \n"
@@ -18,43 +18,43 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 1.8.9\n"
 
-#: blog/models.py:93
+#: blog/models.py:103
 msgid "date"
 msgstr "date"
 
-#: blog/models.py:106
+#: blog/models.py:116
 msgid "tag"
 msgstr "mot-clé"
 
-#: blog/models.py:113
+#: blog/models.py:123
 msgid "category"
 msgstr "catégorie"
 
-#: blog/models.py:120
+#: blog/models.py:130
 msgid "author"
 msgstr "auteur"
 
-#: blog/models.py:138
+#: blog/models.py:160
 msgid "Category"
 msgstr "Catégorie"
 
-#: blog/models.py:154
+#: blog/models.py:176
 msgid "Blog post"
 msgstr "Article de blog"
 
-#: blog/models.py:155
+#: blog/models.py:177
 msgid "Blog posts"
 msgstr "Articles de blog"
 
-#: blog/models.py:157
+#: blog/models.py:179
 msgid "body"
 msgstr "corps"
 
-#: blog/models.py:158
+#: blog/models.py:180
 msgid "excerpt"
 msgstr "extrait"
 
-#: blog/models.py:159
+#: blog/models.py:181
 msgid ""
 "Entry excerpt to be displayed on entries list. If this field is not filled, "
 "a truncate version of body text will be used."
@@ -62,31 +62,31 @@ msgstr ""
 "Extrait de l'article à afficher dans la liste des articles. Si ce champs "
 "n'est pas rempli, un version tronquée du corps de l'article sera utilisée."
 
-#: blog/models.py:162
+#: blog/models.py:185
 msgid "Post date"
 msgstr "Date de publication"
 
-#: blog/models.py:187
+#: blog/models.py:210
 msgid "Content"
 msgstr "Contenu"
 
-#: blog/models.py:190
+#: blog/models.py:213
 msgid "Categories"
 msgstr "Catégories"
 
-#: blog/models.py:191
+#: blog/models.py:214
 msgid "Related links"
 msgstr "Liens connexes"
 
-#: blog/models.py:192
+#: blog/models.py:215
 msgid "Metadata"
 msgstr "Metadonnées"
 
-#: blog/models.py:201
+#: blog/models.py:224
 msgid "Common page configuration"
 msgstr ""
 
-#: blog/models.py:271 blog/wagtail_hooks.py:14
+#: blog/models.py:298 blog/wagtail_hooks.py:14
 msgid "Blog"
 msgstr "Blog"
 

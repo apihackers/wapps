@@ -9,12 +9,12 @@ from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 from colorful.fields import RGBColorField
 
-from wapps.mixins import SocialFields
+from wapps.mixins import SocialFields, ContactFields
 from wapps.utils import mark_safe_lazy, get_image_model, get_image_url
 
 
 @register_setting(icon='fa-universal-access')
-class IdentitySettings(SocialFields, BaseSetting):
+class IdentitySettings(SocialFields, ContactFields, BaseSetting):
     class Meta:
         verbose_name = _('Identity')
 
@@ -72,6 +72,7 @@ class IdentitySettings(SocialFields, BaseSetting):
             FieldPanel('bg_color'),
         ], heading=_('Visual'), classname='collapsible'),
         MultiFieldPanel(SocialFields.panels, heading=_('Social networks'), classname='collapsible'),
+        MultiFieldPanel(ContactFields.panels, heading=_('Contact'), classname='collapsible'),
     ]
 
     def favicon_url(self, width, height=None):
