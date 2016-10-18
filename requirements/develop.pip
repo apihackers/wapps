@@ -1,5 +1,5 @@
 -e .
-invoke
+invoke>=0.13
 flake8
 pep8-naming
 pytest
