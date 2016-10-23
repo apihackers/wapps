@@ -84,4 +84,6 @@ class IdentitySettings(SocialFields, ContactFields, BaseSetting):
             image = self.favicon_large
         elif self.logo:
             image = self.logo
+        else:
+            return
         return get_image_url(image, specs)
