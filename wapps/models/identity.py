@@ -33,6 +33,16 @@ class IdentitySettings(SocialFields, ContactFields, BaseSetting):
         verbose_name=_('Logo'),
     )
 
+    amp_logo = models.ForeignKey(
+        get_image_model(),
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name=_('Logo Mobile'),
+        help_text=mark_safe_lazy(_('An mobile optimized logo that must be 600x60'))
+    )
+
     favicon = models.ForeignKey(
         get_image_model(),
         null=True,

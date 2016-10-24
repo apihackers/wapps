@@ -22,9 +22,10 @@ from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsearch import index
 from wagtail.utils.pagination import paginate
 
-from wapps.models import Category
+from wapps import jsonld
+from wapps.models import Category, IdentitySettings
 from wapps.mixins import RelatedLink
-from wapps.utils import get_image_model, get_image_url
+from wapps.utils import get_image_model
 
 from .feeds import BlogFeed
 
@@ -140,13 +141,14 @@ class Blog(RoutablePageMixin, Page):
     subpage_types = ['blog.BlogPost']
 
     def __jsonld__(self, context):
+        now = datetime.now()
         data = {
             '@type': 'Blog',
             '@id': self.full_url,
             'url': self.full_url,
             'name': self.seo_title or self.title,
-            'datePublished': self.first_published_at.isoformat(),
-            'dateModified': self.latest_revision_created_at.isoformat(),
+            'datePublished': (self.first_published_at or now).isoformat(),
+            'dateModified': (self.latest_revision_created_at or now).isoformat(),
             'description': strip_tags(self.intro),
         }
         return data
@@ -259,14 +261,21 @@ class BlogPost(Page):
 
     def __jsonld__(self, context):
         request = context['request']
+        site = request.site
+        identity = IdentitySettings.for_site(site)
         body = str(self.body)
+        now = datetime.now()
+        publisher = jsonld.organization(context)
+        if identity.amp_logo:
+            publisher['logo'] = jsonld.image_object(context, identity.amp_logo, 600, 60)
         data = {
             '@type': 'BlogPosting',
             '@id': self.full_url,
             'url': self.full_url,
+            'mainEntityOfPage': self.full_url,
             'name': self.seo_title or self.title,
-            'datePublished': self.date.isoformat(),
-            'dateModified': self.latest_revision_created_at.isoformat(),
+            'datePublished': (self.date or now).isoformat(),
+            'dateModified': (self.latest_revision_created_at or now).isoformat(),
             'headline': self.excerpt,
             'keywords': ','.join(t.name for t in self.tags.all()),
             'articleBody': body,
@@ -276,9 +285,12 @@ class BlogPost(Page):
                 '@type': 'Person',
                 'name': self.owner.get_full_name()
             },
+            'publisher': publisher,
         }
         if self.image:
-            data['image'] = request.site.root_url + get_image_url(self.image, 'original')
+            # According to https://developers.google.com/+/web/snippet/article-rendering
+            # Image must had a ratio between 5:2 and 5:3
+            data['image'] = jsonld.image_object(context, self.image, 1000, 600)
         return data
 
 BlogPost._meta.get_field('owner').editable = True

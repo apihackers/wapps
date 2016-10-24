@@ -3,6 +3,7 @@ from wagtail.wagtailcore.models import Page
 
 from . import social
 from .models import IdentitySettings
+from .utils import get_image_url
 
 
 def website(context):
@@ -74,7 +75,7 @@ def organization(context):
         "name": identity.name,
     }
     if identity.logo:
-        org['logo'] = site.root_url + identity.logo.get_rendition('original').url
+        org['logo'] = site.root_url + get_image_url(identity.logo, 'original')
     if identity.email:
         org['email'] = identity.email
     if identity.telephone:
@@ -102,6 +103,45 @@ def organization(context):
     from_settings = getattr(settings, 'JSONLD_ORG', {})
     org.update(from_settings)
     return org
+
+
+def image_object(context, img, width=None, height=None):
+    site = context['request'].site
+    data = {
+        '@type': 'ImageObject',
+        'name': img.title,
+    }
+    if width and height:
+        data.update({
+            'url': site.root_url + get_image_url(img, 'fill-{0}x{1}'.format(width, height)),
+            'width': min(img.width, width),
+            'height': min(img.height, height),
+        })
+    elif width:
+        expected_width = min(img.width, width)
+        expected_height = (expected_width * img.height) / img.width
+        data.update({
+            'url': site.root_url + get_image_url(img, 'width-{0}'.format(width)),
+            'width': expected_width,
+            'height': expected_height,
+        })
+    if height:
+        expected_height = min(img.height, height)
+        expected_width = (expected_height * img.width) / img.height
+        data.update({
+            'url': site.root_url + get_image_url(img, 'height-{0}'.format(height)),
+            'width': expected_width,
+            'height': expected_height,
+        })
+    else:
+        data.update({
+            'url': site.root_url + get_image_url(img, 'original'),
+            'width': img.width,
+            'height': img.height,
+        })
+    if img.details:
+        data['description'] = img.details
+    return data
 
 
 def add_to_graph(graph, data):
