@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-04 10:11+0200\n"
-"PO-Revision-Date: 2016-10-04 10:12+0200\n"
+"POT-Creation-Date: 2016-10-24 11:25+0200\n"
+"PO-Revision-Date: 2016-10-24 11:26+0200\n"
 "Last-Translator: Axel Haustant <noirbizarre@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -51,7 +51,7 @@ msgid "External link"
 msgstr "Lien externe"
 
 #: mixins.py:54
-msgid "Phone"
+msgid "Telephone"
 msgstr "Téléphone"
 
 #: mixins.py:56
@@ -127,46 +127,54 @@ msgid "Logo"
 msgstr "Logo"
 
 #: models/identity.py:42
+msgid "Mobile Logo"
+msgstr "Logo mobile"
+
+#: models/identity.py:43
+msgid "An mobile optimized logo that must be 600x60"
+msgstr "Un logo optimisé pour les mobiles qui doit avoir comme dimension 600x60"
+
+#: models/identity.py:52
 msgid "Favicon"
 msgstr "Favicon"
 
-#: models/identity.py:43
+#: models/identity.py:53
 msgid "The icon displayed in tab"
 msgstr "L'icône affichée dans l'onglet"
 
-#: models/identity.py:52
+#: models/identity.py:62
 msgid "Large favicon"
 msgstr "Grand favicon"
 
-#: models/identity.py:53
+#: models/identity.py:63
 msgid "The icon displayed on mobile device and desktop"
 msgstr "L'icône affichée sur les périphériques mobiles et le bureau"
 
-#: models/identity.py:56
+#: models/identity.py:66
 msgid "SVG Logo"
 msgstr "Logo SVG"
 
-#: models/identity.py:58
+#: models/identity.py:68
 msgid "Background color"
 msgstr "Couleur de fond"
 
-#: models/identity.py:59
+#: models/identity.py:69
 msgid "The background color used to tint the browser"
 msgstr "La couleur de fond utilisée pour teinter le navigateur"
 
-#: models/identity.py:61
+#: models/identity.py:71
 msgid "Tags"
 msgstr "Mots-clés"
 
-#: models/identity.py:73
+#: models/identity.py:84
 msgid "Visual"
 msgstr "Visuel"
 
-#: models/identity.py:74
+#: models/identity.py:85
 msgid "Social networks"
 msgstr "Réseaux sociaux"
 
-#: models/identity.py:75
+#: models/identity.py:86
 msgid "Contact"
 msgstr "Contact"
 
@@ -233,3 +241,9 @@ msgstr "Image principale"
 #: models/pages.py:69
 msgid "Static Page"
 msgstr "Page statique"
+
+#~ msgid "Logo Mobile"
+#~ msgstr "Logo Mobile"
+
+#~ msgid "Phone"
+#~ msgstr "Téléphone"

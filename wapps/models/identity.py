@@ -39,7 +39,7 @@ class IdentitySettings(SocialFields, ContactFields, BaseSetting):
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        verbose_name=_('Logo Mobile'),
+        verbose_name=_('Mobile Logo'),
         help_text=mark_safe_lazy(_('An mobile optimized logo that must be 600x60'))
     )
 
@@ -79,6 +79,7 @@ class IdentitySettings(SocialFields, ContactFields, BaseSetting):
             ImageChooserPanel('favicon'),
             ImageChooserPanel('favicon_large'),
             FieldPanel('svg_logo'),
+            FieldPanel('amp_logo'),
             FieldPanel('bg_color'),
         ], heading=_('Visual'), classname='collapsible'),
         MultiFieldPanel(SocialFields.panels, heading=_('Social networks'), classname='collapsible'),
