@@ -195,9 +195,9 @@ class ManualAlbumImage(Orderable, models.Model):
     page = ParentalKey('gallery.ManualAlbum', related_name='images')
     image = models.ForeignKey(
         get_image_model(),
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
+        null=False,
+        blank=False,
+        on_delete=models.CASCADE,
         related_name='+'
     )
 
