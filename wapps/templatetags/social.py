@@ -1,13 +1,26 @@
+from datetime import datetime
+
 import jinja2
+import requests
 
-from urllib.parse import quote_plus
 from django_jinja import library
-
 from jinja2.ext import Extension
-
-from wapps.utils import get_image_url
+from memoize import memoize
+from urllib.parse import quote_plus
 
 from wapps import social
+from wapps.utils import get_image_url
+
+
+INSTAGRAM_IMAGE_SIZES = {
+    'thumbnail': 'thumbnail',
+    'low': 'low_resolution',
+    'standard': 'standard_resolution',
+}
+INSTAGRAM_DEFAULT_SIZE = 'thumbnail'
+INSTAGRAM_DEFAULT_LENGTH = 10
+INSTAGRAM_CACHE_TIMEOUT = 60 * 5  # Cache for 5 minutes
+INSTAGRAM_FEED_PATTERN = 'https://www.instagram.com/{user}/media/'
 
 
 @library.global_function
@@ -51,3 +64,30 @@ class SocialSettings(Extension):
     def __init__(self, environment):
         super(SocialSettings, self).__init__(environment)
         environment.globals['SOCIAL_NETWORKS'] = social.NETWORKS.keys()
+
+
+def instagram_datetime(value):
+    '''Parse an instagram feed datetime'''
+    return datetime.fromtimestamp(int(value))
+
+
+@library.global_function
+@memoize(timeout=INSTAGRAM_CACHE_TIMEOUT)
+def instagram_feed(user, size=INSTAGRAM_DEFAULT_SIZE, length=INSTAGRAM_DEFAULT_LENGTH):
+    if size not in INSTAGRAM_IMAGE_SIZES:
+        raise ValueError('Unknown image size "{0}"'.format(size))
+    url = INSTAGRAM_FEED_PATTERN.format(user=user)
+    response = requests.get(url)
+    data = response.json()
+    image_size = INSTAGRAM_IMAGE_SIZES[size]
+
+    return [{
+        'id': i['id'],
+        'src': i['images'][image_size]['url'],
+        'text': i['caption']['text'],
+        'link': i['link'],
+        'likes': i['likes']['count'],
+        'comments': i['comments']['count'],
+        'location': (i['location'] or {}).get('name'),
+        'date': instagram_datetime(i['created_time']),
+    } for i in data['items'][:length]]
