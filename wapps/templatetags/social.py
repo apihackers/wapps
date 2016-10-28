@@ -3,6 +3,7 @@ from datetime import datetime
 import jinja2
 import requests
 
+from django.utils.translation import ugettext_lazy as _
 from django_jinja import library
 from jinja2.ext import Extension
 from memoize import memoize
@@ -16,6 +17,11 @@ INSTAGRAM_IMAGE_SIZES = {
     'thumbnail': 'thumbnail',
     'low': 'low_resolution',
     'standard': 'standard_resolution',
+}
+INSTAGRAM_SIZES = {
+    'thumbnail': 150,
+    'low': 320,
+    'standard': 640,
 }
 INSTAGRAM_DEFAULT_SIZE = 'thumbnail'
 INSTAGRAM_DEFAULT_LENGTH = 10
@@ -78,6 +84,19 @@ def instagram_feed(user, size=INSTAGRAM_DEFAULT_SIZE, length=INSTAGRAM_DEFAULT_L
         raise ValueError('Unknown image size "{0}"'.format(size))
     url = INSTAGRAM_FEED_PATTERN.format(user=user)
     response = requests.get(url)
+    if response.status_code != requests.codes.ok:
+        return [{
+            'id': 'unknown',
+            'src': 'https://placehold.it/{size}x{size}/aaa/f00?text={text}'.format(
+                size=INSTAGRAM_SIZES[size], text=_('Error'),
+            ),
+            'text': _('Error while fetching data'),
+            'link': '#',
+            'likes': 0,
+            'comments': 0,
+            'location': None,
+            'date': datetime.now(),
+        }]
     data = response.json()
     image_size = INSTAGRAM_IMAGE_SIZES[size]
 
