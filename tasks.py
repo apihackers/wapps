@@ -158,11 +158,11 @@ def i18nc(ctx):
 def dist(ctx, buildno=None):
     '''Package for distribution'''
     header(dist.__doc__)
-    cmd = ['python setup.py']
+    cmd = ['python3 setup.py']
     if buildno:
         cmd.append('egg_info -b {0}'.format(buildno))
     cmd.append('bdist_wheel')
-    run(' '.join(cmd), pty=True)
+    run(' '.join(cmd))
 
 
 @task(qa, test, dist, default=True)

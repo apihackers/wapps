@@ -19,9 +19,10 @@ build:
     commands:
       # Make installed packages cacheable
       - export PYTHONUSERBASE=$DRONE_DIR/py-user-base
+      - export PATH=$DRONE_DIR/py-user-base/bin:$PATH
       # Install, build and package
       - pip3 install --user -i $PY_INDEX -e . wheel invoke Babel
-      - $DRONE_DIR/py-user-base/bin/inv dist -b ${EGG_TAG%%+master}
+      - inv dist -b ${EGG_TAG%%+master}
 
 publish:
   devpi:
