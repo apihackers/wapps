@@ -21,7 +21,7 @@ build:
       - export PYTHONUSERBASE=$DRONE_DIR/py-user-base
       # Install, build and package
       - pip3 install --user -i $PY_INDEX -e . wheel invoke Babel
-      - inv dist -b ${EGG_TAG%%+master}
+      - $DRONE_DIR/py-user-base/bin/inv dist -b ${EGG_TAG%%+master}
 
 publish:
   devpi:
