@@ -1,22 +1,20 @@
-{% load static i18n wagtailcore_tags wagtailimages_tags %}
+{% set meta = page_meta() %}
 <!DOCTYPE html>
-<html lang="{{lang|default:'en'}}">
+<html lang="{{ LANGUAGE_CODE|default('en') }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
 <head>
 	<meta charset="utf-8">
 
-	<title>{{ page.title }}</title>
-
-	<meta name="description" content="{{ page.excerpt }}">
-
+    <title>{{ meta.full_title }}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    {% include 'wapps/metadata.html' %}
+    {{ blog_meta() }}
 </head>
 <body>
 
     <h1>{{ page.title }}</h1>
 
     {% if page.image %}
-    {% image page.image fill-1100x580 %}
+    {{ image(page.image, 'fill-1100x580') }}
     {% endif %}
 
     {{ page.body|richtext }}

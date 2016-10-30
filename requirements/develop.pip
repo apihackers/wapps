@@ -4,3 +4,8 @@ flake8
 pep8-naming
 pytest
 pytest-django
+pytest-pythonpath
+pytest-cov
+Babel
+tox
+wheel

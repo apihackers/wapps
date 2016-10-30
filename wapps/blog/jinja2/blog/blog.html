@@ -1,0 +1,26 @@
+{% set meta = page_meta() %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE|default('en') }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<head>
+	<meta charset="utf-8">
+
+    <title>{{ meta.full_title }}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% include 'wapps/metadata.html' %}
+    {{ blog_meta() }}
+</head>
+<body>
+
+    <h1>{{ page.title }}</h1>
+    {{ page.intro|richtext }}
+
+    <ul>
+    {% for post in posts.object_list %}
+        <li><a href="{{ pageurl(post) }}">{{ post.title }}</a></li>
+    {% else %}
+        <li><span>{{ _('No results founds.') }}</span></li>
+    {% endfor %}
+    </ul>
+
+</body>
+</html>

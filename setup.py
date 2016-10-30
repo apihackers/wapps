@@ -89,7 +89,7 @@ setup(
     # url='https://github.com/apihackers/wapps',
     author='API Hackers',
     author_email='wapps@apihackers.com',
-    packages=find_packages(),
+    packages=find_packages(exclude=['tests']),
     include_package_data=True,
     install_requires=pip('install'),
     tests_require=[],

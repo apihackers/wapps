@@ -1,4 +1,6 @@
-include README.rst CHANGELOG.rst MANIFEST.in LICENSE
+include README.md CHANGELOG.md MANIFEST.in LICENSE
 recursive-include wapps *
+recursive-include wappsdemo *
+recursive-include requirements *.pip
 
 global-exclude *.pyc

@@ -7,7 +7,7 @@ meant to speedup website development.
 
 # Requirements
 
-Wapps is designed to work with Python 3, Django-jinja and latest Django and Wagtail versions.
+Wapps is designed to work with Python 3, Django-jinja, Django-babel and latest Django and Wagtail versions.
 
 ## Installation
 

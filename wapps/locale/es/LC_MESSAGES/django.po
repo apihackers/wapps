@@ -1,22 +1,23 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) 2016 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-12 02:12+0200\n"
+"POT-Creation-Date: 2016-10-30 14:43+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: es\n"
+"Language-Team: es <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Generated-By: Babel 2.3.4\n"
 
 #: image_formats.py:15
 msgid "Full width"
@@ -46,64 +47,148 @@ msgstr ""
 msgid "Big thumbnail"
 msgstr ""
 
-#: mixins.py:19
+#: mixins.py:20
 msgid "External link"
 msgstr ""
 
-#: mixins.py:114
-msgid "Carousel item"
+#: mixins.py:54
+msgid "Telephone"
+msgstr ""
+
+#: mixins.py:56
+msgid "Address"
+msgstr ""
+
+#: mixins.py:57
+msgid "Address (complement)"
+msgstr ""
+
+#: mixins.py:58
+msgid "Postal code"
+msgstr ""
+
+#: mixins.py:59
+msgid "City"
+msgstr ""
+
+#: mixins.py:60
+msgid "Country"
 msgstr ""
 
 #: mixins.py:115
+msgid "Carousel item"
+msgstr ""
+
+#: mixins.py:116
 msgid "Carousel items"
 msgstr ""
 
-#: mixins.py:128
+#: mixins.py:129
 msgid "Related link"
 msgstr ""
 
-#: mixins.py:129
+#: mixins.py:130
 msgid "Related links"
 msgstr ""
 
-#: models/identity.py:17
-msgid "Identity"
-msgstr ""
-
-#: models/identity.py:19
+#: models/category.py:11 models/identity.py:21
 msgid "Name"
 msgstr ""
 
-#: models/identity.py:20
-msgid "The entity public name"
+#: models/category.py:14
+msgid "Categories allows to sort your content according a hierarchy"
+msgstr ""
+
+#: models/category.py:19
+msgid "Category"
+msgstr ""
+
+#: models/category.py:20
+msgid "Categories"
+msgstr ""
+
+#: models/identity.py:19
+msgid "Identity"
 msgstr ""
 
 #: models/identity.py:22
+msgid "The entity public name"
+msgstr ""
+
+#: models/identity.py:24
 msgid "Description"
 msgstr ""
 
-#: models/identity.py:23
+#: models/identity.py:25
 msgid "A short entity description"
 msgstr ""
 
-#: models/identity.py:31
+#: models/identity.py:33
 msgid "Logo"
 msgstr ""
 
-#: models/identity.py:34
+#: models/identity.py:42
+msgid "Mobile Logo"
+msgstr ""
+
+#: models/identity.py:43
+msgid "An mobile optimized logo that must be 600x60"
+msgstr ""
+
+#: models/identity.py:52
+msgid "Favicon"
+msgstr ""
+
+#: models/identity.py:53
+msgid "The icon displayed in tab"
+msgstr ""
+
+#: models/identity.py:62
+msgid "Large favicon"
+msgstr ""
+
+#: models/identity.py:63
+msgid "The icon displayed on mobile device and desktop"
+msgstr ""
+
+#: models/identity.py:66
+msgid "SVG Logo"
+msgstr ""
+
+#: models/identity.py:68
+msgid "Background color"
+msgstr ""
+
+#: models/identity.py:69
+msgid "The background color used to tint the browser"
+msgstr ""
+
+#: models/identity.py:71
 msgid "Tags"
 msgstr ""
 
-#: models/identity.py:41
+#: models/identity.py:84
+msgid "Visual"
+msgstr ""
+
+#: models/identity.py:85
 msgid "Social networks"
 msgstr ""
 
-#: models/image.py:13
+#: models/identity.py:86
+msgid "Contact"
+msgstr ""
+
+#: models/image.py:11
 msgid "Credit"
 msgstr ""
 
-#: models/image.py:14
+#: models/image.py:12
 msgid "Credit URL"
+msgstr ""
+
+#: models/image.py:13
+msgid "Details"
 msgstr ""
 
 #: models/pages.py:24
@@ -146,14 +231,27 @@ msgstr ""
 msgid "Search engine type"
 msgstr ""
 
-#: models/pages.py:46
+#: models/pages.py:47
 msgid "What does this page represents"
 msgstr ""
 
-#: models/pages.py:55
+#: models/pages.py:56
 msgid "Main image"
 msgstr ""
 
-#: models/pages.py:66
+#: models/pages.py:69
 msgid "Static Page"
 msgstr ""
+
+#: templatetags/images.py:62
+msgid "Placeholder"
+msgstr ""
+
+#: templatetags/social.py:91
+msgid "Error"
+msgstr ""
+
+#: templatetags/social.py:93
+msgid "Error while fetching data"
+msgstr ""
+

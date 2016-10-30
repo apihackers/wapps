@@ -4,4 +4,5 @@ wagtailfontawesome==1.0.5
 django-colorful
 django-jinja
 django-memoize
+# django-babel
 requests
