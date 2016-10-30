@@ -18,8 +18,8 @@ build:
     image: apihackers/wagtail:1.5
     commands:
       # Make installed packages cacheable
-      - export PYTHONUSERBASE=$DRONE_DIR/py-user-base
-      - export PATH=$DRONE_DIR/py-user-base/bin:$PATH
+      - export PYTHONUSERBASE=$DRONE_DIR/.pyuserbase
+      - export PATH=$PYTHONUSERBASE/bin:$PATH
       # Install, build and package
       - pip3 install --user -i $PY_INDEX -e . wheel invoke Babel
       - inv dist -b ${EGG_TAG%%+master}
@@ -37,7 +37,7 @@ publish:
 cache:
   mount:
     - node_modules
-    - py-user-base
+    - .pyuserbase
 
 compose:
   database:
