@@ -2,13 +2,13 @@ import jinja2
 
 from django.conf import settings
 from django.utils.safestring import mark_safe
+from django.forms.utils import flatatt
 from django.utils.translation import ugettext as _
 from django_jinja import library
 
 from wapps.models import IdentitySettings
 
 PLACEHOLDIT_URL = 'https://placehold.it/{width}x{height}/{bg}/{fg}?text={text}'
-IMAGE_TAG = '<img src="{src}" title="{title}" alt="{alt}" width="{width}" height="{height}"/>'
 
 DEFAULT_BACKGROUND = '#ccc'
 DEFAULT_FOREGROUND = '#969696'
@@ -16,7 +16,7 @@ DEFAULT_FOREGROUND = '#969696'
 
 @library.filter
 @jinja2.contextfilter
-def placeholder(ctx, value, width, height, bg=None, fg=None, text=None, site=True):
+def placeholder(ctx, value, width, height, bg=None, fg=None, text=None, site=True, **kwargs):
     '''
     A placehold.it fallback filter or global function.
 
@@ -58,9 +58,15 @@ def placeholder(ctx, value, width, height, bg=None, fg=None, text=None, site=Tru
 
     if value == '':
         # Empty image() call, expect an <img/> tag
-        return mark_safe(IMAGE_TAG.format(
-            src=url, title=text, alt=_('Placeholder'), **params
-        ))
+        attrs = {
+            'src': url,
+            'title': text,
+            'alt': _('Placeholder'),
+            'width': params['width'],
+            'height': params['height'],
+        }
+        attrs.update(**kwargs)
+        return mark_safe('<img {0}/>'.format(flatatt(attrs)))
     else:
         # This is an undefined url
         return url
