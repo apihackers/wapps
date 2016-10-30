@@ -5,6 +5,8 @@ from __future__ import unicode_literals
 from django.db import migrations, models
 import django.db.models.deletion
 
+from wapps.utils import get_image_model
+
 
 class Migration(migrations.Migration):
 
@@ -16,6 +18,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='identitysettings',
             name='amp_logo',
-            field=models.ForeignKey(blank=True, help_text='An mobile optimized logo that must be 600x60', null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wapps.WappsImage', verbose_name='Mobile Logo'),
+            field=models.ForeignKey(blank=True, help_text='An mobile optimized logo that must be 600x60', null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to=get_image_model(), verbose_name='Mobile Logo'),
         ),
     ]
