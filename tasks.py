@@ -175,4 +175,4 @@ def all(ctx):
 def dronecrypt(ctx):
     '''Encrypt drone secrets'''
     header(dronecrypt.__doc__)
-    run('drone secure --repo apihackers/sphene-wedding --in drone.secrets.yml')
+    run('drone secure --repo apihackers/wapps --in drone.secrets.yml')
