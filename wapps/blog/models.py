@@ -59,9 +59,18 @@ class Blog(RoutablePageMixin, Page):
         index.SearchField('intro'),
     ]
 
+    image = models.ForeignKey(
+        ImageModel,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
     content_panels = [
         FieldPanel('title', classname="full title"),
         FieldPanel('intro', classname="full"),
+        FieldPanel('image'),
     ]
 
     promote_panels = Page.promote_panels
