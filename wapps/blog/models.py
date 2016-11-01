@@ -70,7 +70,7 @@ class Blog(RoutablePageMixin, Page):
     content_panels = [
         FieldPanel('title', classname="full title"),
         FieldPanel('intro', classname="full"),
-        FieldPanel('image'),
+        ImageChooserPanel('image'),
     ]
 
     promote_panels = Page.promote_panels
