@@ -54,7 +54,7 @@ def social_share_urls(context, page):
     else:
         image = None
     params = {
-        'url': quote_plus(page.url),
+        'url': quote_plus(page.full_url),
         'title': quote_plus(page.seo_title or page.title),
         'image': image
     }
