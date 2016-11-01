@@ -34,21 +34,6 @@ ImageModel = get_image_model()
 DEFAULT_PAGE_SIZE = 10
 
 
-def get_common_context(context):
-    context['blog_tags'] = BlogPostTag.tags_for(BlogPost).annotate(
-        item_count=models.Count('taggit_taggeditem_items')
-    ).order_by('-item_count')
-    context['all_categories'] = Category.objects.all()
-    context['root_categories'] = Category.objects.filter(
-        parent=None,
-    ).prefetch_related(
-        'children',
-    ).annotate(
-        blog_count=models.Count('blogpost'),
-    )
-    return context
-
-
 class Blog(RoutablePageMixin, Page):
     '''
     A blog root page handling article querying and listing
@@ -80,7 +65,7 @@ class Blog(RoutablePageMixin, Page):
         qs = BlogPost.objects.live().descendant_of(self)
 
         # Order by most recent date first
-        qs = qs.order_by('-first_published_at')
+        qs = qs.order_by('-date')
 
         return qs
 
@@ -93,7 +78,6 @@ class Blog(RoutablePageMixin, Page):
 
         _, posts = paginate(request, self.posts, 'page', DEFAULT_PAGE_SIZE)
         context['posts'] = posts
-        context = get_common_context(context)
         return context
 
     @property
@@ -258,11 +242,6 @@ class BlogPost(Page):
     def blog(self):
         # Find closest ancestor which is a blog index
         return self.get_ancestors().type(Blog).last().specific
-
-    def get_context(self, request):
-        context = super(BlogPost, self).get_context(request)
-        context = get_common_context(context)
-        return context
 
     def summarize(self, length=255):
         text = self.excerpt or self.search_description or self.body

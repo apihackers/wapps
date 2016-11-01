@@ -1,10 +1,14 @@
 import jinja2
 
+from django.db.models import Count
+
 from django_jinja import library
 
-from wapps.templatetags.seo import Metadata
+from wapps.metadata import Metadata
+from wapps.models import Category
+from wapps.templatetags.wagtail import routablepageurl
 
-from ..models import Blog
+from ..models import Blog, BlogPost, BlogPostTag
 
 
 @library.global_function
@@ -19,11 +23,60 @@ def blog_meta(context):
     return ctx
 
 
-@library.global_function
-@jinja2.contextfunction
-def blog_feed_url(context):
+def get_site_blog(context):
     request = context['request']
     site = request.site
     for blog in Blog.objects.live():
         if blog.get_site().pk == site.pk:
-            return blog.full_url + blog.reverse_subpage('feed')
+            return blog
+
+
+@library.global_function
+@jinja2.contextfunction
+def blog_feed_url(context):
+    blog = get_site_blog(context)
+    if blog:
+        return blog.full_url + blog.reverse_subpage('feed')
+
+
+@library.global_function
+@jinja2.contextfunction
+def blog_tags(context):
+    blog = get_site_blog(context)
+    if not blog:
+        return []
+    return BlogPostTag.tags_for(BlogPost).annotate(
+        posts_count=Count('taggit_taggeditem_items')
+    ).order_by('-posts_count')
+
+
+@library.global_function
+@jinja2.contextfunction
+def blog_categories(context):
+    blog = get_site_blog(context)
+    if not blog:
+        return []
+    return Category.objects.filter(
+        parent=None,
+    ).prefetch_related(
+        'children',
+    ).annotate(
+        posts_count=Count('blogpost'),
+    )
+
+
+@library.global_function
+@jinja2.contextfunction
+def blog_latest_posts(context):
+    blog = get_site_blog(context)
+    if not blog:
+        return []
+    return blog.get_queryset()
+
+
+@library.global_function
+@jinja2.contextfunction
+def blog_url(context, *args, **kwargs):
+    blog = get_site_blog(context)
+    if blog:
+        return routablepageurl(context, blog, *args, **kwargs)

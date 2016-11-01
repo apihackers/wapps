@@ -90,7 +90,7 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <ul class="list-unstyled">
-                            {% for category in all_categories %}
+                            {% for category in blog_categories() %}
                             <li><a href="#">{{ category.name }}</a></li>
                             {% endfor %}
                         </ul>
