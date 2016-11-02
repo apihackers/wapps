@@ -20,7 +20,7 @@ $(function() {
 	}
 
 	function countChars(text) {
-		return text.length - 1;
+		return text.length;
 	}
 
 	function extractText(el) {
@@ -36,12 +36,25 @@ $(function() {
 	}
 
 	function getHelp($el) {
-		var $help = $el.closest('.object').find('.object-help');
-		if (!$help) {
-			$help = $('<div style="opacity:1;" class="object-help help"></div>');
-			$help.appendTo($el.closest('.object'));
-		}
-		var $container = $('<div class="text-counter"></div>').appendTo($help);
+        var $help, $container;
+        var $object = $el.closest('.object');
+        if ($object.hasClass('char_field')) {
+            // This is a single field panel
+            $help = $object.find('.object-help');
+            if (!$help.length) {
+                $help = $('<div style="opacity:1;" class="object-help help"></div>');
+                $help.appendTo($object);
+            }
+            $container = $('<div class="text-counter"></div>').appendTo($help)
+        } else {
+            var $fieldContent = $el.closest('.field-content');
+            $help = $fieldContent.find('.help');
+            if (!$help.length) {
+                $help = $('<p class="help"></p>');
+                $help.appendTo($fieldContent);
+            }
+            $container = $('<div class="text-counter one-line"></div>').appendTo($help)
+        }
 		return [$help, $container];
 	}
 
@@ -51,10 +64,22 @@ $(function() {
 		var wordsTxt = MESSAGES[LANG].words.replace('{count}', words);
 		var charsTpl = maxlength ?  MESSAGES[LANG].charsMax : MESSAGES[LANG].chars;
 		var charsTxt = charsTpl.replace('{count}', chars).replace('{max}', maxlength);
-		$container.html([
-			'<div class="word-counter">', wordsTxt, '</div>',
-			'<div class="chars-counter">', charsTxt, '</div>',
-		].join(''));
+		if (chars <= 0) {
+			$container.empty();
+		} else if ($container.hasClass('one-line')) {
+			$container.html([
+				'<i>',
+				'<span class="word-counter">', wordsTxt, '</span>',
+				' / ',
+				'<span class="chars-counter">', charsTxt, '</span>',
+				'</i>'
+			].join(''));
+		} else {
+			$container.html([
+				'<div class="word-counter">', wordsTxt, '</div>',
+				'<div class="chars-counter">', charsTxt, '</div>',
+			].join(''));
+		}
 	}
 
 	$('.richtext').each(function() {
@@ -66,20 +91,20 @@ $(function() {
 			setCounter($container, extractText($richtext[0]), $textarea.attr('maxlength'));
 		})
 	});
-	$('.field.char_field:not(.hallo_rich_text_area) input').each(function() {
+	$('.field.char_field:not(.widget-hallo_rich_text_area):not(.hallo_rich_text_area):not(.no-counter) input').each(function() {
 		var $input = $(this);
 		var [$help, $container] = getHelp($input);
 		setCounter($container, $input.val(), $input.attr('maxlength'));
-		$input.on('change', function() {
+		$input.on('change keyup paste', function() {
 			setCounter($container, $input.val(), $input.attr('maxlength'));
 		})
 	});
 
-	$('.field.char_field:not(.hallo_rich_text_area) textarea').each(function() {
+	$('.field.char_field:not(.widget-hallo_rich_text_area):not(.hallo_rich_text_area):not(.no-counter) textarea').each(function() {
 		var $textarea = $(this);
 		var [$help, $container] = getHelp($textarea);
 		setCounter($container, $textarea.val(), $textarea.attr('maxlength'));
-		$textarea.on('change', function() {
+		$textarea.on('change keyup paste', function() {
 			setCounter($container, $textarea.val(), $textarea.attr('maxlength'));
 		})
 	});
