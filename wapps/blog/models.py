@@ -5,7 +5,6 @@ from datetime import date, datetime
 from django.db import models
 from django.utils.dateformat import DateFormat
 from django.utils.formats import date_format
-from django.utils.functional import cached_property
 from django.utils.html import strip_tags
 from django.utils.text import Truncator
 from django.utils.translation import ugettext_lazy as _
@@ -24,7 +23,7 @@ from wagtail.utils.pagination import paginate
 
 from wapps import jsonld
 from wapps.models import Category, IdentitySettings
-from wapps.mixins import RelatedLink
+from wapps.mixins import RelatedLink, ContextBlock
 from wapps.utils import get_image_model
 
 from .feeds import BlogFeed
@@ -71,6 +70,10 @@ class Blog(RoutablePageMixin, Page):
 
     @property
     def queryset(self):
+        return self.get_queryset()
+
+    @property
+    def recents(self):
         return self.get_queryset()
 
     def get_context(self, request):
@@ -284,14 +287,14 @@ class BlogPost(Page):
 BlogPost._meta.get_field('owner').editable = True
 
 
-class BlogBlock(blocks.PageChooserBlock):
-    @cached_property
-    def target_model(self):
-        return Blog
+class BlogBlock(ContextBlock, blocks.StructBlock):
+    title = blocks.CharBlock(label=_('Title'), required=False)
+    nb_articles = blocks.IntegerBlock(label=_('Number of articles'), default=3)
 
-    def get_context(self, value):
+    def get_context(self, value, page_context=None):
+        from .utils import get_blog_from_context
         context = super(BlogBlock, self).get_context(value)
-        context['blog'] = context['value']
+        context['blog'] = get_blog_from_context(page_context or {})
         return context
 
     class Meta:

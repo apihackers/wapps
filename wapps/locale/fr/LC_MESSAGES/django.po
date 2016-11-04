@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-30 14:43+0100\n"
+"POT-Creation-Date: 2016-11-04 10:35+0100\n"
 "PO-Revision-Date: 2016-10-29 16:18+0200\n"
 "Last-Translator: Axel Haustant <noirbizarre@gmail.com>\n"
 "Language: fr\n"
@@ -242,7 +242,7 @@ msgstr "Image principale"
 msgid "Static Page"
 msgstr "Page statique"
 
-#: templatetags/images.py:62
+#: templatetags/images.py:64
 msgid "Placeholder"
 msgstr "Emplacement"
 
