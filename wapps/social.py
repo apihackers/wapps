@@ -17,7 +17,7 @@ NETWORKS = {
     'facebook': {
         'name': 'Facebook',
         'icon': 'fa-facebook',
-        'url': 'https://facebook.com/{user}',
+        'url': 'https://facebook.com/n/?{user}',
         'share': 'https://www.facebook.com/sharer.php?u={url}',
     },
     'google': {
@@ -27,7 +27,7 @@ NETWORKS = {
     'instagram': {
         'name': 'Instagram',
         'icon': 'fa-instagram',
-        'url': 'https://www.instagram.com/{user}',
+        'url': 'https://instagram.com/_u/{user}',
     },
     'pinterest': {
         'name': 'PInterest',
