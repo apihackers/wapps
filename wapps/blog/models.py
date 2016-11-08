@@ -122,7 +122,7 @@ class Blog(RoutablePageMixin, Page):
         self.posts = self.get_queryset().filter(blogpost_categories__category__slug=category)
         return Page.serve(self, request, *args, **kwargs)
 
-    @route(r'^author/(?P<author>\w+)/$')
+    @route(r'^author/(?P<author>[-_\w]+)/$')
     def by_author(self, request, author, *args, **kwargs):
         self.filter_type = _('author')
         self.filter_term = author
