@@ -14,8 +14,8 @@ class BlogPostAdmin(ThumbnailMixin, ModelAdmin):
     menu_label = _('Blog')
     menu_icon = 'fa-rss'
     menu_order = 200  # will put in 3rd place (000 being 1st, 100 2nd)
-    list_display = ('title', 'date', 'admin_thumb')
-    list_filter = ('date', 'tags')
+    list_display = ('title', 'date', 'admin_thumb', 'owner')
+    list_filter = ('date', 'tags', 'owner')
     search_fields = ('title', 'body')
     ordering = ('-date', )
 
