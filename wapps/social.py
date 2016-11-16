@@ -46,6 +46,11 @@ NETWORKS = {
         'url': 'mailto:{user}',
         'share': 'mailto:?subject={title}&body={url}',
     },
+    'youtube': {
+        'name': 'YouTube',
+        'icon': 'fa-youtube',
+        'url': 'https://www.youtube.com/user/{user}',
+    }
 }
 
 
