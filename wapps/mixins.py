@@ -80,6 +80,7 @@ class SocialFields(models.Model):
     linkedin = models.CharField(max_length=255, blank=True)
     instagram = models.CharField(max_length=255, blank=True)
     pinterest = models.CharField(max_length=255, blank=True)
+    youtube = models.CharField(max_length=255, blank=True)
 
     panels = [
         FieldPanel('facebook'),
@@ -87,6 +88,7 @@ class SocialFields(models.Model):
         FieldPanel('linkedin'),
         FieldPanel('instagram'),
         FieldPanel('pinterest'),
+        FieldPanel('youtube'),
     ]
 
     class Meta:
