@@ -1,5 +1,7 @@
 from urllib import parse
 
+from wagtail.wagtailcore.rich_text import expand_db_html
+
 from wapps.feed import SiteFeed
 from wapps.utils import get_image_url
 
@@ -31,7 +33,7 @@ class BlogFeed(SiteFeed):
         return item.title
 
     def item_description(self, item):
-        return item.body
+        return item.summarize()
 
     def item_pubdate(self, item):
         return item.date
@@ -53,4 +55,4 @@ class BlogFeed(SiteFeed):
             return 0
 
     def item_content(self, item):
-        return str(item.body)
+        return expand_db_html(item.body)
