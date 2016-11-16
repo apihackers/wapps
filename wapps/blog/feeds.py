@@ -41,7 +41,7 @@ class BlogFeed(SiteFeed):
 
     def item_enclosure_url(self, item):
         if item.image:
-            image_url = get_image_url(item.image, 'original')
+            image_url = get_image_url(item.image, 'fill-1920x1080')
             return parse.urljoin(self.site.root_url, image_url)
 
     def item_enclosure_mime_type(self, item):
