@@ -77,27 +77,37 @@ def instagram_datetime(value):
     return datetime.fromtimestamp(int(value))
 
 
+def instagram_error_response(size):
+    return [{
+        'id': 'unknown',
+        'src': 'https://placehold.it/{size}x{size}/aaa/f00?text={text}'.format(
+            size=INSTAGRAM_SIZES[size], text=_('Error'),
+        ),
+        'text': _('Error while fetching data'),
+        'link': '#',
+        'likes': 0,
+        'comments': 0,
+        'location': None,
+        'date': datetime.now(),
+    }]
+
+
 @library.global_function
 @memoize(timeout=INSTAGRAM_CACHE_TIMEOUT)
 def instagram_feed(user, size=INSTAGRAM_DEFAULT_SIZE, length=INSTAGRAM_DEFAULT_LENGTH):
     if size not in INSTAGRAM_IMAGE_SIZES:
         raise ValueError('Unknown image size "{0}"'.format(size))
     url = INSTAGRAM_FEED_PATTERN.format(user=user)
-    response = requests.get(url)
+    try:
+        response = requests.get(url)
+    except requests.RequestException:
+        return instagram_error_response(size)
     if response.status_code != requests.codes.ok:
-        return [{
-            'id': 'unknown',
-            'src': 'https://placehold.it/{size}x{size}/aaa/f00?text={text}'.format(
-                size=INSTAGRAM_SIZES[size], text=_('Error'),
-            ),
-            'text': _('Error while fetching data'),
-            'link': '#',
-            'likes': 0,
-            'comments': 0,
-            'location': None,
-            'date': datetime.now(),
-        }]
-    data = response.json()
+        return instagram_error_response(size)
+    try:
+        data = response.json()
+    except ValueError:
+        return instagram_error_response(size)
     image_size = INSTAGRAM_IMAGE_SIZES[size]
 
     return [{
