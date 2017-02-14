@@ -37,7 +37,7 @@
 <meta property="og:locale" content="{{ LANGUAGE_CODE }}" />
 {% endif %}
 {% if meta.image %}
-<meta property="og:image" content="{{ image_url(meta.image, 'fill-1200x630') }}" />
+<meta property="og:image" content="{{ imageurl(meta.image, 'fill-1200x630').url }}" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 {% endif %}
@@ -47,7 +47,7 @@
 <meta name="twitter:title" content="{{ meta.full_title }}" />
 <meta name="twitter:description" content="{{ meta.description }}" />
 {% if meta.image %}
-<meta name="twitter:image" content="{{ image_url(meta.image, 'fill-1024x512') }}" />
+<meta name="twitter:image" content="{{ imageurl(meta.image, 'fill-1024x512') }}" />
 <meta name="twitter:image:alt" content="{{ meta.image.title }}" />
 {% endif %}
 {% endif %}

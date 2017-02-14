@@ -26,7 +26,7 @@ def is_site_root(context, page):
 
 
 @library.global_function
-def image_url(image, specs):
+def imageurl(image, specs):
     return get_image_url(image, specs)
 
 
