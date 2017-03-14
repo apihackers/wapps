@@ -23,7 +23,7 @@ from wagtail.utils.pagination import paginate
 
 from wapps import jsonld
 from wapps.models import Category, IdentitySettings
-from wapps.mixins import RelatedLink, ContextBlock
+from wapps.mixins import RelatedLink
 from wapps.utils import get_image_model
 
 from .feeds import BlogFeed
@@ -287,14 +287,14 @@ class BlogPost(Page):
 BlogPost._meta.get_field('owner').editable = True
 
 
-class BlogBlock(ContextBlock, blocks.StructBlock):
+class BlogBlock(blocks.StructBlock):
     title = blocks.CharBlock(label=_('Title'), required=False)
     nb_articles = blocks.IntegerBlock(label=_('Number of articles'), default=3)
 
-    def get_context(self, value, page_context=None):
+    def get_context(self, value, parent_context=None):
         from .utils import get_blog_from_context
-        context = super(BlogBlock, self).get_context(value)
-        context['blog'] = get_blog_from_context(page_context or {})
+        context = super(BlogBlock, self).get_context(value, parent_context=parent_context)
+        context['blog'] = get_blog_from_context(parent_context or {})
         return context
 
     class Meta:
