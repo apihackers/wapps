@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^docs/', include(wagtaildocs_urls)),
     url(r'^search/', include(wagtailsearch_frontend_urls)),
     url(r'^i18n/', include('django.conf.urls.i18n')),
+    # url(r'^comments/', include('django_comments_xtd.urls')),
     url(r'', include(wapps_urls)),
     url(r'', include(wagtail_urls)),
 ]

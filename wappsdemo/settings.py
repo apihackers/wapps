@@ -34,7 +34,11 @@ INSTALLED_APPS = [
     'wappsdemo',
     'wapps',
     'wapps.blog',
+    # 'wapps.comments',
     'wapps.gallery',
+
+    # 'mediumeditor',
+    'wagtailfontawesome',
 
     # Django required apps
     'django.contrib.admin',
@@ -43,12 +47,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 'django.contrib.sites',
 
     # Some Wagtail dependencies
     'taggit',
     'modelcluster',
 
+    # Some Django depdencies
     'django_jinja',
+    # 'django_comments',
+    # 'django_comments_xtd',
     # 'django_babel',
 
     # Wagtail apps
@@ -64,7 +72,14 @@ INSTALLED_APPS = [
     'wagtail.wagtailforms',
     'wagtail.wagtailsites',
     'wagtail.contrib.settings',
+    'wagtail.contrib.wagtailstyleguide',
 ]
+
+# WAGTAILADMIN_RICH_TEXT_EDITORS = {
+#     'default': {
+#         'WIDGET': 'mediumeditor.rich_text.MediumEditorRichTextArea',
+#     },
+# }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -83,6 +98,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'wappsdemo.urls'
+
+COMMENTS_APP = 'django_comments_xtd'
+COMMENTS_XTD_MAX_THREAD_LEVEL = 2
+COMMENTS_XTD_CONFIRM_EMAIL = True
 
 
 TEMPLATES = [
