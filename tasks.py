@@ -84,8 +84,8 @@ def clean(ctx):
 def demo(ctx):
     '''Run the demo'''
     header(demo.__doc__)
-    run('./manage.py migrate')
-    run('./manage.py runserver')
+    run('./manage.py migrate', pty=True)
+    run('./manage.py runserver', pty=True)
 
 
 @task
