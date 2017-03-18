@@ -3,7 +3,7 @@ from .models import Blog
 
 def get_site_blog(site):
     for blog in Blog.objects.live():
-        if blog.get_site().pk == site.pk:
+        if getattr(blog.get_site(), 'pk', None) == site.pk:
             return blog
 
 

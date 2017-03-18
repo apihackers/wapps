@@ -19,7 +19,7 @@ def blog_meta(context):
     ctx = context.get_all()
     request = context['request']
     site = request.site
-    ctx['blogs'] = (b for b in Blog.objects.live() if b.get_site().pk == site.pk)
+    ctx['blogs'] = [b for b in Blog.objects.live() if getattr(b.get_site(), 'pk', None) == site.pk]
     ctx['meta'] = Metadata(ctx)
     return ctx
 
