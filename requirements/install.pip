@@ -1,5 +1,5 @@
-Django>=1.10.0
-wagtail>=1.9
+Django>=1.11.0
+wagtail>=1.10
 wagtailfontawesome==1.0.6
 django-colorful
 django-jinja
