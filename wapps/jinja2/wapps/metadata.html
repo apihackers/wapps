@@ -1,4 +1,4 @@
-{% set identity = settings('wapps.IdentitySettings') %}
+{% set identity = settings('wapps.IdentitySettings', use_default_site=not request.site) %}
 <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{ identity.favicon_url(57) }}" />
 <link rel="apple-touch-icon-precomposed" sizes="60x60" href="{{ identity.favicon_url(60) }}" />
 <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ identity.favicon_url(72) }}" />

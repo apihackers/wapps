@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.utils.functional import lazy
 from django.utils.safestring import mark_safe
 
-from wagtail.wagtailcore.models import PAGE_MODEL_CLASSES, Page
+from wagtail.wagtailcore.models import PAGE_MODEL_CLASSES, Page, Site
 
 
 mark_safe_lazy = lazy(mark_safe, str)
@@ -11,6 +11,10 @@ mark_safe_lazy = lazy(mark_safe, str)
 
 def get_image_model():
     return getattr(settings, 'WAGTAILIMAGES_IMAGE_MODEL', 'wagtailimages.Image')
+
+
+def get_site(request):
+    return getattr(request, 'site', Site.objects.get(is_default_site=True))
 
 
 def get_image_url(image, filter_spec):

@@ -3,12 +3,12 @@ from wagtail.wagtailcore.models import Page
 
 from . import social
 from .models import IdentitySettings
-from .utils import get_image_url
+from .utils import get_image_url, get_site
 
 
 def website(context):
     request = context['request']
-    site = request.site
+    site = get_site(request)
     identity = IdentitySettings.for_site(site)
     return {
         "@type": "WebSite",
@@ -67,7 +67,7 @@ ADDRESS_MAPPING = {
 
 def organization(context):
     request = context['request']
-    site = request.site
+    site = get_site(request)
     identity = IdentitySettings.for_site(site)
     org = {
         "@type": "Organization",
@@ -106,7 +106,8 @@ def organization(context):
 
 
 def image_object(context, img, width=None, height=None):
-    site = context['request'].site
+    request = context['request']
+    site = get_site(request)
     data = {
         '@type': 'ImageObject',
         'name': img.title,

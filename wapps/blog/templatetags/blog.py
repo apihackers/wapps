@@ -7,6 +7,7 @@ from django_jinja import library
 from wapps.metadata import Metadata
 from wapps.models import Category
 from wapps.templatetags.wagtail import routablepageurl
+from wapps.utils import get_site
 
 from ..models import Blog, BlogPost, BlogPostTag
 from ..utils import get_blog_from_context
@@ -18,7 +19,7 @@ from ..utils import get_blog_from_context
 def blog_meta(context):
     ctx = context.get_all()
     request = context['request']
-    site = request.site
+    site = get_site(request)
     ctx['blogs'] = [b for b in Blog.objects.live() if getattr(b.get_site(), 'pk', None) == site.pk]
     ctx['meta'] = Metadata(ctx)
     return ctx

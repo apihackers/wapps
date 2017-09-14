@@ -1,7 +1,7 @@
 from django.utils.html import strip_tags
 
 from .models import IdentitySettings
-from .utils import get_image_url
+from .utils import get_image_url, get_site
 
 
 class Metadata(object):
@@ -13,7 +13,7 @@ class Metadata(object):
         self.kwargs = kwargs
         self.request = kwargs.get('request', None) or context.get('request', None)
         self.page = kwargs.get('page', None) or context.get('page', None)
-        self.site = kwargs.get('site', None) or self.request.site
+        self.site = kwargs.get('site', None) or get_site(self.request)
         self.identity = IdentitySettings.for_site(self.site)
 
     @property

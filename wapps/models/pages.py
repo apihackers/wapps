@@ -13,7 +13,7 @@ from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
-from wapps.utils import get_image_model
+from wapps.utils import get_image_model, get_site
 
 
 class StaticPageTag(TaggedItemBase):
@@ -76,7 +76,7 @@ class StaticPage(Page):
             'keywords': ','.join(t.name for t in self.tags.all()),
         }
         if self.image:
-            data['image'] = request.site.root_url + self.image.get_rendition('original').url
+            data['image'] = get_site(request).root_url + self.image.get_rendition('original').url
 
         jsonld_method_name = 'get_jsonld_{0}'.format(self.seo_type)
         jsonld_method = getattr(self, jsonld_method_name, None)

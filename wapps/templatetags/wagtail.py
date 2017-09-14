@@ -8,7 +8,7 @@ from wagtail.contrib.wagtailroutablepage.templatetags.wagtailroutablepage_tags i
     routablepageurl as dj_routablepageurl
 )
 
-from wapps.utils import get_image_url
+from wapps.utils import get_image_url, get_site
 
 
 @library.global_function
@@ -33,6 +33,8 @@ def imageurl(image, specs):
 @library.global_function
 @jinja2.contextfunction
 def routablepageurl(context, page, name, *args, **kwargs):
+    if not hasattr(context['request'], 'site'):
+        context['request'].site = get_site(context['request'])
     return dj_routablepageurl(context, page, name, *args, **kwargs)
 
 
