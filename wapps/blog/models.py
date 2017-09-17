@@ -284,6 +284,7 @@ class BlogPost(Page):
             data['image'] = jsonld.image_object(context, self.image, 1000, 600)
         return data
 
+
 BlogPost._meta.get_field('owner').editable = True
 
 
