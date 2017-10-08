@@ -117,6 +117,18 @@ def qa(ctx):
 
 
 @task
+def migration(ctx, app='wapps', name=None, empty=False):
+    '''Create a new migration'''
+    header('Create a new django migration')
+    msg = './manage.py makemigrations {0}'.format(app)
+    if name:
+        msg += ' -n {0}'.format(name)
+    if empty:
+        msg += ' --empty'
+    run(msg, pty=True)
+
+
+@task
 def update(ctx):
     '''Update dependancies'''
     header(update.__doc__)
