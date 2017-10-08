@@ -5,7 +5,7 @@ import jinja2
 from django.utils.safestring import mark_safe
 from django_jinja import library
 
-from .. import json
+from .. import json, utils
 from ..jsonld import graph
 
 
@@ -33,6 +33,11 @@ def jsonld(context, *data):
 @library.global_function
 def now():
     return datetime.now()
+
+
+@library.global_function
+def timehash(length=10):
+    return utils.timehash(length)
 
 
 @library.global_function

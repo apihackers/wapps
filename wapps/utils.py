@@ -1,3 +1,6 @@
+import hashlib
+import time
+
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.functional import lazy
@@ -44,3 +47,10 @@ def hide_parent_type(cls):
             hide_page_type(parent)
             break  # Can only inherit from one page model
     return cls
+
+
+def timehash(length):
+    '''Generate a time-based hash'''
+    hash = hashlib.sha1()
+    hash.update(str(time.time()).encode('utf-8'))
+    return hash.hexdigest()[:length]
