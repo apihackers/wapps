@@ -48,9 +48,7 @@ class LinkFields(models.Model):
         abstract = True
 
 
-class ContactFields(models.Model):
-    telephone = models.CharField(_('Telephone'), max_length=20, blank=True)
-    email = models.EmailField(blank=True)
+class AddressFields(models.Model):
     address_1 = models.CharField(_('Address'), max_length=255, blank=True)
     address_2 = models.CharField(_('Address (complement)'), max_length=255, blank=True)
     post_code = models.CharField(_('Postal code'), max_length=10, blank=True)
@@ -63,6 +61,17 @@ class ContactFields(models.Model):
         FieldPanel('post_code'),
         FieldPanel('city'),
         FieldPanel('country'),
+    ]
+
+    class Meta:
+        abstract = True
+
+
+class ContactFields(AddressFields):
+    telephone = models.CharField(_('Telephone'), max_length=20, blank=True)
+    email = models.EmailField(blank=True)
+
+    panels = AddressFields.panels + [
         FieldPanel('telephone'),
         FieldPanel('email'),
     ]
