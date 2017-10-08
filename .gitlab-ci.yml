@@ -18,7 +18,7 @@ flake8:
 
 package:
   stage: build
-  image: apihackers/wagtail:1.5
+  image: apihackers/wagtail:1.12
   script:
     # Install, build and package
     - pip install -e . wheel invoke Babel

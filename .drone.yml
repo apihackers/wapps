@@ -15,7 +15,7 @@ build:
       PY_INDEX: $$DEVPI_SERVER$$DEVPI_INDEX/
       DJANGO_SETTINGS: drone_settings
       EGG_TAG: $$BUILD_NUMBER+$$BRANCH
-    image: apihackers/wagtail:1.5
+    image: apihackers/wagtail:1.12
     commands:
       # Make installed packages cacheable
       - export PYTHONUSERBASE=$DRONE_DIR/.pyuserbase
