@@ -1,7 +1,6 @@
 -e .
-invoke>=0.13
-flake8
-pep8-naming
+invoke==0.21.0
+flake8==3.4.1
 pytest
 pytest-django
 pytest-pythonpath
