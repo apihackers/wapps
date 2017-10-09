@@ -21,5 +21,6 @@ package:
   image: apihackers/wagtail:1.12
   script:
     # Install, build and package
-    - pip install -e . wheel invoke Babel
+    - pip install -r requirements/develop
+    - inv test
     - inv dist -b ${EGG_TAG%%+master}

@@ -92,7 +92,7 @@ def demo(ctx):
 def test(ctx):
     '''Run tests suite'''
     header(test.__doc__)
-    run('py.test tests/', pty=True)
+    run('py.test', pty=True)
 
 
 @task
