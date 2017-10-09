@@ -49,7 +49,7 @@ def hide_parent_type(cls):
     return cls
 
 
-def timehash(length):
+def timehash(length=10):
     '''Generate a time-based hash'''
     hash = hashlib.sha1()
     hash.update(str(time.time()).encode('utf-8'))
