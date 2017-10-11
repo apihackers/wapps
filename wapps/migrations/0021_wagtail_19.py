@@ -10,6 +10,9 @@ class Migration(migrations.Migration):
     dependencies = [
         ('wapps', '0020_wagtail_18_image_rendition'),
     ]
+    run_before = [
+        ('wagtailimages', '0018_remove_rendition_filter'),
+    ]
 
     operations = [
         migrations.RemoveField(

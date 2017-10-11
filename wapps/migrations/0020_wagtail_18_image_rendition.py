@@ -10,6 +10,9 @@ class Migration(migrations.Migration):
     dependencies = [
         ('wapps', '0019_identity_youtube'),
     ]
+    run_before = [
+        ('wagtailimages', '0016_deprecate_rendition_filter_relation'),
+    ]
 
     operations = [
         migrations.AlterField(

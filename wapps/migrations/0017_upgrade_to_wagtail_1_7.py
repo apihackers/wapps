@@ -12,6 +12,9 @@ class Migration(migrations.Migration):
         ('wapps', '0016_auto_20161024_0925'),
         ('wagtailcore', '0030_index_on_pagerevision_created_at'),
     ]
+    run_before = [
+        ('wagtailimages', '0014_add_filter_spec_field'),
+    ]
 
     operations = [
         migrations.AddField(
