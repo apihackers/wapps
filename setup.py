@@ -2,46 +2,88 @@
 # -*- coding: utf-8 -*-
 # flake8: noqa
 from __future__ import unicode_literals
-
+import io
+import os
 import re
-import sys
-
-from os.path import join, dirname
 
 from setuptools import setup, find_packages
 
 
-ROOT = dirname(__file__)
-
 RE_REQUIREMENT = re.compile(r'^\s*-r\s*(?P<filename>.*)$')
+RE_MD_CODE_BLOCK = re.compile(r'```(?P<language>\w+)?\n(?P<lines>.*?)```', re.S)
+RE_SELF_LINK = re.compile(r'\[(.*?)\]\[\]')
+RE_LINK_TO_URL = re.compile(r'\[(?P<text>.*?)\]\((?P<url>.*?)\)')
+RE_LINK_TO_REF = re.compile(r'\[(?P<text>.*?)\]\[(?P<ref>.*?)\]')
+RE_LINK_REF = re.compile(r'^\[(?P<key>[^!].*?)\]:\s*(?P<url>.*)$', re.M)
+RE_BADGE = re.compile(r'^\[\!\[(?P<text>.*?)\]\[(?P<badge>.*?)\]\]\[(?P<target>.*?)\]$', re.M)
+RE_TITLE = re.compile(r'^(?P<level>#+)\s*(?P<title>.*)$', re.M)
 
-PYPI_RST_FILTERS = (
-    # Replace code-blocks
-    (r'\.\.\s? code-block::\s*(\w|\+)+', '::'),
-    # Remove all badges
-    (r'\.\. image:: .*', ''),
-    (r'\s+:target: .*', ''),
-    (r'\s+:alt: .*', ''),
-    # Replace Python crossreferences by simple monospace
-    (r':(?:class|func|meth|mod|attr|obj|exc|data|const):`~(?:\w+\.)*(\w+)`', r'``\1``'),
-    (r':(?:class|func|meth|mod|attr|obj|exc|data|const):`([^`]+)`', r'``\1``'),
-    # replace doc references
-    (r':doc:`(.+) <(.*)>`', r'`\1 <http://wapps.readthedocs.org/en/stable\2.html>`_'),
-    # replace issues references
-    (r':issue:`(.+)`', r'`#\1 <https://github.com/apihackers/wapps/issues/\1>`_'),
-    # Drop unrecognized currentmodule
-    (r'\.\. currentmodule:: .*', ''),
-)
+BADGES_TO_KEEP = []
+
+RST_TITLE_LEVELS = ['=', '-', '*']
+
+RST_BADGE = '''\
+.. image:: {badge}
+    :target: {target}
+    :alt: {text}
+'''
+
+
+def md2pypi(filename):
+    '''
+    Load .md (markdown) file and sanitize it for PyPI.
+    Remove unsupported github tags:
+     - code-block directive
+     - travis ci build badges
+    '''
+    content = io.open(filename).read()
+
+    for match in RE_MD_CODE_BLOCK.finditer(content):
+        rst_block = '\n'.join(
+            ['.. code-block:: {language}'.format(**match.groupdict()), ''] +
+            ['    {0}'.format(l) for l in match.group('lines').split('\n')] +
+            ['']
+        )
+        content = content.replace(match.group(0), rst_block)
+
+    refs = dict(RE_LINK_REF.findall(content))
+    content = RE_LINK_REF.sub('.. _\g<key>: \g<url>', content)
+    content = RE_SELF_LINK.sub('`\g<1>`_', content)
+    content = RE_LINK_TO_URL.sub('`\g<text> <\g<url>>`_', content)
+
+    for match in RE_BADGE.finditer(content):
+        if match.group('badge') not in BADGES_TO_KEEP:
+            content = content.replace(match.group(0), '')
+        else:
+            params = match.groupdict()
+            params['badge'] = refs[match.group('badge')]
+            params['target'] = refs[match.group('target')]
+            content = content.replace(match.group(0),
+                                      RST_BADGE.format(**params))
+    # Must occur after badges
+    for match in RE_LINK_TO_REF.finditer(content):
+        content = content.replace(match.group(0), '`{text} <{url}>`_'.format(
+            text=match.group('text'),
+            url=refs[match.group('ref')]
+        ))
+
+    for match in RE_TITLE.finditer(content):
+        underchar = RST_TITLE_LEVELS[len(match.group('level')) - 1]
+        title = match.group('title')
+        underline = underchar * len(title)
+
+        full_title = '\n'.join((title, underline))
+        content = content.replace(match.group(0), full_title)
+
+    return content
 
 
 def pip(filename):
     """Parse pip reqs file and transform it to setuptools requirements."""
     requirements = []
-    if not filename.endswith('.pip'):
-        filename = '{0}.pip'.format(filename)
-    for line in open(join(ROOT, 'requirements', filename)):
+    for line in open(os.path.join('requirements', '{0}.pip'.format(filename))):
         line = line.strip()
-        if not line or '://' in line:
+        if not line or '://' in line or line.startswith('#'):
             continue
         match = RE_REQUIREMENT.match(line)
         if match:
@@ -51,56 +93,37 @@ def pip(filename):
     return requirements
 
 
-def rst(filename):
-    '''
-    Load rst file and sanitize it for PyPI.
-    Remove unsupported github tags:
-     - code-block directive
-     - all badges
-    '''
-    content = open(filename).read()
-    for regex, replacement in PYPI_RST_FILTERS:
-        content = re.sub(regex, replacement, content)
-    return content
-
-
 long_description = '\n'.join((
-    rst('README.md'),
-    # rst('CHANGELOG.rst'),
+    md2pypi('README.md'),
+    md2pypi('CHANGELOG.md'),
     ''
 ))
 
-
-exec(compile(open('wapps/__about__.py').read(), 'wapps/__about__.py', 'exec'))
-
-# insta
-
-# tests_require = ['nose', 'rednose', 'blinker', 'tzlocal']
-# install_requires = ['Flask>=0.8', 'six>=1.3.0', 'jsonschema', 'pytz', 'aniso8601>=0.82']
-# doc_require = ['sphinx', 'alabaster', 'sphinx_issues']
-# dev_requires = ['flake8', 'minibench', 'tox', 'invoke'] + tests_require + doc_require
-# test_require = []
+tests_require = pip('test')
 
 setup(
     name='wapps',
-    version=__version__,
-    description=__description__,
+    version=__import__('wapps').__version__,
+    description=__import__('wapps').__description__,
     long_description=long_description,
-    # url='https://github.com/apihackers/wapps',
+    url='https://github.com/apihackers/wapps',
     author='API Hackers',
     author_email='wapps@apihackers.com',
-    packages=find_packages(exclude=['tests']),
+    packages=find_packages(exclude=['tests', 'wappsdemo']),
     include_package_data=True,
     install_requires=pip('install'),
-    tests_require=[],
+    tests_require=tests_require,
     extras_require={
-        'test': [],
-        'doc': [],
-        # 'dev': pip('develop'),
+        'test': tests_require,
+    },
+    entry_points={
+        'pytest11': [
+            'wapps = wapps.pytest',
+        ],
     },
     license='MIT',
     zip_safe=False,
-    keywords='wagtail',
+    keywords='wagtail, reusable apps, django',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Programming Language :: Python',
@@ -116,6 +139,7 @@ setup(
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'License :: OSI Approved :: MIT License',

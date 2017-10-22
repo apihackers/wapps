@@ -1,0 +1,10 @@
+---
+version: '2'
+services:
+  db:
+    image: postgres:9.4
+    environment:
+      POSTGRES_USER: wapps
+      POSTGRES_PASSWORD: wapps
+    ports:
+      - '5432:5432'
