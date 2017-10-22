@@ -3,7 +3,7 @@ import time
 
 from django.conf import settings
 from django.core.urlresolvers import reverse
-from django.utils.functional import lazy
+from django.utils.functional import lazy, SimpleLazyObject
 from django.utils.safestring import mark_safe
 
 from wagtail.wagtailcore.models import PAGE_MODEL_CLASSES, Page, Site
@@ -54,3 +54,8 @@ def timehash(length=10):
     hash = hashlib.sha1()
     hash.update(str(time.time()).encode('utf-8'))
     return hash.hexdigest()[:length]
+
+
+class SettingProxy(SimpleLazyObject):
+    def __init__(self, key):
+        super().__init__(lambda: getattr(settings, key, None))

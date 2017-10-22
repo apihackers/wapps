@@ -9,7 +9,7 @@ class Metadata(object):
     Extract metadata from a Page object
     '''
     def __init__(self, context=None, **kwargs):
-        self.context = context or {}
+        self.context = context = context or {}
         self.kwargs = kwargs
         self.request = kwargs.get('request', None) or context.get('request', None)
         self.page = kwargs.get('page', None) or context.get('page', None)
@@ -71,9 +71,9 @@ class Metadata(object):
 
     @property
     def tags(self):
-        tags = set(self.identity.tags.all())
+        tags = set(t.name for t in self.identity.tags.all())
         if self.kwargs.get('tags'):
             tags.update(self.kwargs['tags'])
         if getattr(self.page, 'tags', None):
-            tags.update(self.page.tags.all())
+            tags.update(t.name for t in self.page.tags.all())
         return tags

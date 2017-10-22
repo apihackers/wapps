@@ -1,0 +1,28 @@
+[bumpr]
+file = wapps/__init__.py
+vcs = git
+commit = true
+tag = true
+tests = tox
+publish =
+    inv assets
+    python setup.py bdist_wheel upload
+clean =
+    inv clean
+files =
+    README.md
+
+[bump]
+unsuffix = true
+
+[prepare]
+part = patch
+suffix = dev
+
+[changelog]
+file = CHANGELOG.rst
+bump = {version} ({date:%Y-%m-%d})
+prepare = Current
+
+[readthedoc]
+id = wapps

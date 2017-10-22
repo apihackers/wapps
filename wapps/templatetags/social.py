@@ -41,7 +41,7 @@ def social_icon(network):
 
 @library.global_function
 def social_share_url(network, url, title=None):
-    return social.share_url(network, url, title)
+    return jinja2.Markup(social.share_url(network, url, title))
 
 
 @library.global_function

@@ -38,6 +38,7 @@ NETWORKS = {
     },
     'reddit': {
         'name': 'Reddit',
+        'icon': 'fa-reddit',
         'share': 'https://reddit.com/submit?url={url}&title={title}',
     },
     'email': {
@@ -75,4 +76,5 @@ def icon(network_name):
 def share_url(network_name, url, title=None):
     template = network(network_name).get('share')
     if template:
-        return template.format(url=quote_plus(url), title=quote_plus(title))
+        title = quote_plus(title) if title else None
+        return template.format(url=quote_plus(url), title=title)

@@ -4,8 +4,6 @@ from django_jinja import library
 
 from jinja2.ext import Extension
 
-# from mezzanine.conf import settings
-
 
 # @library.global_function
 # def media(url):

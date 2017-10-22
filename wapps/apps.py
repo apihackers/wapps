@@ -18,6 +18,9 @@ class WappsSettings(AppConf):
         prefix = 'wapps'
 
 
-class WagtailSettings(AppConf):
-    '''Wagtail default settings'''
-    WAGTAILIMAGES_IMAGE_MODEL = 'wapps.WappsImage'
+class WagtailImagesSettings(AppConf):
+    '''Wagtail images default settings'''
+    IMAGE_MODEL = 'wapps.WappsImage'
+
+    class Meta:
+        prefix = 'wagtailimages'

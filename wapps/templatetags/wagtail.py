@@ -1,6 +1,5 @@
 import jinja2
 
-from django.conf import settings
 from django_jinja import library
 from jinja2.ext import Extension
 from wagtail.wagtailcore.models import Page
@@ -8,7 +7,7 @@ from wagtail.contrib.wagtailroutablepage.templatetags.wagtailroutablepage_tags i
     routablepageurl as dj_routablepageurl
 )
 
-from wapps.utils import get_image_url, get_site
+from wapps.utils import get_image_url, get_site, SettingProxy
 
 
 @library.global_function
@@ -42,4 +41,4 @@ def routablepageurl(context, page, name, *args, **kwargs):
 class WagtailSettings(Extension):
     def __init__(self, environment):
         super(WagtailSettings, self).__init__(environment)
-        environment.globals['WAGTAIL_SITE_NAME'] = getattr(settings, 'WAGTAIL_SITE_NAME', None)
+        environment.globals['WAGTAIL_SITE_NAME'] = SettingProxy('WAGTAIL_SITE_NAME')
