@@ -83,7 +83,7 @@ jobs:
       - save_cache:
           key: nvm-cache-{{ arch }}-{{ .Environment.NODE_VERSION }}
           paths:
-          - {{ .Environment.NVM_DIR  }}/version/node/{{ .Environment.NODE_VERSION }}
+          - '{{ .Environment.NVM_DIR  }}/version/node/{{ .Environment.NODE_VERSION }}'
       - save_cache:
           key: js-cache-{{ arch }}-{{ checksum "js.deps" }}
           paths:
@@ -96,7 +96,7 @@ jobs:
           root: .
           paths:
             - node_modules
-            - {{ .Environment.NVM_DIR  }}/version/node/{{ .Environment.NODE_VERSION }}
+            - '{{ .Environment.NVM_DIR  }}/version/node/{{ .Environment.NODE_VERSION }}'
 
   dist:
     docker:
@@ -153,11 +153,12 @@ jobs:
     docker:
       - image: apihackers/wagtail-circleci
     steps:
+      - checkout
       - attach_workspace:
           at: .
       - run:
           name: Create .npmrc with credentials
-          command: - echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
       - run:
           name: Install NodeJS and dependencies
           command: nvm use && npm publish
