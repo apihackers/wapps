@@ -1,0 +1,210 @@
+---
+version: 2
+
+jobs:
+  python:
+    docker:
+      - image: apihackers/wagtail-circleci
+      - image: postgres:9.5
+        environment:
+          - POSTGRES_USER=wapps
+          - POSTGRES_PASSWORD=wapps
+    steps:
+      - checkout
+      - run:
+          name: Compute Python dependencies key
+          command: cat requirements/*.pip > python.deps
+      - run:
+          name: Get the base reference branch
+          command: export BASE_BRANCH=$(base_branch)
+      - restore_cache:
+          keys:
+          - py-cache-{{ arch }}-{{ checksum "python.deps" }}
+          - py-cache-{{ arch }}-{{ .Branch }}
+          - py-cache-{{ arch }}-{{ .Environment.BASE_BRANCH }}
+      - run:
+          name: Install python dependencies
+          command: |
+            virtualenv venv
+            source venv/bin/activate
+            pip install -r requirements/develop.pip || pip install -r requirements/develop.pip
+      - save_cache:
+          key: py-cache-{{ arch }}-{{ checksum "python.deps" }}
+          paths:
+          - venv
+      - save_cache:
+          key: py-cache-{{ arch }}-{{ .Branch }}
+          paths:
+          - venv
+      - run:
+          name: Run tests
+          command: |
+            mkdir -p reports/python
+            source venv/bin/activate
+            inv qa cover --report
+      - store_test_results:
+          path: reports/python
+      - store_artifacts:
+          path: reports/
+          destination: reports
+
+      - persist_to_workspace:
+          root: .
+          paths:
+          - venv
+
+  assets:
+    docker:
+      - image: apihackers/wagtail-circleci
+    environment:
+       BASH_ENV: /root/.bashrc
+    steps:
+      - checkout
+      - run:
+          name: Compute cache keys
+          command: |
+            cat .nvmrc package.json > js.deps
+            export BASE_BRANCH=$(base_branch)
+            export NODE_VERSION=$(cat .nvmrc)
+      - restore_cache:
+          keys:
+            - nvm-cache-{{ arch }}-{{ .Environment.NODE_VERSION }}
+      - restore_cache:
+          keys:
+            - js-cache-{{ arch }}-{{ checksum "js.deps" }}
+            - js-cache-{{ arch }}-{{ .Branch }}
+            - js-cache-{{ arch }}-{{ .Environment.BASE_BRANCH }}
+      - run:
+          name: Compute JS dependencies key
+          command: cat .nvmrc package.json > js.deps
+      - run:
+          name: Install NodeJS and dependencies
+          command: nvm install && npm install
+      - save_cache:
+          key: nvm-cache-{{ arch }}-{{ .Environment.NODE_VERSION }}
+          paths:
+          - {{ .Environment.NVM_DIR  }}/version/node/{{ .Environment.NODE_VERSION }}
+      - save_cache:
+          key: js-cache-{{ arch }}-{{ checksum "js.deps" }}
+          paths:
+          - node_modules
+      - save_cache:
+          key: js-cache-{{ arch }}-{{ .Branch }}
+          paths:
+          - node_modules
+      - persist_to_workspace:
+          root: .
+          paths:
+            - node_modules
+            - {{ .Environment.NVM_DIR  }}/version/node/{{ .Environment.NODE_VERSION }}
+
+  dist:
+    docker:
+      - image: apihackers/wagtail-circleci
+    environment:
+       BASH_ENV: /root/.bashrc
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Build a distributable package
+          command: |
+            source venv/bin/activate
+            # Build a wheel release
+            if [[ $CIRCLE_TAG ]]; then
+                # This is a tagged release
+                inv pydist
+            else
+                # This is a simple development build
+                inv pydist -b $CIRCLE_BUILD_NUM
+            fi
+      - store_artifacts:
+          path: dist
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist
+
+  pypi:
+    docker:
+      - image: apihackers/wagtail-circleci
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Install Twine
+          command: pip install twine
+      - deploy:
+          name: Publish on PyPI
+          command: twine upload --username "${PYPI_USERNAME}" --password "${PYPI_PASSWORD}" dist/*.whl
+
+  github:
+    docker:
+      - image: apihackers/wagtail-circleci
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Upload github release
+          command: gh_release
+
+  npmjs:
+    docker:
+      - image: apihackers/wagtail-circleci
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Create .npmrc with credentials
+          command: - echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+      - run:
+          name: Install NodeJS and dependencies
+          command: nvm use && npm publish
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - python:
+          filters:
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
+      - assets:
+          filters:
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
+      - dist:
+          requires:
+            - python
+            - assets
+          filters:
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
+      - pypi:
+          requires:
+            - dist
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
+          context: org-global
+      - github:
+          requires:
+            - dist
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
+          context: org-global
+      - npmjs:
+          requires:
+            - dist
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*/
+          context: org-global
