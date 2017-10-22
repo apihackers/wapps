@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-04 10:35+0100\n"
+"POT-Creation-Date: 2017-10-08 20:41+0200\n"
 "PO-Revision-Date: 2016-10-29 16:18+0200\n"
 "Last-Translator: Axel Haustant <noirbizarre@gmail.com>\n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.3.4\n"
+"Generated-By: Babel 2.5.1\n"
 
 #: image_formats.py:15
 msgid "Full width"
@@ -46,47 +46,47 @@ msgstr "Vignette"
 msgid "Big thumbnail"
 msgstr "Grande vignette"
 
-#: mixins.py:20
+#: mixins.py:18
 msgid "External link"
 msgstr "Lien externe"
 
-#: mixins.py:54
-msgid "Telephone"
-msgstr "Téléphone"
-
-#: mixins.py:56
+#: mixins.py:52
 msgid "Address"
 msgstr "Adresse"
 
-#: mixins.py:57
+#: mixins.py:53
 msgid "Address (complement)"
 msgstr "Adresse (complément)"
 
-#: mixins.py:58
+#: mixins.py:54
 msgid "Postal code"
 msgstr "Code postal"
 
-#: mixins.py:59
+#: mixins.py:55
 msgid "City"
 msgstr "Ville"
 
-#: mixins.py:60
+#: mixins.py:56
 msgid "Country"
 msgstr "Pays"
 
-#: mixins.py:115
+#: mixins.py:71
+msgid "Telephone"
+msgstr "Téléphone"
+
+#: mixins.py:124
 msgid "Carousel item"
 msgstr "Élément du carousel"
 
-#: mixins.py:116
+#: mixins.py:125
 msgid "Carousel items"
 msgstr "Éléments du carousel"
 
-#: mixins.py:129
+#: mixins.py:138
 msgid "Related link"
 msgstr "Lien contextuel"
 
-#: mixins.py:130
+#: mixins.py:139
 msgid "Related links"
 msgstr "Liens contextuels"
 
@@ -178,15 +178,15 @@ msgstr "Réseaux sociaux"
 msgid "Contact"
 msgstr "Contact"
 
-#: models/image.py:11
+#: models/image.py:8
 msgid "Credit"
 msgstr "Crédit"
 
-#: models/image.py:12
+#: models/image.py:9
 msgid "Credit URL"
 msgstr "Lien du crédit"
 
-#: models/image.py:13
+#: models/image.py:10
 msgid "Details"
 msgstr "Détails"
 
@@ -246,11 +246,11 @@ msgstr "Page statique"
 msgid "Placeholder"
 msgstr "Emplacement"
 
-#: templatetags/social.py:91
+#: templatetags/social.py:84
 msgid "Error"
 msgstr "Erreur"
 
-#: templatetags/social.py:93
+#: templatetags/social.py:86
 msgid "Error while fetching data"
 msgstr "Erreur lors de la récupération des données"
 
