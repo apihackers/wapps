@@ -5,7 +5,7 @@ django-colorful==1.2
 django-jinja==2.4.0
 django-memoize==2.1.0
 django-model-utils==3.0.0
-psycopg2
+psycopg2==2.7.3.1
 requests
 wagtail>=1.10
 wagtailfontawesome==1.0.6
