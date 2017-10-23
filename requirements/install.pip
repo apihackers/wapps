@@ -6,6 +6,6 @@ django-jinja==2.4.0
 django-memoize==2.1.0
 django-model-utils==3.0.0
 psycopg2
-requests
+requests==2.18.4
 wagtail>=1.10
 wagtailfontawesome==1.0.6
