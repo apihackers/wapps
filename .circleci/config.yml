@@ -9,6 +9,9 @@ jobs:
         environment:
           - POSTGRES_USER=wapps
           - POSTGRES_PASSWORD=wapps
+    environment:
+       CC: /usr/bin/gcc
+       CXX: /usr/bin/g++
     steps:
       - checkout
       - run:
@@ -79,7 +82,7 @@ jobs:
           command: cat .nvmrc package.json > js.deps
       - run:
           name: Install NodeJS and dependencies
-          command: nvm install && npm install
+          command: nvm install || nvm use --delete-prefix && npm install
       - save_cache:
           key: nvm-cache-{{ arch }}-{{ .Environment.NODE_VERSION }}
           paths:
