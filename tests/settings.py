@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'wapps',
     'wapps.blog',
     'wapps.gallery',
-    'wapps.forms',
+    # 'wapps.forms',
 
     'wagtail.wagtailforms',
     'wagtail.wagtailredirects',
