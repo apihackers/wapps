@@ -8,7 +8,7 @@ from wagtail.wagtailcore import urls as wagtail_urls
 # from wagtail.contrib.wagtailsitemaps.views import sitemap
 
 from wapps import urls as wapps_common_urls
-from wapps.forms import urls as wapps_forms_urls
+# from wapps.forms import urls as wapps_forms_urls
 
 # from ..feeds import BlogRssFeed, BlogAtomFeed
 
@@ -22,7 +22,7 @@ urlpatterns = [
     url(r'^search/', include('wagtail.wagtailsearch.urls.frontend')),
     # url(r'^i18n/', include('django.conf.urls.i18n')),
 
-    url(r'^forms/', include(wapps_forms_urls)),
+    # url(r'^forms/', include(wapps_forms_urls)),
     # url('^sitemap\.xml$', sitemap),
 
     # url(r'^feeds/blog/rss/$', BlogRssFeed(), name="blog_rss_feed"),
