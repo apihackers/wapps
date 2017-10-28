@@ -117,10 +117,10 @@ jobs:
             # Build a wheel release
             if [[ $CIRCLE_TAG ]]; then
                 # This is a tagged release
-                inv pydist
+                inv dist
             else
                 # This is a simple development build
-                inv pydist -b $CIRCLE_BUILD_NUM
+                inv dist -b $CIRCLE_BUILD_NUM
             fi
       - store_artifacts:
           path: dist
