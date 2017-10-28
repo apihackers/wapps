@@ -9,22 +9,21 @@ jobs:
         environment:
           - POSTGRES_USER=wapps
           - POSTGRES_PASSWORD=wapps
-    # environment:
-    #    CC: /usr/bin/gcc
-    #    CXX: /usr/bin/g++
+    environment:
+       BASH_ENV: .circleci/tools.sh
     steps:
       - checkout
       - run:
           name: Compute Python dependencies key
           command: cat requirements/*.pip > python.deps
-      # - run:
-      #     name: Get the base reference branch
-      #     command: export BASE_BRANCH=$(base_branch)
+      - run:
+          name: Get the base reference branch
+          command: export BASE_BRANCH=$(base_branch)
       - restore_cache:
           keys:
           - python-cache-{{ arch }}-{{ checksum "python.deps" }}
           - python-cache-{{ arch }}-{{ .Branch }}
-          # - python-cache-{{ arch }}-{{ .Environment.BASE_BRANCH }}
+          - python-cache-{{ arch }}-{{ .Environment.BASE_BRANCH }}
       - run:
           name: Install python dependencies
           command: |
@@ -37,6 +36,10 @@ jobs:
           - venv
       - save_cache:
           key: python-cache-{{ arch }}-{{ .Branch }}
+          paths:
+          - venv
+      - save_cache:
+          key: python-cache-{{ arch }}-{{ .Environment.BASE_BRANCH }}
           paths:
           - venv
       - run:
@@ -59,34 +62,19 @@ jobs:
   assets:
     docker:
       - image: circleci/node:8.6
-    # environment:
-    #    BASH_ENV: /root/.bashrc
     steps:
       - checkout
-      # - run:
-      #     name: Compute cache keys
-      #     command: |
-      #       cat .nvmrc package.json > js.deps
-      #       export BASE_BRANCH=$(base_branch)
-      #       export NODE_VERSION=$(cat .nvmrc)
-      # - restore_cache:
-      #     keys:
-      #       - nvm-cache-{{ arch }}-{{ .Environment.NODE_VERSION }}
+      - run:
+          name: Get the base reference branch
+          command: export BASE_BRANCH=$(base_branch)
       - restore_cache:
           keys:
             - js-cache-{{ arch }}-{{ checksum "package.json" }}
             - js-cache-{{ arch }}-{{ .Branch }}
-            # - js-cache-{{ arch }}
-      # - run:
-      #     name: Compute JS dependencies key
-      #     command: cat .nvmrc package.json > js.deps
+            - js-cache-{{ arch }}-{{ .Environment.BASE_BRANCH }}
       - run:
           name: Install NodeJS and dependencies
           command: npm install
-      # - save_cache:
-      #     key: nvm-cache-{{ arch }}-{{ .Environment.NODE_VERSION }}
-      #     paths:
-      #     - '{{ .Environment.NVM_DIR  }}/version/node/{{ .Environment.NODE_VERSION }}'
       - save_cache:
           key: js-cache-{{ arch }}-{{ checksum "package.json" }}
           paths:
@@ -95,17 +83,18 @@ jobs:
           key: js-cache-{{ arch }}-{{ .Branch }}
           paths:
           - node_modules
+      - save_cache:
+          key: js-cache-{{ arch }}-{{ .Environment.BASE_BRANCH }}
+          paths:
+          - node_modules
       - persist_to_workspace:
           root: .
           paths:
             - node_modules
-            # - '{{ .Environment.NVM_DIR  }}/version/node/{{ .Environment.NODE_VERSION }}'
 
   dist:
     docker:
       - image: circleci/python:3.6
-    # environment:
-    #    BASH_ENV: /root/.bashrc
     steps:
       - checkout
       - attach_workspace:
@@ -131,26 +120,23 @@ jobs:
 
   pypi:
     docker:
-      - image: circleci/python:3.6
+      - image: apihackers/twine
     steps:
       - attach_workspace:
           at: .
       - run:
-          name: Install Twine
-          command: pip install twine
-      - deploy:
           name: Publish on PyPI
           command: twine upload --username "${PYPI_USERNAME}" --password "${PYPI_PASSWORD}" dist/*.whl
 
   github:
     docker:
-      - image: apihackers/wagtail-circleci
+      - image: apihackers/ghr
     steps:
       - attach_workspace:
           at: .
       - run:
           name: Upload github release
-          command: gh_release
+          command: ghr ${CIRCLE_TAG} dist/
 
   npmjs:
     docker:
@@ -189,8 +175,8 @@ workflows:
           requires:
             - dist
           filters:
-            branches:
-              ignore: /.*/
+            # branches:
+            #   ignore: /.*/
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
           context: org-global
@@ -198,8 +184,8 @@ workflows:
           requires:
             - dist
           filters:
-            branches:
-              ignore: /.*/
+            # branches:
+            #   ignore: /.*/
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
           context: org-global
@@ -207,8 +193,8 @@ workflows:
           requires:
             - dist
           filters:
-            branches:
-              ignore: /.*/
+            # branches:
+            #   ignore: /.*/
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
           context: org-global
