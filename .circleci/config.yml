@@ -63,12 +63,12 @@ jobs:
     #    BASH_ENV: /root/.bashrc
     steps:
       - checkout
-      - run:
-          name: Compute cache keys
-          # command: |
-          #   cat .nvmrc package.json > js.deps
-          #   export BASE_BRANCH=$(base_branch)
-          #   export NODE_VERSION=$(cat .nvmrc)
+      # - run:
+      #     name: Compute cache keys
+      #     command: |
+      #       cat .nvmrc package.json > js.deps
+      #       export BASE_BRANCH=$(base_branch)
+      #       export NODE_VERSION=$(cat .nvmrc)
       # - restore_cache:
       #     keys:
       #       - nvm-cache-{{ arch }}-{{ .Environment.NODE_VERSION }}
