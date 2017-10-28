@@ -28,23 +28,22 @@ jobs:
       - run:
           name: Install python dependencies
           command: |
-            pip install virtualenv
-            virtualenv venv
-            source venv/bin/activate
-            pip install -r requirements/develop.pip || pip install -r requirements/develop.pip
+            # virtualenv venv
+            # source venv/bin/activate
+            pip install --user -r requirements/develop.pip || pip install --user -r requirements/develop.pip
       - save_cache:
           key: python-cache-{{ arch }}-{{ checksum "python.deps" }}
           paths:
-          - venv
+          - /root/.local/lib/python3.6/site-packages
       - save_cache:
           key: python-cache-{{ arch }}-{{ .Branch }}
           paths:
-          - venv
+          - /root/.local/lib/python3.6/site-packages
       - run:
           name: Run tests
           command: |
             mkdir -p reports/python
-            source venv/bin/activate
+            # source venv/bin/activate
             inv qa cover --report
       - store_test_results:
           path: reports/python
@@ -55,7 +54,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-          - venv
+          - /root/.local/lib/python3.6/site-packages
 
   assets:
     docker:
@@ -114,7 +113,7 @@ jobs:
       - run:
           name: Build a distributable package
           command: |
-            source venv/bin/activate
+            # source venv/bin/activate
             # Build a wheel release
             if [[ $CIRCLE_TAG ]]; then
                 # This is a tagged release
@@ -138,7 +137,7 @@ jobs:
           at: .
       - run:
           name: Install Twine
-          command: pip install twine
+          command: pip install --user twine
       - deploy:
           name: Publish on PyPI
           command: twine upload --username "${PYPI_USERNAME}" --password "${PYPI_PASSWORD}" dist/*.whl
