@@ -1,6 +1,6 @@
 # WApps
 
-[![Build Status](https://ci.noirbizarre.info/api/badges/apihackers/wapps/status.svg)](https://ci.noirbizarre.info/apihackers/wapps)
+[![CircleCI](https://circleci.com/gh/apihackers/wapps.svg?style=svg)](https://circleci.com/gh/apihackers/wapps)
 
 A very optionated set of Wagtail reusable applications and helpers
 meant to speedup website development. There is not any universality intent.
