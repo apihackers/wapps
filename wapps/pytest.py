@@ -48,6 +48,7 @@ def get_jinja_context(**ctx):
     engine = engines['jinja2']
     request = ctx.get('request', factories.RequestFactory().get('/'))
     context = dict_from_context(ctx)
+
     def _get_val():
         token = csrf.get_token(request)
         if token is None:
