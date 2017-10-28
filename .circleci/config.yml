@@ -28,6 +28,7 @@ jobs:
       - run:
           name: Install python dependencies
           command: |
+            pip install virtualenv
             virtualenv venv
             source venv/bin/activate
             pip install -r requirements/develop.pip || pip install -r requirements/develop.pip
