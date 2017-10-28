@@ -4,14 +4,14 @@ version: 2
 jobs:
   python:
     docker:
-      - image: apihackers/wagtail-circleci
+      - image: circleci/python:3.6
       - image: postgres:9.5
         environment:
           - POSTGRES_USER=wapps
           - POSTGRES_PASSWORD=wapps
-    environment:
-       CC: /usr/bin/gcc
-       CXX: /usr/bin/g++
+    # environment:
+    #    CC: /usr/bin/gcc
+    #    CXX: /usr/bin/g++
     steps:
       - checkout
       - run:
@@ -19,12 +19,12 @@ jobs:
           command: cat requirements/*.pip > python.deps
       - run:
           name: Get the base reference branch
-          command: export BASE_BRANCH=$(base_branch)
+          # command: export BASE_BRANCH=$(base_branch)
       - restore_cache:
           keys:
           - py-cache-{{ arch }}-{{ checksum "python.deps" }}
           - py-cache-{{ arch }}-{{ .Branch }}
-          - py-cache-{{ arch }}-{{ .Environment.BASE_BRANCH }}
+          # - py-cache-{{ arch }}-{{ .Environment.BASE_BRANCH }}
       - run:
           name: Install python dependencies
           command: |
@@ -103,9 +103,9 @@ jobs:
 
   dist:
     docker:
-      - image: apihackers/wagtail-circleci
-    environment:
-       BASH_ENV: /root/.bashrc
+      - image: circleci/python:3.6
+    # environment:
+    #    BASH_ENV: /root/.bashrc
     steps:
       - checkout
       - attach_workspace:
@@ -131,7 +131,7 @@ jobs:
 
   pypi:
     docker:
-      - image: apihackers/wagtail-circleci
+      - image: circleci/python:3.6
     steps:
       - attach_workspace:
           at: .
