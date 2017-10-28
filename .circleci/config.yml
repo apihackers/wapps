@@ -22,9 +22,9 @@ jobs:
       #     command: export BASE_BRANCH=$(base_branch)
       - restore_cache:
           keys:
-          - py-cache-{{ arch }}-{{ checksum "python.deps" }}
-          - py-cache-{{ arch }}-{{ .Branch }}
-          # - py-cache-{{ arch }}-{{ .Environment.BASE_BRANCH }}
+          - python-cache-{{ arch }}-{{ checksum "python.deps" }}
+          - python-cache-{{ arch }}-{{ .Branch }}
+          # - python-cache-{{ arch }}-{{ .Environment.BASE_BRANCH }}
       - run:
           name: Install python dependencies
           command: |
@@ -32,11 +32,11 @@ jobs:
             source venv/bin/activate
             pip install -r requirements/develop.pip || pip install -r requirements/develop.pip
       - save_cache:
-          key: py-cache-{{ arch }}-{{ checksum "python.deps" }}
+          key: python-cache-{{ arch }}-{{ checksum "python.deps" }}
           paths:
           - venv
       - save_cache:
-          key: py-cache-{{ arch }}-{{ .Branch }}
+          key: python-cache-{{ arch }}-{{ .Branch }}
           paths:
           - venv
       - run:
