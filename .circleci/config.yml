@@ -47,7 +47,7 @@ jobs:
           command: |
             mkdir -p reports/python
             source venv/bin/activate
-            inv qa cover --report
+            inv qa cover --report --verbose
       - store_test_results:
           path: reports/python
       - store_artifacts:
@@ -175,8 +175,8 @@ workflows:
           requires:
             - dist
           filters:
-            # branches:
-            #   ignore: /.*/
+            branches:
+              ignore: /.*/
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
           context: org-global
@@ -184,8 +184,8 @@ workflows:
           requires:
             - dist
           filters:
-            # branches:
-            #   ignore: /.*/
+            branches:
+              ignore: /.*/
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
           context: org-global
@@ -193,8 +193,8 @@ workflows:
           requires:
             - dist
           filters:
-            # branches:
-            #   ignore: /.*/
+            branches:
+              ignore: /.*/
             tags:
               only: /v[0-9]+(\.[0-9]+)*/
           context: org-global

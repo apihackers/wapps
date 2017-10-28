@@ -89,18 +89,20 @@ def demo(ctx):
 
 
 @task
-def test(ctx, report=False):
+def test(ctx, report=False, verbose=False):
     '''Run tests suite'''
     header(test.__doc__)
-    cmd = 'pytest -v'
+    cmd = ['pytest']
+    if verbose:
+        cmd.append('-v')
     if report:
-        cmd = ' '.join((cmd, '--junitxml=reports/python/tests.xml'))
+        cmd.append('--junitxml=reports/python/tests.xml')
     with ctx.cd(ROOT):
-        ctx.run(cmd, pty=True)
+        ctx.run(' '.join(cmd), pty=True)
 
 
 @task
-def cover(ctx, report=False):
+def cover(ctx, report=False, verbose=False):
     '''Run tests suite with coverage'''
     header(cover.__doc__)
     cmd = [
@@ -111,6 +113,8 @@ def cover(ctx, report=False):
         '--cov-report xml:reports/coverage.xml',
         '--cov=wapps',
     ]
+    if verbose:
+        cmd.append('-v')
     if report:
         cmd += [
             '--cov-report html:reports/python/coverage',
