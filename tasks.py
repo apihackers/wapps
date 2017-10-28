@@ -13,7 +13,7 @@ PROJECTS = [
     'wapps',
     'wapps.blog',
     'wapps.gallery',
-    'wapps.forms',
+    # 'wapps.forms',
 ]
 
 LANGUAGES = ['fr']
@@ -127,13 +127,13 @@ def qa(ctx):
     header(qa.__doc__)
     with ctx.cd(ROOT):
         info('Python Static Analysis')
-        flake8_results = ctx.run('flake8 wapps --jobs 1', pty=True, warn=True, in_stream=False)
+        flake8_results = ctx.run('flake8 wapps --jobs 1', pty=True, warn=True)
         if flake8_results.failed:
             error('There is some lints to fix')
         else:
             success('No lint to fix')
         info('Ensure PyPI can render README and CHANGELOG')
-        readme_results = ctx.run('python setup.py check -r -s', pty=True, warn=True, hide=True, in_stream=False)
+        readme_results = ctx.run('python setup.py check -r -s', pty=True, warn=True, hide=True)
         if readme_results.failed:
             print(readme_results.stdout)
             error('README and/or CHANGELOG is not renderable by PyPI')
