@@ -1,6 +1,10 @@
 # WApps
 
-[![CircleCI](https://circleci.com/gh/apihackers/wapps.svg?style=svg)](https://circleci.com/gh/apihackers/wapps)
+[![CircleCI](https://img.shields.io/circleci/project/github/apihackers/wapps.svg)](https://circleci.com/gh/apihackers/workflows/wapps)
+[![Coverage Status](https://coveralls.io/repos/github/apihackers/wapps/badge.svg?branch=master)](https://coveralls.io/github/apihackers/wapps?branch=master)
+[![Last version](https://img.shields.io/pypi/v/wapps.svg)](https://pypi.python.org/pypi/wapps)
+[![License](https://img.shields.io/pypi/l/wapps.svg)](https://pypi.python.org/pypi/wapps)
+[![Supported Python versions](https://img.shields.io/pypi/pyversions/wapps.svg)](https://pypi.python.org/pypi/wapps)
 
 A very optionated set of Wagtail reusable applications and helpers
 meant to speedup website development. There is not any universality intent.
