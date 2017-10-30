@@ -30,6 +30,7 @@ jobs:
             python3 -m venv venv
             source venv/bin/activate
             pip install -r requirements/develop.pip || pip install -r requirements/develop.pip
+            pip install coveralls
       - save_cache:
           key: python-cache-{{ arch }}-{{ checksum "python.deps" }}
           paths:
@@ -53,7 +54,11 @@ jobs:
       - store_artifacts:
           path: reports/
           destination: reports
-
+      - run:
+          name: Publish coverage results
+          command: |
+            source venv/bin/activate
+            COVERALLS_REPO_TOKEN=kAAt1w2bTnLpjCCwZ2faCDCkipOio3cJ3 coveralls --rcfile=coverage.rc
       - persist_to_workspace:
           root: .
           paths:
