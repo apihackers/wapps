@@ -21,6 +21,15 @@ def pytest_configure(config):
     register(factories.UserFactory)
 
 
+@pytest.fixture(scope='session')
+def django_db_setup(django_db_setup, django_db_blocker):
+    from wagtail.wagtailcore.models import Page, Site
+    with django_db_blocker.unblock():
+        # Remove some initial data that is brought by the sandbox module
+        Site.objects.all().delete()
+        Page.objects.all().exclude(depth=1).delete()
+
+
 @pytest.fixture
 def rf(site):
     from wapps import factories

@@ -11,8 +11,9 @@ def test_wagtail_site_name(jinja, settings, faker):
 
 
 @pytest.mark.django_db
-def test_is_site_root(rf, jinja, site, page):
+def test_is_site_root(rf, jinja, site, page_factory):
     request = rf.get('/')
+    page = page_factory(parent=site.root_page)
     assert jinja('{{ is_site_root(page) }}', request=request, page=site.root_page) == 'True'
     assert jinja('{{ is_site_root(page) }}', request=request, page=page) == 'False'
     assert jinja('{{ is_site_root(page) }}', page=site.root_page) == 'False'
