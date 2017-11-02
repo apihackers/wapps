@@ -1,4 +1,4 @@
-Django==1.11.6
+Django==1.11.7
 django-appconf==1.0.2
 django-babel==0.6.1
 django-colorful==1.2
