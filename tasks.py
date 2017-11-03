@@ -131,7 +131,7 @@ def qa(ctx):
     header(qa.__doc__)
     with ctx.cd(ROOT):
         info('Python Static Analysis')
-        flake8_results = ctx.run('flake8 wapps --jobs 1', pty=True, warn=True)
+        flake8_results = ctx.run('flake8 wapps tests', pty=True, warn=True)
         if flake8_results.failed:
             error('There is some lints to fix')
         else:
