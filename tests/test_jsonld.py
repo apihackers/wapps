@@ -1,7 +1,5 @@
 import pytest
 
-from pytest_factoryboy import LazyFixture
-
 from wapps import jsonld
 
 

@@ -5,12 +5,10 @@ from django.contrib import admin
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from wagtail.wagtailcore import urls as wagtail_urls
-# from wagtail.contrib.wagtailsitemaps.views import sitemap
 
 from wapps import urls as wapps_common_urls
-# from wapps.forms import urls as wapps_forms_urls
 
-# from ..feeds import BlogRssFeed, BlogAtomFeed
+from .views import error, first_visit
 
 
 urlpatterns = [
@@ -20,6 +18,11 @@ urlpatterns = [
     url(r'^documents/', include(wagtaildocs_urls)),
 
     url(r'^search/', include('wagtail.wagtailsearch.urls.frontend')),
+
+    # Test views
+    url(r'^error/$', error, name='error'),
+    url(r'^first-visit/$', first_visit, name='first-visit'),
+
     # url(r'^i18n/', include('django.conf.urls.i18n')),
 
     # url(r'^forms/', include(wapps_forms_urls)),

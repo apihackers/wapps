@@ -18,32 +18,32 @@ def test_timehash_different():
 class SettingProxyTest:
     def test_undefined_setting(self, settings, faker):
         proxy = utils.SettingProxy('UNDEFINED')
-        assert bool(proxy) == False
-        assert proxy == None
+        assert bool(proxy) is False
+        assert proxy == None  # noqa
 
     def test_none_setting(self, settings, faker):
         settings.VALUE = None
         proxy = utils.SettingProxy('VALUE')
-        assert bool(proxy) == False
-        assert proxy == None
+        assert bool(proxy) is False
+        assert proxy == None  # noqa
 
     def test_string_setting(self, settings, faker):
         settings.VALUE = faker.word()
         proxy = utils.SettingProxy('VALUE')
         assert str(proxy) == settings.VALUE
-        assert bool(proxy) == True
+        assert bool(proxy) is True
 
     def test_empty_string_setting(self, settings, faker):
         settings.VALUE = ''
         proxy = utils.SettingProxy('VALUE')
         assert str(proxy) == ''
-        assert bool(proxy) == False
+        assert bool(proxy) is False
 
     def test_bool_setting(self, settings, faker):
         settings.VALUE = True
         proxy = utils.SettingProxy('VALUE')
-        assert proxy == True
+        assert proxy == True  # noqa
 
         settings.VALUE = False
         proxy = utils.SettingProxy('VALUE')
-        assert proxy == False
+        assert proxy == False  # noqa

@@ -104,6 +104,10 @@ MIDDLEWARE = [
 
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
+
+    # Wapps middlewares
+    'wapps.middleware.ErrorMiddleware',
+    'wapps.middleware.FirstVisitMiddleware',
 ]
 
 ROOT_URLCONF = 'tests.app.urls'
