@@ -5,12 +5,14 @@ omit =
     tests/*
     wappsdemo/*
     */migrations/*
+    wapps/pytest.py
 
 [report]
 omit =
     tests/*
     wappsdemo/*
     */migrations/*
+    wapps/pytest.py
 
 # Regexes for lines to exclude from consideration
 exclude_lines =
