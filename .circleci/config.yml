@@ -46,11 +46,10 @@ jobs:
       - run:
           name: Run tests
           command: |
-            mkdir -p reports/python
             source venv/bin/activate
             inv qa cover --report --verbose
       - store_test_results:
-          path: reports/python
+          path: reports
       - store_artifacts:
           path: reports/
           destination: reports
