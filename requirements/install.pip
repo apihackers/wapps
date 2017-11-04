@@ -7,5 +7,5 @@ django-memoize==2.1.0
 django-model-utils==3.0.0
 psycopg2
 requests
-wagtail>=1.10
+wagtail==1.13
 wagtailfontawesome==1.1.0
