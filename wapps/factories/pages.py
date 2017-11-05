@@ -6,6 +6,7 @@ from wapps.models import StaticPage
 
 from .image import ImageFactory
 from .tag import TagFactory
+from .user import UserFactory
 
 
 class PageFactory(MP_NodeFactory):
@@ -15,6 +16,11 @@ class PageFactory(MP_NodeFactory):
 
     class Meta:
         model = Page
+
+    class Params:
+        owned = factory.Trait(
+            owner=factory.SubFactory(UserFactory),
+        )
 
     @classmethod
     def _create(cls, *args, **kwargs):

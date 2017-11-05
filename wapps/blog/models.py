@@ -273,12 +273,13 @@ class BlogPost(Page):
             'articleBody': body,
             'description': self.summarize(140),
             'wordCount': len(re.findall(r'\w+', strip_tags(body))),
-            'author': {
-                '@type': 'Person',
-                'name': self.owner.get_full_name()
-            },
             'publisher': publisher,
         }
+        if self.owner:
+            data['author'] = {
+                '@type': 'Person',
+                'name': self.owner.get_full_name()
+            }
         if self.image:
             # According to https://developers.google.com/+/web/snippet/article-rendering
             # Image must had a ratio between 5:2 and 5:3

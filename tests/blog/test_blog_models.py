@@ -18,3 +18,9 @@ def test_blogpost_hierarchy_restrictions(blog_post, site):
     assert_allowed_parent_types(blog_post, [Blog])
     assert_can_not_create_at(site.root_page.__class__, BlogPost)
     assert_can_create_at(Blog, BlogPost)
+
+
+@pytest.mark.django_db
+def test_blogpost_parent_blog(blog, blog_post_factory):
+    blog_post = blog_post_factory(parent=blog)
+    assert blog_post.blog == blog
