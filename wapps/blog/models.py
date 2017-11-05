@@ -7,6 +7,7 @@ from django.utils.dateformat import DateFormat
 from django.utils.formats import date_format
 from django.utils.html import strip_tags
 from django.utils.text import Truncator
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 from modelcluster.fields import ParentalKey
@@ -180,7 +181,7 @@ class BlogPost(Page):
                                            "If this field is not filled, a truncate version "
                                            "of body text will be used."))
 
-    date = models.DateTimeField(verbose_name=_('Post date'), default=datetime.today)
+    date = models.DateTimeField(verbose_name=_('Post date'), default=timezone.now)
 
     tags = ClusterTaggableManager(through=BlogPostTag, blank=True)
     categories = models.ManyToManyField(Category, through=BlogPostCategory, blank=True)

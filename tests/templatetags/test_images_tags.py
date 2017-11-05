@@ -11,7 +11,7 @@ def test_placeholder_url_provivded(jinja, faker):
 
 
 @pytest.mark.django_db
-def test_placeholder_text_from_text(rf, jinja, faker):
+def test_placeholder_text_from_text(jinja, faker):
     text = faker.sentence()
     rendered = jinja('{{ url|placeholder(300, 400, text=text) }}', url=None, text=text)
     assert rendered == PLACEHOLDIT_URL.format(width=300, height=400,
@@ -21,8 +21,8 @@ def test_placeholder_text_from_text(rf, jinja, faker):
 
 
 @pytest.mark.django_db
-def test_placeholder_text_from_identity(rf, jinja, identity):
-    rendered = jinja('{{ url|placeholder(300, 400) }}', url=None, request=rf.get('/'))
+def test_placeholder_text_from_identity(wrf, jinja, identity):
+    rendered = jinja('{{ url|placeholder(300, 400) }}', url=None, request=wrf.get('/'))
     assert rendered == PLACEHOLDIT_URL.format(width=300, height=400,
                                               fg=DEFAULT_FOREGROUND.replace('#', ''),
                                               bg=DEFAULT_BACKGROUND.replace('#', ''),
@@ -30,8 +30,8 @@ def test_placeholder_text_from_identity(rf, jinja, identity):
 
 
 @pytest.mark.django_db
-def test_placeholder_text_from_site(rf, jinja, site):
-    rendered = jinja('{{ url|placeholder(300, 400) }}', url=None, request=rf.get('/'))
+def test_placeholder_text_from_site(wrf, jinja, site):
+    rendered = jinja('{{ url|placeholder(300, 400) }}', url=None, request=wrf.get('/'))
     assert rendered == PLACEHOLDIT_URL.format(width=300, height=400,
                                               fg=DEFAULT_FOREGROUND.replace('#', ''),
                                               bg=DEFAULT_BACKGROUND.replace('#', ''),
@@ -39,8 +39,8 @@ def test_placeholder_text_from_site(rf, jinja, site):
 
 
 @pytest.mark.django_db
-def test_placeholder_text_from_size(rf, jinja):
-    request = rf.get('/')
+def test_placeholder_text_from_size(wrf, jinja):
+    request = wrf.get('/')
     request.site = None
     rendered = jinja('{{ url|placeholder(300, 400) }}', url=None, request=request)
     assert rendered == PLACEHOLDIT_URL.format(width=300, height=400,

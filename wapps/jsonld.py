@@ -168,3 +168,12 @@ def graph(context, *data):
         "@context": 'http://schema.org/',
         "@graph": graph,
     }
+
+
+def extract(graph, type):
+    return [el for el in graph if el.get('@type') == type]
+
+
+def extract_first(graph, type):
+    candidates = extract(graph, type)
+    return candidates[0] if candidates else None
