@@ -6,7 +6,7 @@ from .pages import RootFactory
 
 
 class SiteFactory(factory.DjangoModelFactory):
-    hostname = 'localhost'
+    hostname = factory.Faker('domain_name')
     port = factory.Sequence(lambda n: 8000 + n)
     site_name = 'Test Site'
     root_page = factory.SubFactory(RootFactory)
@@ -14,4 +14,4 @@ class SiteFactory(factory.DjangoModelFactory):
 
     class Meta:
         model = Site
-        django_get_or_create = ['hostname']
+        django_get_or_create = ['hostname', 'port']

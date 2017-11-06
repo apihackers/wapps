@@ -33,6 +33,17 @@ class PageFactory(MP_NodeFactory):
         return super()._create(*args, **kwargs)
 
     @factory.post_generation
+    def published(page, create, extracted, **kwargs):
+        if not create:
+            # Simple build, do nothing.
+            return
+
+        if extracted is True:
+            revision = page.save_revision()
+            revision.publish()
+            page.refresh_from_db()
+
+    @factory.post_generation
     def tags(self, create, extracted, **kwargs):
         if not create:
             # Simple build, do nothing.

@@ -18,7 +18,7 @@ def test_timehashcustom_length(jinja):
 @pytest.mark.django_db
 def test_now(jinja):
     rendered = jinja('{{ now().isoformat() }}')
-    assert re.match(r'^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}$', rendered)
+    assert re.match(r'^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{6}\+\d{2}\:\d{2}$', rendered)
 
 
 @pytest.mark.django_db

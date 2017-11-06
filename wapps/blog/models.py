@@ -1,6 +1,6 @@
 import re
 
-from datetime import date, datetime
+from datetime import date
 
 from django.db import models
 from django.utils.dateformat import DateFormat
@@ -138,14 +138,14 @@ class Blog(RoutablePageMixin, Page):
     subpage_types = ['blog.BlogPost']
 
     def __jsonld__(self, context):
-        now = datetime.now()
+        now = timezone.now()
         data = {
             '@type': 'Blog',
             '@id': self.full_url,
             'url': self.full_url,
             'name': self.seo_title or self.title,
             'datePublished': (self.first_published_at or now).isoformat(),
-            'dateModified': (self.latest_revision_created_at or now).isoformat(),
+            'dateModified': (self.last_published_at or now).isoformat(),
             'description': strip_tags(self.intro),
         }
         return data
@@ -256,7 +256,7 @@ class BlogPost(Page):
         site = request.site
         identity = IdentitySettings.for_site(site)
         body = str(self.body)
-        now = datetime.now()
+        now = timezone.now()
         publisher = jsonld.organization(context)
         if identity.amp_logo:
             publisher['logo'] = jsonld.image_object(context, identity.amp_logo, 600, 60)

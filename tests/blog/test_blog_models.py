@@ -23,4 +23,5 @@ def test_blogpost_hierarchy_restrictions(blog_post, site):
 @pytest.mark.django_db
 def test_blogpost_parent_blog(blog, blog_post_factory):
     blog_post = blog_post_factory(parent=blog)
+    assert isinstance(blog_post.blog, Blog)
     assert blog_post.blog == blog
