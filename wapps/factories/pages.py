@@ -26,7 +26,7 @@ class PageFactory(MP_NodeFactory):
     def _create(cls, *args, **kwargs):
         if 'parent' not in kwargs:
             try:
-                kwargs['parent'] = Page.objects.get(depth=0)
+                kwargs['parent'] = Page.objects.get(depth=1)
             except Page.DoesNotExist:
                 kwargs['parent'] = RootFactory()
 
@@ -60,7 +60,7 @@ class PageFactory(MP_NodeFactory):
 
 
 class RootFactory(PageFactory):
-    depth = 0
+    depth = 1
     title = 'root'
 
     @classmethod

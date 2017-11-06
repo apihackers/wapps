@@ -6,7 +6,7 @@ from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from wagtail.wagtailcore import urls as wagtail_urls
 
-from wapps import urls as wapps_common_urls
+from wapps import urls as wapps_urls
 
 from .views import error, first_visit
 
@@ -28,9 +28,6 @@ urlpatterns = [
     # url(r'^forms/', include(wapps_forms_urls)),
     # url('^sitemap\.xml$', sitemap),
 
-    # url(r'^feeds/blog/rss/$', BlogRssFeed(), name="blog_rss_feed"),
-    # url(r'^feeds/blog/atom/$', BlogAtomFeed(), name="blog_atom_feed"),
-
-    url(r'', include(wapps_common_urls)),
+    url(r'', include(wapps_urls)),
     url(r'', include(wagtail_urls)),
 ]

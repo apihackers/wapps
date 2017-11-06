@@ -25,7 +25,7 @@ SECRET_KEY = '!^!gdgh9_lsp2f$ly)=%wc(v_p03$%de6c94k2i72qrvm9gv17'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # DEBUG_TOOLBAR = True
