@@ -11,3 +11,11 @@ def test_get_site_blog(site, site_factory, blog_factory, faker):
 
     for site, blog in zip(sites, blogs):
         assert utils.get_site_blog(site) == blog
+
+
+@pytest.mark.django_db
+def test_get_blog_from_context(wrf, site, blog_factory):
+    blog = blog_factory(parent=site.root_page, published=True)
+
+    ctx = {'request': wrf.get('/')}
+    assert utils.get_blog_from_context(ctx) == blog
