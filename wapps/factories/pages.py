@@ -13,6 +13,7 @@ class PageFactory(MP_NodeFactory):
     title = factory.Faker('sentence')
     seo_title = factory.Faker('sentence')
     search_description = factory.Faker('paragraph')
+    live = False
 
     class Meta:
         model = Page

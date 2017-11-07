@@ -111,7 +111,7 @@ class SiteFeed(Feed):
         )
         return kwargs
 
-    def item_content(self, item):
+    def item_content(self, item):  # pragma: nocover
         '''The full item HTML content'''
         pass
 
@@ -121,3 +121,9 @@ class SiteFeed(Feed):
             return item.image
         elif getattr(item, 'feed_image', None):
             return item.feed_image
+
+    def title(self):
+        return self.meta.site_title
+
+    def link(self):
+        return self.site.root_url

@@ -18,6 +18,7 @@ from pytest_factoryboy import register, LazyFixture
 def pytest_configure(config):
     from wapps import factories
     register(factories.IdentityFactory, 'identity', author=LazyFixture('site'))
+    register(factories.FullIdentityFactory, 'full_identity', author=LazyFixture('site'))
     register(factories.ImageFactory, 'image')
     register(factories.ImageFactory)
     register(factories.PageFactory)

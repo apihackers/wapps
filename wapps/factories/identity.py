@@ -2,7 +2,7 @@ import factory
 
 from wapps.models import IdentitySettings
 
-from .image import ImageFactory
+from .image import ImageFactory, SvgFileField
 from .site import SiteFactory
 from .tag import TagFactory
 
@@ -11,7 +11,6 @@ class IdentityFactory(factory.DjangoModelFactory):
     site = factory.SubFactory(SiteFactory)
     name = factory.Faker('word')
     description = factory.Faker('paragraph')
-    logo = factory.SubFactory(ImageFactory)
 
     @factory.post_generation
     def tags(self, create, extracted, **kwargs):
@@ -31,3 +30,9 @@ class IdentityFactory(factory.DjangoModelFactory):
     class Meta:
         model = IdentitySettings
         django_get_or_create = ['site']
+
+
+class FullIdentityFactory(IdentityFactory):
+    logo = factory.SubFactory(ImageFactory)
+    svg_logo = SvgFileField()
+    favicon = factory.SubFactory(ImageFactory)

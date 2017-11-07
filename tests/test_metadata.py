@@ -14,8 +14,8 @@ def test_from_kwargs(wrf, page, site, identity):
     assert metadata.site_title == identity.name
     assert metadata.full_title == ' | '.join((page.seo_title, identity.name))
     assert metadata.description == page.search_description
-    assert metadata.image == identity.logo
-    assert metadata.image_url == site.root_url + get_image_url(identity.logo, 'original')
+    assert metadata.image is None
+    assert metadata.image_url is None
     assert len(metadata.tags) == 3
 
 
@@ -100,9 +100,8 @@ def test_image_url_from_kwargs(wrf, page, site, faker):
     assert metadata.image_url == url
 
 
-@pytest.mark.parametrize('identity__logo', [None])
-def test_no_image(wrf, page, site, identity):
+def test_no_image(wrf, page, site, full_identity):
     metadata = Metadata(request=wrf.get('/'), page=page, site=site)
 
-    assert metadata.image is None
-    assert metadata.image_url is None
+    assert metadata.image == full_identity.logo
+    assert metadata.image_url == site.root_url + get_image_url(full_identity.logo, 'original')

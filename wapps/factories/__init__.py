@@ -1,5 +1,5 @@
-from .identity import IdentityFactory  # noqa
-from .image import ImageFactory  # noqa
+from .identity import IdentityFactory, FullIdentityFactory  # noqa
+from .image import ImageFactory, SvgFileField  # noqa
 from .pages import PageFactory, RootFactory, StaticPageFactory  # noqa
 from .site import SiteFactory  # noqa
 from .tag import TagFactory  # noqa

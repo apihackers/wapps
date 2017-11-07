@@ -8,7 +8,7 @@ from wagtail.wagtailcore import urls as wagtail_urls
 
 from wapps import urls as wapps_urls
 
-from .views import error, first_visit
+from .views import error, first_visit, site_feed
 
 
 urlpatterns = [
@@ -22,6 +22,7 @@ urlpatterns = [
     # Test views
     url(r'^error/$', error, name='error'),
     url(r'^first-visit/$', first_visit, name='first-visit'),
+    url(r'^atom/$', site_feed, name='atom'),
 
     # url(r'^i18n/', include('django.conf.urls.i18n')),
 
