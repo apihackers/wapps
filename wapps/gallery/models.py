@@ -36,7 +36,7 @@ class Gallery(Page):
 
     @property
     def children(self):
-        return self.get_children().live()
+        return self.get_children().live().specific()
 
     def get_context(self, request):
         # Get list of live Gallery pages that are descendants of this page
@@ -67,6 +67,26 @@ class Gallery(Page):
         MultiFieldPanel(Page.promote_panels, _('SEO and metadata')),
         ImageChooserPanel('feed_image'),
     ]
+
+    def __jsonld__(self, context):
+        request = context['request']
+        data = {
+            '@type': 'CollectionPage',
+            '@id': self.full_url,
+            'url': self.full_url,
+            'name': self.seo_title or self.title,
+        }
+        if self.first_published_at:
+            data.update({
+                'datePublished': self.first_published_at.isoformat(),
+                'dateModified': self.last_published_at.isoformat(),
+            })
+        if self.feed_image:
+            data['image'] = request.site.root_url + self.feed_image.get_rendition('original').url
+
+        data['hasPart'] = [album.__jsonld__(context) for album in self.children]
+
+        return data
 
 
 class AlbumTag(TaggedItemBase):
@@ -159,6 +179,7 @@ class Album(Page):
         data = {
             '@type': 'ImageGallery',
             '@id': self.full_url,
+            'url': self.full_url,
             'name': self.seo_title or self.title,
             'associatedMedia': []
         }

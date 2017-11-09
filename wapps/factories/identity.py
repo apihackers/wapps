@@ -36,3 +36,4 @@ class FullIdentityFactory(IdentityFactory):
     logo = factory.SubFactory(ImageFactory)
     svg_logo = SvgFileField()
     favicon = factory.SubFactory(ImageFactory)
+    amp_logo = factory.SubFactory(ImageFactory)
