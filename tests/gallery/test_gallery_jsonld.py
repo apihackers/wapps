@@ -28,8 +28,8 @@ def test_minimal_album(wrf, site, identity, album):
 
 @pytest.mark.django_db
 def test_full_gallery_with_albums(wrf, site, identity, gallery_factory, album_factory):
-    gallery = gallery_factory(full=True)
-    albums = album_factory.create_batch(3, full=True, live=True, parent=gallery)
+    gallery = gallery_factory(full=True, published=True)
+    albums = album_factory.create_batch(3, full=True, published=True, parent=gallery)
     data = jsonld.graph({'request': wrf.get('/')}, gallery)
 
     assert len(jsonld.extract(data['@graph'], 'CollectionPage')) == 1

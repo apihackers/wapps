@@ -124,7 +124,7 @@ class Album(Page):
     @property
     def gallery(self):
         # Find closest ancestor which is a Gallery index
-        return self.get_ancestors().type(Gallery).last()
+        return self.get_ancestors().type(Gallery).specific().last()
 
     def get_context(self, request):
         context = super(Album, self).get_context(request)
