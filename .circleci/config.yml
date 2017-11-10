@@ -79,6 +79,9 @@ jobs:
       - run:
           name: Install NodeJS and dependencies
           command: npm install
+      - run:
+          name: Run ESLint
+          command: npm run -s lint
       - save_cache:
           key: js-cache-{{ arch }}-{{ checksum "package.json" }}
           paths:
