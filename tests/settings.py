@@ -151,6 +151,8 @@ TEMPLATES = [
                 "django.template.context_processors.media",
                 "django.template.context_processors.request",
                 "django.template.context_processors.tz",
+                "wapps.context_processors.config",
+                "wapps.context_processors.google"
             ],
         }
     },

@@ -4,13 +4,6 @@ from wapps.utils import get_image_url
 
 
 @pytest.mark.django_db
-def test_wagtail_site_name(jinja, settings, faker):
-    settings.WAGTAIL_SITE_NAME = faker.sentence()
-    rendered = jinja('{{ WAGTAIL_SITE_NAME }}')
-    assert rendered == settings.WAGTAIL_SITE_NAME
-
-
-@pytest.mark.django_db
 def test_is_site_root(wrf, jinja, site, page_factory):
     request = wrf.get('/')
     page = page_factory(parent=site.root_page)

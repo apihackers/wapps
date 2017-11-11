@@ -72,9 +72,12 @@ class StaticPage(Page):
         request = context['request']
         data = {
             '@id': self.full_url,
+            'url': self.full_url,
             'name': self.seo_title or self.title,
-            'keywords': ','.join(t.name for t in self.tags.all()),
         }
+        tags = self.tags.all()
+        if tags:
+            data['keywords'] = ','.join(t.name for t in tags)
         if self.image:
             data['image'] = get_site(request).root_url + self.image.get_rendition('original').url
 
