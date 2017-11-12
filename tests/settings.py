@@ -27,19 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-
-# DEBUG_TOOLBAR = True
-#
-# INSTALLED_APPS += (  # noqa
-#     'debug_toolbar',
-# )
-#
-# MIDDLEWARE.insert(0, 'debug_toolbar.middleware.DebugToolbarMiddleware')
-
 # Application definition
 
 INSTALLED_APPS = [
-    # 'wappsdemo',
     'wapps',
     'wapps.blog',
     'wapps.gallery',
@@ -171,7 +161,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'wappsdemo.wsgi.application'
+WSGI_APPLICATION = 'demo.wsgi.application'
 
 
 # Database

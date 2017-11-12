@@ -3,14 +3,14 @@ source = wapps
 branch = True
 omit =
     tests/*
-    wappsdemo/*
+    demo/*
     */migrations/*
     wapps/pytest.py
 
 [report]
 omit =
     tests/*
-    wappsdemo/*
+    demo/*
     */migrations/*
     wapps/pytest.py
 

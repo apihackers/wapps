@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'wappsdemo',
+    'demo',
     'wapps',
     'wapps.blog',
     # 'wapps.comments',
@@ -97,7 +97,7 @@ MIDDLEWARE = [
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
 ]
 
-ROOT_URLCONF = 'wappsdemo.urls'
+ROOT_URLCONF = 'demo.urls'
 
 COMMENTS_APP = 'django_comments_xtd'
 COMMENTS_XTD_MAX_THREAD_LEVEL = 2
@@ -155,7 +155,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'wappsdemo.wsgi.application'
+WSGI_APPLICATION = 'demo.wsgi.application'
 
 
 # Database

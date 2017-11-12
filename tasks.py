@@ -9,7 +9,7 @@ from invoke import task, call
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__)))
 
 PROJECTS = [
-    'wappsdemo',
+    'demo',
     'wapps',
     'wapps.blog',
     'wapps.gallery',
