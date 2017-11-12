@@ -81,3 +81,11 @@ def test_minimal_blog_post_page(client, blog_post):
 
     assert response.status_code == 200
     assert response.context_data['page'] == blog_post
+
+
+def test_full_blog_post_page(client, blog, blog_post_factory):
+    post = blog_post_factory(parent=blog, full=True, published=True, owned=True, tags=2, categories=2)
+    response = client.get(post.url)
+
+    assert response.status_code == 200
+    assert response.context_data['page'] == post

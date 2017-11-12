@@ -31,6 +31,6 @@ def imageurl(image, specs):
 @library.global_function
 @jinja2.contextfunction
 def routablepageurl(context, page, name, *args, **kwargs):
-    if not hasattr(context['request'], 'site'):
+    if not hasattr(context['request'], 'site'):  # pragma: nocover
         context['request'].site = get_site(context['request'])
     return dj_routablepageurl(context, page, name, *args, **kwargs)
