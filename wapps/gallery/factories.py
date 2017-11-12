@@ -20,7 +20,6 @@ class GalleryFactory(PageFactory):
 
 class AlbumFactory(PageFactory):
     animation = FuzzyChoice(a[0] for a in Album.ANIMATIONS_TYPES)
-    # body = factory.Faker('paragraph')
 
     class Meta:
         model = Album
@@ -60,7 +59,7 @@ class ManualAlbumFactory(AlbumFactory):
         if extracted:
             # A list of tags were passed in, use them.
             if isinstance(extracted, int):
-                images = [ManualAlbumImage(image=ImageFactory())]
+                images = [ManualAlbumImage(image=i) for i in ImageFactory.create_batch(extracted)]
             else:
                 images = extracted
             for image in images:

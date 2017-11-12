@@ -1,0 +1,33 @@
+{% if page.image %}
+{% set image_specs = 'width-1100' if page.image_full else 'fill-1100x580' %}
+{% set image_class = 'content-top-img-full' if page.image_full else 'content-top-img' %}
+{% set page_image = image(page.image, image_specs, class=image_class) %}
+{% set meta_image = page_image.url %}
+{% endif %}
+
+{% set meta = page_meta() %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE|default('en') }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<head>
+	<meta charset="utf-8">
+  <title>{{ meta.full_title }}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% include 'wapps/metadata.html' %}
+</head>
+<body>
+  <h1>{{ page.title }}</h1>
+  {% if page.intro %}{{ page.intro|richtext }}{% endif %}
+
+  {% for img in images %}
+  <div>
+      <a href="{{image(img, 'original').url}}"
+          {% if page.show_details -%}
+          title="{{ img.title }}"
+          {% if img.details %}data-details="{{ img.details }}"{% endif %}
+          {%- endif %}>
+          {{ image(img, 'fill-400x380', alt=img.title, class='img-responsive') }}
+      </a>
+  </div>
+  {% endfor %}
+</body>
+</html>

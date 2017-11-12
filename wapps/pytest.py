@@ -25,6 +25,7 @@ def pytest_configure(config):
     register(factories.PageFactory)
     register(factories.SiteFactory)
     register(factories.UserFactory)
+    register(factories.TagFactory)
 
 
 @pytest.fixture(autouse=True)

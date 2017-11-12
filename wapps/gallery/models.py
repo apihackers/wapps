@@ -1,4 +1,3 @@
-from django.apps import apps
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -6,6 +5,7 @@ from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailcore.models import Page, Orderable
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel, InlinePanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+from wagtail.wagtailimages import get_image_model, get_image_model_string
 from wagtail.wagtailsearch import index
 
 from modelcluster.fields import ParentalKey
@@ -13,9 +13,9 @@ from modelcluster.tags import ClusterTaggableManager
 
 from taggit.models import TaggedItemBase
 
-from wapps.utils import get_image_model, get_image_url
+from wapps.utils import get_image_url
 
-ImageModel = get_image_model()
+ImageModel = get_image_model_string()
 
 
 class Gallery(Page):
@@ -132,21 +132,13 @@ class Album(Page):
         return context
 
     def get_images(self, request):
-        # Get tags and convert them into list so we can iterate over them
-        tags = self.tags.values_list('name', flat=True)
+        tags = self.tags.all()
 
         # Be compatible with swappable image model
-        model = apps.get_model(*ImageModel.split('.'))
+        model = get_image_model()
 
         # Creating empty Queryset from Wagtail image model
-        images = model.objects.none()
-
-        if tags:
-            for i in range(0, len(tags)):
-                img = model.objects.filter(tags__name=tags[i])
-                images = images | img
-
-        return images
+        return model.objects.filter(tags__in=tags).distinct()
 
     class Meta:
         verbose_name = _('Album')
@@ -215,7 +207,7 @@ class Album(Page):
 class ManualAlbumImage(Orderable, models.Model):
     page = ParentalKey('gallery.ManualAlbum', related_name='images')
     image = models.ForeignKey(
-        get_image_model(),
+        ImageModel,
         null=False,
         blank=False,
         on_delete=models.CASCADE,
@@ -229,19 +221,7 @@ class ManualAlbumImage(Orderable, models.Model):
 
 class ManualAlbum(Album):
     def get_images(self, request):
-        # Creating empty Queryset from Wagtail image model
-        images = self.images.all()
-
-        # Pagination
-        # page = request.GET.get('page')
-        # paginator = Paginator(images, 20)  # Show 20 images per page
-        # try:
-        #     images = paginator.page(page)
-        # except PageNotAnInteger:
-        #     images = paginator.page(1)
-        # except EmptyPage:
-        #     images = paginator.page(paginator.num_pages)
-        return images
+        return [i.image for i in self.images.all()]
 
     class Meta:
         verbose_name = _('Manual album')

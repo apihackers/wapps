@@ -42,6 +42,14 @@ class PageFactory(MP_NodeFactory):
             revision.publish()
             page.refresh_from_db()
 
+
+class StaticPageFactory(PageFactory):
+    body = factory.Faker('paragraph')
+    image = factory.SubFactory(ImageFactory)
+
+    class Meta:
+        model = StaticPage
+
     @factory.post_generation
     def tags(self, create, extracted, **kwargs):
         if not create:  # pragma: nocover
@@ -56,11 +64,3 @@ class PageFactory(MP_NodeFactory):
                 tags = extracted
             for tag in tags:
                 self.tags.add(tag)
-
-
-class StaticPageFactory(PageFactory):
-    body = factory.Faker('paragraph')
-    image = factory.SubFactory(ImageFactory)
-
-    class Meta:
-        model = StaticPage
