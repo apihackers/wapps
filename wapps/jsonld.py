@@ -57,14 +57,6 @@ def breadcrumb(context):
     }
 
 
-ADDRESS_MAPPING = {
-    'address': 'streetAddress',
-    'post_code': 'postalCode',
-    'city': 'addressLocality',
-    'country': 'addressCountry',
-}
-
-
 def organization(context):
     request = context['request']
     site = get_site(request)

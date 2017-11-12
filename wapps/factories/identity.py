@@ -33,7 +33,20 @@ class IdentityFactory(factory.DjangoModelFactory):
 
 
 class FullIdentityFactory(IdentityFactory):
+    tags = 3
     logo = factory.SubFactory(ImageFactory)
     svg_logo = SvgFileField()
     favicon = factory.SubFactory(ImageFactory)
     amp_logo = factory.SubFactory(ImageFactory)
+    email = factory.Faker('email')
+    telephone = factory.Faker('phone_number')
+    address_1 = factory.Faker('street_address')
+    post_code = factory.Faker('postalcode')
+    city = factory.Faker('city')
+    country = factory.Faker('country')
+    facebook = factory.Faker('user_name')
+    twitter = factory.Faker('user_name')
+    linkedin = factory.Faker('uri')
+    instagram = factory.Faker('user_name')
+    pinterest = factory.Faker('user_name')
+    youtube = factory.Faker('user_name')
