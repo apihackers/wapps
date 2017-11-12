@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-08 20:41+0200\n"
+"POT-Creation-Date: 2017-11-12 18:04+0100\n"
 "PO-Revision-Date: 2016-10-30 12:13+0100\n"
 "Last-Translator: Axel Haustant <noirbizarre@gmail.com>\n"
 "Language: fr\n"
@@ -30,14 +30,6 @@ msgstr "Précédent"
 msgid "Next"
 msgstr "Suivant"
 
-#: jinja2/blog/sidebar.html:6
-msgid "Categories"
-msgstr "Catégories"
-
-#: jinja2/blog/sidebar.html:29
-msgid "Tags"
-msgstr ""
-
 #: jinja2/wagtailsearch/search_results.html:8
 msgid "Search results"
 msgstr "Résultats de la recherche"
@@ -52,4 +44,10 @@ msgstr[1] "%(num)s résultats trouvés pour la recherche %(query)s"
 #: jinja2/wagtailsearch/search_results.html:66
 msgid "Read more"
 msgstr "Lire plus"
+
+#~ msgid "Categories"
+#~ msgstr "Catégories"
+
+#~ msgid "Tags"
+#~ msgstr ""
 
