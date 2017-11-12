@@ -22,20 +22,18 @@ class PageFactory(MP_NodeFactory):
         owned = factory.Trait(
             owner=factory.SubFactory(UserFactory),
         )
+        root = factory.Trait(title='root', parent=None)
 
-    @classmethod
-    def _create(cls, *args, **kwargs):
-        if 'parent' not in kwargs:
-            try:
-                kwargs['parent'] = Page.objects.get(depth=1)
-            except Page.DoesNotExist:
-                kwargs['parent'] = RootFactory()
-
-        return super()._create(*args, **kwargs)
+    @factory.lazy_attribute
+    def parent(self):
+        try:
+            return Page.objects.get(slug='root')
+        except Page.DoesNotExist:
+            return PageFactory(root=True)
 
     @factory.post_generation
     def published(page, create, extracted, **kwargs):
-        if not create:
+        if not create:  # pragma: nocover
             # Simple build, do nothing.
             return
 
@@ -46,7 +44,7 @@ class PageFactory(MP_NodeFactory):
 
     @factory.post_generation
     def tags(self, create, extracted, **kwargs):
-        if not create:
+        if not create:  # pragma: nocover
             # Simple build, do nothing.
             return
 
@@ -58,16 +56,6 @@ class PageFactory(MP_NodeFactory):
                 tags = extracted
             for tag in tags:
                 self.tags.add(tag)
-
-
-class RootFactory(PageFactory):
-    depth = 1
-    title = 'root'
-
-    @classmethod
-    def _create(cls, *args, **kwargs):
-        kwargs['parent'] = None
-        return super()._create(*args, **kwargs)
 
 
 class StaticPageFactory(PageFactory):

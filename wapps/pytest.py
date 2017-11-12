@@ -17,12 +17,12 @@ from pytest_factoryboy import register, LazyFixture
 
 def pytest_configure(config):
     from wapps import factories
-    register(factories.IdentityFactory, 'identity', author=LazyFixture('site'))
-    register(factories.FullIdentityFactory, 'full_identity', author=LazyFixture('site'))
-    register(factories.ImageFactory, 'image')
+    register(factories.CategoryFactory)
+    register(factories.FullIdentityFactory, 'full_identity', site=LazyFixture('site'))
+    register(factories.IdentityFactory, 'identity', site=LazyFixture('site'))
     register(factories.ImageFactory)
+    register(factories.ImageFactory, 'image')
     register(factories.PageFactory)
-    register(factories.RootFactory)
     register(factories.SiteFactory)
     register(factories.UserFactory)
 

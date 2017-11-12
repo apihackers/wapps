@@ -4,9 +4,9 @@ from wapps.utils import get_image_url
 
 
 @pytest.mark.django_db
-def test_is_site_root(wrf, jinja, site, page_factory):
+def test_is_site_root(wrf, jinja, site, page):
     request = wrf.get('/')
-    page = page_factory(parent=site.root_page)
+    assert site.root_page != page
     assert jinja('{{ is_site_root(page) }}', request=request, page=site.root_page) == 'True'
     assert jinja('{{ is_site_root(page) }}', request=request, page=page) == 'False'
     assert jinja('{{ is_site_root(page) }}', page=site.root_page) == 'False'

@@ -17,6 +17,7 @@ omit =
 # Regexes for lines to exclude from consideration
 exclude_lines =
     # Have to re-enable the standard pragma
+    pragma: nocover
     pragma: no cover
 
     # Don't complain about missing debug-only code:

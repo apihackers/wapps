@@ -33,7 +33,7 @@ class AlbumFactory(PageFactory):
 
     @factory.post_generation
     def tags(self, create, extracted, **kwargs):
-        if not create:
+        if not create:  # pragma: nocover
             # Simple build, do nothing.
             return
 
@@ -53,7 +53,7 @@ class ManualAlbumFactory(AlbumFactory):
 
     @factory.post_generation
     def images(self, create, extracted, **kwargs):
-        if not create:
+        if not create:  # pragma: nocover
             # Simple build, do nothing.
             return
 

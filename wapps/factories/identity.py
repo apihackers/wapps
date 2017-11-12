@@ -14,7 +14,7 @@ class IdentityFactory(factory.DjangoModelFactory):
 
     @factory.post_generation
     def tags(self, create, extracted, **kwargs):
-        if not create:
+        if not create:  # pragma: nocover
             # Simple build, do nothing.
             return
 

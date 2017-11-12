@@ -1,8 +1,8 @@
 import factory
 
-from wapps.factories import PageFactory, TagFactory, ImageFactory
+from wapps.factories import PageFactory, TagFactory, ImageFactory, CategoryFactory
 
-from .models import Blog, BlogPost
+from .models import Blog, BlogPost, BlogPostCategory
 
 
 class BlogFactory(PageFactory):
@@ -31,7 +31,7 @@ class BlogPostFactory(PageFactory):
 
     @factory.post_generation
     def tags(self, create, extracted, **kwargs):
-        if not create:
+        if not create:  # pragma: nocover
             # Simple build, do nothing.
             return
 
@@ -44,10 +44,17 @@ class BlogPostFactory(PageFactory):
             for tag in tags:
                 self.tags.add(tag)
 
+    @factory.post_generation
+    def categories(self, create, extracted, **kwargs):
+        if not create:  # pragma: nocover
+            # Simple build, do nothing.
+            return
 
-# class StaticPageFactory(PageFactory):
-#     body = factory.Faker('paragraph')
-#     image = factory.SubFactory(ImageFactory)
-#
-#     class Meta:
-#         model = StaticPage
+        if extracted:
+            # A list of tags were passed in, use them.
+            if isinstance(extracted, int):
+                categories = CategoryFactory.create_batch(extracted)
+            else:
+                categories = extracted
+            for category in categories:
+                self.blogpost_categories.add(BlogPostCategory(category=category))
