@@ -97,7 +97,7 @@ class Blog(RoutablePageMixin, Page):
     @route(r'^(\d{4})/(\d{2})/$')
     @route(r'^(\d{4})/(\d{2})/(\d{2})/$')
     def by_date(self, request, year, month=None, day=None, *args, **kwargs):
-        self.posts = self.get_queryset().filter(first_published_at__year=year)
+        self.posts = self.queryset.filter(first_published_at__year=year)
         self.filter_type = _('date')
         self.filter_term = year
         if month:
@@ -113,21 +113,21 @@ class Blog(RoutablePageMixin, Page):
     def by_tag(self, request, tag, *args, **kwargs):
         self.filter_type = _('tag')
         self.filter_term = tag
-        self.posts = self.get_queryset().filter(tags__slug=tag)
+        self.posts = self.queryset.filter(tags__slug=tag)
         return Page.serve(self, request, *args, **kwargs)
 
     @route(r'^category/(?P<category>[-\w]+)/$')
     def by_category(self, request, category, *args, **kwargs):
         self.filter_type = _('category')
         self.filter_term = category
-        self.posts = self.get_queryset().filter(blogpost_categories__category__slug=category)
+        self.posts = self.queryset.filter(blogpost_categories__category__slug=category)
         return Page.serve(self, request, *args, **kwargs)
 
     @route(r'^author/(?P<author>[-_\w]+)/$')
     def by_author(self, request, author, *args, **kwargs):
         self.filter_type = _('author')
         self.filter_term = author
-        self.posts = self.get_queryset().filter(owner__username=author)
+        self.posts = self.queryset.filter(owner__username=author)
         return Page.serve(self, request, *args, **kwargs)
 
     @route(r'^feed/$')
