@@ -45,10 +45,16 @@ class PageFactory(MP_NodeFactory):
 
 class StaticPageFactory(PageFactory):
     body = factory.Faker('paragraph')
-    image = factory.SubFactory(ImageFactory)
+    seo_type = 'article'
 
     class Meta:
         model = StaticPage
+
+    class Params:
+        full = factory.Trait(
+            intro=factory.Faker('paragraph'),
+            image=factory.SubFactory(ImageFactory),
+        )
 
     @factory.post_generation
     def tags(self, create, extracted, **kwargs):
