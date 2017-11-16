@@ -10,4 +10,4 @@ django-modelcluster==3.1
 psycopg2
 requests
 wagtail==1.13
-wagtailfontawesome==1.1.0
+wagtailfontawesome==1.1.1
