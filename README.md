@@ -24,7 +24,7 @@ It assumes the following stacks:
 ### Frontend Stack
 
 - Vue 2 for front components
-- Webpack 2 as front build toolchain
+- Webpack 3 as front build toolchain
 - SCSS as style language
 - Bootstrap and Font-awesome as base frameworks
 
