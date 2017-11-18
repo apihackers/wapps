@@ -65,7 +65,7 @@ jobs:
 
   assets:
     docker:
-      - image: circleci/node:8.6
+      - image: circleci/node:8.9
     steps:
       - checkout
       - run:
