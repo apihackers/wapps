@@ -3,6 +3,7 @@ import pytest
 from urllib.parse import urljoin, urlsplit
 
 from django.conf import settings
+from django.core.management import call_command
 from django.core.urlresolvers import reverse
 from django.http import QueryDict
 from django.http.request import split_domain_port, validate_host
@@ -36,8 +37,12 @@ def _wagtail_cleanup(request, django_db_blocker, _django_db_marker):
         from wagtail.wagtailcore.models import Page, Site
         with django_db_blocker.unblock():
             # Remove some initial data that is brought by the sandbox module
-            Site.objects.all().delete()
-            Page.objects.all().delete()
+            if not request.node.get_marker('no_wagtail_cleanup'):
+                Site.objects.all().delete()
+                Page.objects.all().delete()
+            marker = request.node.get_marker('load_db_fixture')
+            if marker:
+                call_command('loaddata', marker.args[0])
 
 
 @pytest.fixture
