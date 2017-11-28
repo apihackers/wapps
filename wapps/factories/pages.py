@@ -1,5 +1,6 @@
 import factory
 
+from django.utils.text import slugify
 from wagtail_factories.factories import MP_NodeFactory
 from wagtail.wagtailcore.models import Page
 from wapps.models import StaticPage
@@ -13,6 +14,7 @@ class PageFactory(MP_NodeFactory):
     title = factory.Faker('sentence')
     seo_title = factory.Faker('sentence')
     search_description = factory.Faker('paragraph')
+    slug = factory.LazyAttribute(lambda o: slugify(o.title, allow_unicode=True))
     live = False
 
     class Meta:

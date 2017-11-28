@@ -16,6 +16,11 @@ def test_minimal_gallery_page(client, gallery):
     assert response.context_data['page'] == gallery
 
 
+def test_minimal_gallery_page_preview(preview, gallery_factory):
+    response = preview(gallery_factory.build())
+    assert response.status_code == 200
+
+
 @pytest.mark.parametrize('gallery__published', [True])
 def test_gallery_with_albums(client, gallery, album_factory, manual_album_factory):
     albums = album_factory.create_batch(3, published=True, parent=gallery)

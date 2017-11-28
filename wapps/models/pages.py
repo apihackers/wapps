@@ -96,9 +96,11 @@ class StaticPage(Page):
             'articleBody': str(self.body),
         })
         if self.first_published_at:
+            # Prevent pre wagtail 1.11 pages to fail
+            date_modified = self.last_published_at or self.first_published_at
             data.update({
                 'datePublished': self.first_published_at.isoformat(),
-                'dateModified': self.last_published_at.isoformat(),
+                'dateModified': date_modified.isoformat(),
             })
         if self.owner:
             data.update(author={
@@ -119,9 +121,11 @@ class StaticPage(Page):
             'headline': Truncator(strip_tags(self.search_description or str(self.intro))).chars(100),
         })
         if self.first_published_at:
+            # Prevent pre wagtail 1.11 pages to fail
+            date_modified = self.last_published_at or self.first_published_at
             data.update({
                 'datePublished': self.first_published_at.isoformat(),
-                'dateModified': self.last_published_at.isoformat(),
+                'dateModified': date_modified.isoformat(),
             })
         if self.owner:
             data.update(author={

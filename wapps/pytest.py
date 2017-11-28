@@ -46,6 +46,33 @@ def _wagtail_cleanup(request, django_db_blocker, _django_db_marker):
 
 
 @pytest.fixture
+def preview(admin_client, site):
+    __tracebackhide__ = True
+
+    def preview_func(page):
+        form_class = page.get_edit_handler().get_form_class(page._meta.model)
+        parent_page = (page.get_parent() or site.root_page).specific
+        form = form_class(instance=page, parent_page=parent_page)
+        data = {'action-submit': 'Submit'}
+        for name in form.fields:
+            value = form.initial.get(name, None)
+            data[name] = value or ''
+        if page.id:
+            preview_url = reverse('wagtailadmin_pages:preview_on_edit', args=[page.id])
+        else:
+            args = (page._meta.app_label, page._meta.model_name, parent_page.id)
+            preview_url = reverse('wagtailadmin_pages:preview_on_add', args=args)
+        response = admin_client.post(preview_url, data)
+        assert response.status_code == 200
+        if not response.json().get('is_valid'):
+            errors = form_class(data, instance=page, parent_page=parent_page).errors.as_data()
+            pytest.fail('Preview validation fail: {0}'.format(errors))
+        return admin_client.get(preview_url)
+    preview_func.client = admin_client
+    return preview_func
+
+
+@pytest.fixture
 def wrf(site):
     from wapps import factories
     return factories.RequestFactory(site=site)

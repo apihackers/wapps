@@ -77,9 +77,11 @@ class Gallery(Page):
             'name': self.seo_title or self.title,
         }
         if self.first_published_at:
+            # Prevent pre wagtail 1.11 pages to fail
+            date_modified = self.last_published_at or self.first_published_at
             data.update({
                 'datePublished': self.first_published_at.isoformat(),
-                'dateModified': self.last_published_at.isoformat(),
+                'dateModified': date_modified.isoformat(),
             })
         if self.feed_image:
             data['image'] = request.site.root_url + self.feed_image.get_rendition('original').url
@@ -176,9 +178,11 @@ class Album(Page):
             'associatedMedia': []
         }
         if self.first_published_at:
+            # Prevent pre wagtail 1.11 pages to fail
+            date_modified = self.last_published_at or self.first_published_at
             data.update({
                 'datePublished': self.first_published_at.isoformat(),
-                'dateModified': self.latest_revision_created_at.isoformat(),
+                'dateModified': date_modified.isoformat(),
             })
         if self.image:
             data['image'] = request.site.root_url + self.image.get_rendition('original').url
