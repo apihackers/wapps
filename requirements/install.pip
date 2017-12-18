@@ -1,7 +1,7 @@
 Django==1.11.7
 Jinja2==2.10
 django-appconf==1.0.2
-django-babel==0.6.1
+django-babel==0.6.2
 django-colorful==1.2
 django-jinja==2.4.1
 django-memoize==2.1.0
