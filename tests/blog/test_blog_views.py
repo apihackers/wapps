@@ -16,6 +16,12 @@ def test_minimal_blog_page(client, blog):
     assert response.context_data['page'] == blog
 
 
+def test_minimal_blog_preview(preview, blog_factory):
+    response = preview(blog_factory())
+
+    assert response.status_code == 200
+
+
 @pytest.mark.parametrize('blog__published', [True])
 def test_blog_with_posts(client, blog, blog_post_factory):
     posts = blog_post_factory.create_batch(3, published=True, parent=blog)
