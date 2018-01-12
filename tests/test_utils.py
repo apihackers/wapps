@@ -13,37 +13,3 @@ def test_timehash_different():
     first = utils.timehash()
     second = utils.timehash()
     assert first != second
-
-
-class SettingProxyTest:
-    def test_undefined_setting(self, settings, faker):
-        proxy = utils.SettingProxy('UNDEFINED')
-        assert bool(proxy) == False
-        assert proxy == None
-
-    def test_none_setting(self, settings, faker):
-        settings.VALUE = None
-        proxy = utils.SettingProxy('VALUE')
-        assert bool(proxy) == False
-        assert proxy == None
-
-    def test_string_setting(self, settings, faker):
-        settings.VALUE = faker.word()
-        proxy = utils.SettingProxy('VALUE')
-        assert str(proxy) == settings.VALUE
-        assert bool(proxy) == True
-
-    def test_empty_string_setting(self, settings, faker):
-        settings.VALUE = ''
-        proxy = utils.SettingProxy('VALUE')
-        assert str(proxy) == ''
-        assert bool(proxy) == False
-
-    def test_bool_setting(self, settings, faker):
-        settings.VALUE = True
-        proxy = utils.SettingProxy('VALUE')
-        assert proxy == True
-
-        settings.VALUE = False
-        proxy = utils.SettingProxy('VALUE')
-        assert proxy == False

@@ -46,11 +46,11 @@ def placeholder(ctx, value, width, height, bg=None, fg=None, text=None, site=Tru
     if not text:
         request = ctx['request']
         site = request.site
-        identity = IdentitySettings.for_site(request.site)
         if site:
-            text = identity.name or request.site.name
-        else:
-            text = '{width}x{height}'.format(**params)
+            identity = IdentitySettings.for_site(site)
+            text = getattr(identity, 'name') or site.site_name
+    if not text:
+        text = '{width}x{height}'.format(**params)
     params['text'] = text.replace(' ', '+')
     for key in 'fg', 'bg':
         params[key] = params[key].replace('#', '')

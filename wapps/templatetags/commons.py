@@ -1,7 +1,6 @@
-from datetime import datetime
-
 import jinja2
 
+from django.utils import timezone
 from django.utils.safestring import mark_safe
 from django_jinja import library
 
@@ -32,7 +31,7 @@ def jsonld(context, *data):
 
 @library.global_function
 def now():
-    return datetime.now()
+    return timezone.now()
 
 
 @library.global_function

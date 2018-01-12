@@ -1,4 +1,3 @@
-from django.apps import apps
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -6,6 +5,7 @@ from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailcore.models import Page, Orderable
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel, InlinePanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+from wagtail.wagtailimages import get_image_model, get_image_model_string
 from wagtail.wagtailsearch import index
 
 from modelcluster.fields import ParentalKey
@@ -13,9 +13,9 @@ from modelcluster.tags import ClusterTaggableManager
 
 from taggit.models import TaggedItemBase
 
-from wapps.utils import get_image_model, get_image_url
+from wapps.utils import get_image_url
 
-ImageModel = get_image_model()
+ImageModel = get_image_model_string()
 
 
 class Gallery(Page):
@@ -36,7 +36,7 @@ class Gallery(Page):
 
     @property
     def children(self):
-        return self.get_children().live()
+        return self.get_children().live().specific()
 
     def get_context(self, request):
         # Get list of live Gallery pages that are descendants of this page
@@ -67,6 +67,28 @@ class Gallery(Page):
         MultiFieldPanel(Page.promote_panels, _('SEO and metadata')),
         ImageChooserPanel('feed_image'),
     ]
+
+    def __jsonld__(self, context):
+        request = context['request']
+        data = {
+            '@type': 'CollectionPage',
+            '@id': self.full_url,
+            'url': self.full_url,
+            'name': self.seo_title or self.title,
+        }
+        if self.first_published_at:
+            # Prevent pre wagtail 1.11 pages to fail
+            date_modified = self.last_published_at or self.first_published_at
+            data.update({
+                'datePublished': self.first_published_at.isoformat(),
+                'dateModified': date_modified.isoformat(),
+            })
+        if self.feed_image:
+            data['image'] = request.site.root_url + self.feed_image.get_rendition('original').url
+
+        data['hasPart'] = [album.__jsonld__(context) for album in self.children]
+
+        return data
 
 
 class AlbumTag(TaggedItemBase):
@@ -104,7 +126,7 @@ class Album(Page):
     @property
     def gallery(self):
         # Find closest ancestor which is a Gallery index
-        return self.get_ancestors().type(Gallery).last()
+        return self.get_ancestors().type(Gallery).specific().last()
 
     def get_context(self, request):
         context = super(Album, self).get_context(request)
@@ -112,21 +134,13 @@ class Album(Page):
         return context
 
     def get_images(self, request):
-        # Get tags and convert them into list so we can iterate over them
-        tags = self.tags.values_list('name', flat=True)
+        tags = self.tags.all()
 
         # Be compatible with swappable image model
-        model = apps.get_model(*ImageModel.split('.'))
+        model = get_image_model()
 
         # Creating empty Queryset from Wagtail image model
-        images = model.objects.none()
-
-        if tags:
-            for i in range(0, len(tags)):
-                img = model.objects.filter(tags__name=tags[i])
-                images = images | img
-
-        return images
+        return model.objects.filter(tags__in=tags).distinct()
 
     class Meta:
         verbose_name = _('Album')
@@ -159,13 +173,16 @@ class Album(Page):
         data = {
             '@type': 'ImageGallery',
             '@id': self.full_url,
+            'url': self.full_url,
             'name': self.seo_title or self.title,
             'associatedMedia': []
         }
         if self.first_published_at:
+            # Prevent pre wagtail 1.11 pages to fail
+            date_modified = self.last_published_at or self.first_published_at
             data.update({
                 'datePublished': self.first_published_at.isoformat(),
-                'dateModified': self.latest_revision_created_at.isoformat(),
+                'dateModified': date_modified.isoformat(),
             })
         if self.image:
             data['image'] = request.site.root_url + self.image.get_rendition('original').url
@@ -194,7 +211,7 @@ class Album(Page):
 class ManualAlbumImage(Orderable, models.Model):
     page = ParentalKey('gallery.ManualAlbum', related_name='images')
     image = models.ForeignKey(
-        get_image_model(),
+        ImageModel,
         null=False,
         blank=False,
         on_delete=models.CASCADE,
@@ -208,19 +225,7 @@ class ManualAlbumImage(Orderable, models.Model):
 
 class ManualAlbum(Album):
     def get_images(self, request):
-        # Creating empty Queryset from Wagtail image model
-        images = self.images.all()
-
-        # Pagination
-        # page = request.GET.get('page')
-        # paginator = Paginator(images, 20)  # Show 20 images per page
-        # try:
-        #     images = paginator.page(page)
-        # except PageNotAnInteger:
-        #     images = paginator.page(1)
-        # except EmptyPage:
-        #     images = paginator.page(paginator.num_pages)
-        return images
+        return [i.image for i in self.images.all()]
 
     class Meta:
         verbose_name = _('Manual album')

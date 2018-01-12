@@ -23,27 +23,17 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '!^!gdgh9_lsp2f$ly)=%wc(v_p03$%de6c94k2i72qrvm9gv17'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
-ALLOWED_HOSTS = []
-
-
-# DEBUG_TOOLBAR = True
-#
-# INSTALLED_APPS += (  # noqa
-#     'debug_toolbar',
-# )
-#
-# MIDDLEWARE.insert(0, 'debug_toolbar.middleware.DebugToolbarMiddleware')
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
 INSTALLED_APPS = [
-    # 'wappsdemo',
     'wapps',
     'wapps.blog',
     'wapps.gallery',
-    'wapps.forms',
+    # 'wapps.forms',
 
     'wagtail.wagtailforms',
     'wagtail.wagtailredirects',
@@ -104,6 +94,10 @@ MIDDLEWARE = [
 
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
+
+    # Wapps middlewares
+    'wapps.middleware.ErrorMiddleware',
+    'wapps.middleware.FirstVisitMiddleware',
 ]
 
 ROOT_URLCONF = 'tests.app.urls'
@@ -147,6 +141,8 @@ TEMPLATES = [
                 "django.template.context_processors.media",
                 "django.template.context_processors.request",
                 "django.template.context_processors.tz",
+                "wapps.context_processors.config",
+                "wapps.context_processors.google"
             ],
         }
     },
@@ -165,7 +161,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'wappsdemo.wsgi.application'
+WSGI_APPLICATION = 'demo.wsgi.application'
 
 
 # Database

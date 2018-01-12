@@ -1,0 +1,47 @@
+{% extends "demo/base.html" %}
+
+{% block extra_head %}
+<link href="{{ static('vendor/baguetteBox/baguetteBox.min.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block extra_vendor_js %}
+<script src="{{ static('vendor/baguetteBox/baguetteBox.min.js') }}"></script>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ static('js/album.js') }}"></script>
+{% endblock %}
+
+{% if page.image %}
+{% set image_specs = 'width-1100' if page.image_full else 'fill-1100x580' %}
+{% set image_class = 'content-top-img-full' if page.image_full else 'content-top-img' %}
+{% set page_image = image(page.image, image_specs, class=image_class) %}
+{% set meta_image = page_image.url %}
+{% endif %}
+
+{% block main_content %}
+<section class="container gallery-album">
+
+    <div class="row">
+
+        <div class="col-lg-12">
+            <h1 class="page-header">{{ page.title }}</h1>
+            {% if page.intro %}{{ page.intro|richtext }}{% endif %}
+        </div>
+
+        {% for img in images %}
+        {% set img = img.image or img %}
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <a href="{{image(img, 'original').url}}" class="thumbnail"
+                {% if page.show_details -%}
+                title="{{ img.title }}"
+                {% if img.details %}data-details="{{ img.details }}"{% endif %}
+                {%- endif %}>
+                {{ image(img, 'fill-400x380', alt=img.title, class='img-responsive') }}
+                <span class="overlay"></span>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

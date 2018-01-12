@@ -1,34 +1,66 @@
 import factory
 
+from django.utils.text import slugify
 from wagtail_factories.factories import MP_NodeFactory
 from wagtail.wagtailcore.models import Page
 from wapps.models import StaticPage
 
 from .image import ImageFactory
 from .tag import TagFactory
+from .user import UserFactory
 
 
 class PageFactory(MP_NodeFactory):
     title = factory.Faker('sentence')
     seo_title = factory.Faker('sentence')
     search_description = factory.Faker('paragraph')
+    slug = factory.LazyAttribute(lambda o: slugify(o.title, allow_unicode=True))
+    live = False
 
     class Meta:
         model = Page
 
-    @classmethod
-    def _create(cls, *args, **kwargs):
-        if 'parent' not in kwargs:
-            try:
-                kwargs['parent'] = Page.objects.get(depth=0)
-            except Page.DoesNotExist:
-                kwargs['parent'] = RootFactory()
+    class Params:
+        owned = factory.Trait(
+            owner=factory.SubFactory(UserFactory),
+        )
+        root = factory.Trait(title='root', parent=None)
 
-        return super()._create(*args, **kwargs)
+    @factory.lazy_attribute
+    def parent(self):
+        try:
+            return Page.objects.get(slug='root')
+        except Page.DoesNotExist:
+            return PageFactory(root=True)
+
+    @factory.post_generation
+    def published(page, create, extracted, **kwargs):
+        if not create:  # pragma: nocover
+            # Simple build, do nothing.
+            return
+
+        if extracted is True:
+            revision = page.save_revision()
+            revision.publish()
+            page.refresh_from_db()
+
+
+class StaticPageFactory(PageFactory):
+    body = factory.Faker('paragraph')
+    seo_type = 'article'
+
+    class Meta:
+        model = StaticPage
+
+    class Params:
+        full = factory.Trait(
+            intro=factory.Faker('paragraph'),
+            image=factory.SubFactory(ImageFactory),
+        )
 
     @factory.post_generation
     def tags(self, create, extracted, **kwargs):
-        if not create:
+        if not create:  # pragma: nocover
             # Simple build, do nothing.
             return
 
@@ -40,21 +72,3 @@ class PageFactory(MP_NodeFactory):
                 tags = extracted
             for tag in tags:
                 self.tags.add(tag)
-
-
-class RootFactory(PageFactory):
-    depth = 0
-    title = 'root'
-
-    @classmethod
-    def _create(cls, *args, **kwargs):
-        kwargs['parent'] = None
-        return super()._create(*args, **kwargs)
-
-
-class StaticPageFactory(PageFactory):
-    body = factory.Faker('paragraph')
-    image = factory.SubFactory(ImageFactory)
-
-    class Meta:
-        model = StaticPage

@@ -1,6 +1,10 @@
 # WApps
 
-[![Build Status](https://ci.noirbizarre.info/api/badges/apihackers/wapps/status.svg)](https://ci.noirbizarre.info/apihackers/wapps)
+[![CircleCI](https://img.shields.io/circleci/project/github/apihackers/wapps.svg)](https://circleci.com/gh/apihackers/workflows/wapps)
+[![codecov](https://codecov.io/gh/apihackers/wapps/branch/master/graph/badge.svg)](https://codecov.io/gh/apihackers/wapps/branch/master)
+[![Last version](https://img.shields.io/pypi/v/wapps.svg)](https://pypi.python.org/pypi/wapps)
+[![License](https://img.shields.io/pypi/l/wapps.svg)](https://pypi.python.org/pypi/wapps)
+[![Supported Python versions](https://img.shields.io/pypi/pyversions/wapps.svg)](https://pypi.python.org/pypi/wapps)
 
 A very optionated set of Wagtail reusable applications and helpers
 meant to speedup website development. There is not any universality intent.
@@ -20,7 +24,7 @@ It assumes the following stacks:
 ### Frontend Stack
 
 - Vue 2 for front components
-- Webpack 2 as front build toolchain
+- Webpack 3 as front build toolchain
 - SCSS as style language
 - Bootstrap and Font-awesome as base frameworks
 

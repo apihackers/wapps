@@ -1,12 +1,13 @@
 import re
 
-from datetime import date, datetime
+from datetime import date
 
 from django.db import models
 from django.utils.dateformat import DateFormat
 from django.utils.formats import date_format
 from django.utils.html import strip_tags
 from django.utils.text import Truncator
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 from modelcluster.fields import ParentalKey
@@ -96,7 +97,7 @@ class Blog(RoutablePageMixin, Page):
     @route(r'^(\d{4})/(\d{2})/$')
     @route(r'^(\d{4})/(\d{2})/(\d{2})/$')
     def by_date(self, request, year, month=None, day=None, *args, **kwargs):
-        self.posts = self.get_queryset().filter(first_published_at__year=year)
+        self.posts = self.queryset.filter(first_published_at__year=year)
         self.filter_type = _('date')
         self.filter_term = year
         if month:
@@ -112,21 +113,21 @@ class Blog(RoutablePageMixin, Page):
     def by_tag(self, request, tag, *args, **kwargs):
         self.filter_type = _('tag')
         self.filter_term = tag
-        self.posts = self.get_queryset().filter(tags__slug=tag)
+        self.posts = self.queryset.filter(tags__slug=tag)
         return Page.serve(self, request, *args, **kwargs)
 
     @route(r'^category/(?P<category>[-\w]+)/$')
     def by_category(self, request, category, *args, **kwargs):
         self.filter_type = _('category')
         self.filter_term = category
-        self.posts = self.get_queryset().filter(blogpost_categories__category__slug=category)
+        self.posts = self.queryset.filter(blogpost_categories__category__slug=category)
         return Page.serve(self, request, *args, **kwargs)
 
     @route(r'^author/(?P<author>[-_\w]+)/$')
     def by_author(self, request, author, *args, **kwargs):
         self.filter_type = _('author')
         self.filter_term = author
-        self.posts = self.get_queryset().filter(owner__username=author)
+        self.posts = self.queryset.filter(owner__username=author)
         return Page.serve(self, request, *args, **kwargs)
 
     @route(r'^feed/$')
@@ -137,14 +138,14 @@ class Blog(RoutablePageMixin, Page):
     subpage_types = ['blog.BlogPost']
 
     def __jsonld__(self, context):
-        now = datetime.now()
+        now = timezone.now()
         data = {
             '@type': 'Blog',
             '@id': self.full_url,
             'url': self.full_url,
             'name': self.seo_title or self.title,
             'datePublished': (self.first_published_at or now).isoformat(),
-            'dateModified': (self.latest_revision_created_at or now).isoformat(),
+            'dateModified': (self.last_published_at or now).isoformat(),
             'description': strip_tags(self.intro),
         }
         return data
@@ -180,7 +181,7 @@ class BlogPost(Page):
                                            "If this field is not filled, a truncate version "
                                            "of body text will be used."))
 
-    date = models.DateTimeField(verbose_name=_('Post date'), default=datetime.today)
+    date = models.DateTimeField(verbose_name=_('Post date'), default=timezone.now)
 
     tags = ClusterTaggableManager(through=BlogPostTag, blank=True)
     categories = models.ManyToManyField(Category, through=BlogPostCategory, blank=True)
@@ -255,7 +256,7 @@ class BlogPost(Page):
         site = request.site
         identity = IdentitySettings.for_site(site)
         body = str(self.body)
-        now = datetime.now()
+        now = timezone.now()
         publisher = jsonld.organization(context)
         if identity.amp_logo:
             publisher['logo'] = jsonld.image_object(context, identity.amp_logo, 600, 60)
@@ -272,12 +273,13 @@ class BlogPost(Page):
             'articleBody': body,
             'description': self.summarize(140),
             'wordCount': len(re.findall(r'\w+', strip_tags(body))),
-            'author': {
-                '@type': 'Person',
-                'name': self.owner.get_full_name()
-            },
             'publisher': publisher,
         }
+        if self.owner:
+            data['author'] = {
+                '@type': 'Person',
+                'name': self.owner.get_full_name()
+            }
         if self.image:
             # According to https://developers.google.com/+/web/snippet/article-rendering
             # Image must had a ratio between 5:2 and 5:3

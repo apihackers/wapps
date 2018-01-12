@@ -10,7 +10,7 @@ export default {
         onWappsFormsVerify(ref) {
             this.$refs[ref].submit();
         },
-        onWappsFormsSubmit(ref, ev) {
+        onWappsFormsSubmit(ref) {
             this.$refs[`${ref}-captcha`].execute();
         },
         onWappsFormsInvalid(ev) {

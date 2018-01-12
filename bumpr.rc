@@ -20,9 +20,10 @@ part = patch
 suffix = dev
 
 [changelog]
-file = CHANGELOG.rst
-bump = {version} ({date:%Y-%m-%d})
-prepare = Current
+file = CHANGELOG.md
+bump = ## {version} ({date:%Y-%m-%d})
+prepare = ## Current (in progress)
+separator =
 
 [readthedoc]
 id = wapps
