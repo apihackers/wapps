@@ -1,4 +1,4 @@
-Faker==0.8.8
+Faker==0.8.9
 factory-boy<2.9.0
 feedparser==5.2.1
 pytest-cov==2.5.1
