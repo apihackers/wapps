@@ -40,6 +40,7 @@ class StaticPage(Page):
     SEO_TYPES = [
         ('article', _('Article')),
         ('service', _('Service')),
+        ('faq', _('FAQ')),
     ]
 
     seo_type = models.CharField(_('Search engine type'), max_length=10,
@@ -72,9 +73,12 @@ class StaticPage(Page):
         request = context['request']
         data = {
             '@id': self.full_url,
+            'url': self.full_url,
             'name': self.seo_title or self.title,
-            'keywords': ','.join(t.name for t in self.tags.all()),
         }
+        tags = self.tags.all()
+        if tags:
+            data['keywords'] = ','.join(t.name for t in tags)
         if self.image:
             data['image'] = get_site(request).root_url + self.image.get_rendition('original').url
 
@@ -92,9 +96,11 @@ class StaticPage(Page):
             'articleBody': str(self.body),
         })
         if self.first_published_at:
+            # Prevent pre wagtail 1.11 pages to fail
+            date_modified = self.last_published_at or self.first_published_at
             data.update({
                 'datePublished': self.first_published_at.isoformat(),
-                'dateModified': self.latest_revision_created_at.isoformat(),
+                'dateModified': date_modified.isoformat(),
             })
         if self.owner:
             data.update(author={
@@ -104,17 +110,26 @@ class StaticPage(Page):
         return data
 
     def get_jsonld_service(self, context, data):
-        # request = context['request']
-        data = {
+        data.update({
             '@type': 'Service',
-            # 'author': {
-            #     '@type': 'Person',
-            #     'name': self.owner.get_full_name()
-            # },
+        })
+        return data
 
-            # 'datePublished': self.first_published_at.isoformat(),
-            # 'dateModified': self.latest_revision_created_at.isoformat(),
-            # 'headline': Truncator(strip_tags(self.search_description or str(self.intro))).chars(100),
-            # 'articleBody': str(self.body),
-        }
+    def get_jsonld_faq(self, context, data):
+        data.update({
+            '@type': 'FAQPage',
+            'headline': Truncator(strip_tags(self.search_description or str(self.intro))).chars(100),
+        })
+        if self.first_published_at:
+            # Prevent pre wagtail 1.11 pages to fail
+            date_modified = self.last_published_at or self.first_published_at
+            data.update({
+                'datePublished': self.first_published_at.isoformat(),
+                'dateModified': date_modified.isoformat(),
+            })
+        if self.owner:
+            data.update(author={
+                '@type': 'Person',
+                'name': self.owner.get_full_name()
+            })
         return data

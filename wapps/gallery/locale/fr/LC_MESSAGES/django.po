@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-08 20:41+0200\n"
+"POT-Creation-Date: 2017-11-12 18:04+0100\n"
 "PO-Revision-Date: 2016-09-06 02:10+0200\n"
 "Last-Translator: Axel Haustant <noirbizarre@gmail.com>\n"
 "Language: fr\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.5.1\n"
 
-#: models.py:22 models.py:81
+#: models.py:22 models.py:101
 msgid "Introduction"
 msgstr "Introduction"
 
@@ -30,57 +30,57 @@ msgstr "Un texte à afficher avant les albums"
 msgid "Gallery"
 msgstr "Gallerie"
 
-#: models.py:67 models.py:145
+#: models.py:67 models.py:157
 msgid "SEO and metadata"
 msgstr "SEO et métadonnées"
 
-#: models.py:82
+#: models.py:102
 msgid "A text to be displayed before images"
 msgstr "Un texte à afficher avant les images"
 
-#: models.py:84
+#: models.py:104
 msgid "Display details"
 msgstr "Afficher les détails"
 
-#: models.py:85
+#: models.py:105
 msgid "Display image title and details"
 msgstr "Affiche le titre de l'image et ses détails"
 
-#: models.py:88
+#: models.py:108
 msgid "Slide"
 msgstr "Glissement"
 
-#: models.py:89
+#: models.py:109
 msgid "Fade"
 msgstr "Fondu"
 
-#: models.py:92
+#: models.py:112
 msgid "Animation"
 msgstr "Animation"
 
-#: models.py:100
+#: models.py:120
 msgid "Image"
 msgstr "Image"
 
-#: models.py:101
+#: models.py:121
 msgid "The image seen on gallery browser and when sharing this album"
 msgstr ""
 "L'image vue dans lors du parcours des galleries et lorsque cet album est "
 "partagé"
 
-#: models.py:132
+#: models.py:144
 msgid "Album"
 msgstr "Album"
 
-#: models.py:141
+#: models.py:153
 msgid "Options"
 msgstr "Options"
 
-#: models.py:226
+#: models.py:227
 msgid "Manual album"
 msgstr "Album manuel"
 
-#: models.py:230
+#: models.py:231
 msgid "Images"
 msgstr "Images"
 

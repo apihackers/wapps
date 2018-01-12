@@ -1,0 +1,26 @@
+env:
+  browser: true
+  es6: true
+extends:
+    - eslint:recommended
+    - plugin:vue/recommended
+parserOptions:
+  sourceType: module
+globals:
+  require: false
+  DEBUG: false
+rules:
+  indent:
+    - error
+    - 4
+    - SwitchCase: 1
+      VariableDeclarator: 0
+  linebreak-style:
+    - error
+    - unix
+  quotes:
+    - error
+    - single
+  semi:
+    - error
+    - always

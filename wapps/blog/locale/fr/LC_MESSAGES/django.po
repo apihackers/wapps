@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-08 20:41+0200\n"
+"POT-Creation-Date: 2017-11-12 18:04+0100\n"
 "PO-Revision-Date: 2016-11-04 10:36+0100\n"
 "Last-Translator: Axel Haustant <noirbizarre@gmail.com>\n"
 "Language: fr\n"
@@ -18,43 +18,43 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.5.1\n"
 
-#: models.py:100
+#: models.py:101
 msgid "date"
 msgstr "date"
 
-#: models.py:113
+#: models.py:114
 msgid "tag"
 msgstr "mot-clé"
 
-#: models.py:120
+#: models.py:121
 msgid "category"
 msgstr "catégorie"
 
-#: models.py:127
+#: models.py:128
 msgid "author"
 msgstr "auteur"
 
-#: models.py:158
+#: models.py:159
 msgid "Category"
 msgstr "Catégorie"
 
-#: models.py:174
+#: models.py:175
 msgid "Blog post"
 msgstr "Article de blog"
 
-#: models.py:175
+#: models.py:176
 msgid "Blog posts"
 msgstr "Articles de blog"
 
-#: models.py:177
+#: models.py:178
 msgid "body"
 msgstr "corps"
 
-#: models.py:178
+#: models.py:179
 msgid "excerpt"
 msgstr "extrait"
 
-#: models.py:179
+#: models.py:180
 msgid ""
 "Entry excerpt to be displayed on entries list. If this field is not "
 "filled, a truncate version of body text will be used."
@@ -63,39 +63,39 @@ msgstr ""
 "n'est pas rempli, un version tronquée du corps de l'article sera "
 "utilisée."
 
-#: models.py:183
+#: models.py:184
 msgid "Post date"
 msgstr "Date de publication"
 
-#: models.py:208
+#: models.py:209
 msgid "Content"
 msgstr "Contenu"
 
-#: models.py:211
+#: models.py:212
 msgid "Categories"
 msgstr "Catégories"
 
-#: models.py:212
+#: models.py:213
 msgid "Related links"
 msgstr "Liens connexes"
 
-#: models.py:213
+#: models.py:214
 msgid "Metadata"
 msgstr "Metadonnées"
 
-#: models.py:222
+#: models.py:223
 msgid "Common page configuration"
 msgstr "Configuration commune"
 
-#: models.py:292
+#: models.py:294
 msgid "Title"
 msgstr "Titre"
 
-#: models.py:293
+#: models.py:295
 msgid "Number of articles"
 msgstr "Nombre d'articles"
 
-#: models.py:302 wagtail_hooks.py:14
+#: models.py:304 wagtail_hooks.py:14
 msgid "Blog"
 msgstr "Blog"
 

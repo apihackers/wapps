@@ -3,7 +3,7 @@ from .models import Blog
 
 def get_site_blog(site):
     for blog in Blog.objects.live():
-        if getattr(blog.get_site(), 'pk', None) == site.pk:
+        if site.root_page in blog.get_ancestors():
             return blog
 
 
