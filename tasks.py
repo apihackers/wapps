@@ -9,11 +9,11 @@ from invoke import task, call
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__)))
 
 PROJECTS = [
-    'wappsdemo',
+    'demo',
     'wapps',
     'wapps.blog',
     'wapps.gallery',
-    'wapps.forms',
+    # 'wapps.forms',
 ]
 
 LANGUAGES = ['fr']
@@ -53,7 +53,7 @@ def info(text, *args, **kwargs):
 
 def success(text):
     '''Display a success message'''
-    print(' '.join((green('>>'), white(text))))
+    print(' '.join((green('✔'), white(text))))
     sys.stdout.flush()
 
 
@@ -89,33 +89,35 @@ def demo(ctx):
 
 
 @task
-def test(ctx, report=False):
+def test(ctx, report=False, verbose=False):
     '''Run tests suite'''
     header(test.__doc__)
-    cmd = 'pytest -v'
+    cmd = ['pytest']
+    if verbose:
+        cmd.append('-v')
     if report:
-        cmd = ' '.join((cmd, '--junitxml=reports/python/tests.xml'))
+        cmd.append('--junitxml=reports/tests.xml')
     with ctx.cd(ROOT):
-        ctx.run(cmd, pty=True)
+        ctx.run(' '.join(cmd), pty=True)
 
 
 @task
-def cover(ctx, report=False):
+def cover(ctx, report=False, verbose=False):
     '''Run tests suite with coverage'''
     header(cover.__doc__)
     cmd = [
         'pytest',
         '--cov-config coverage.rc',
         '--cov-report term',
-        '--cov-report html:reports/coverage',
-        '--cov-report xml:reports/coverage.xml',
         '--cov=wapps',
     ]
+    if verbose:
+        cmd.append('-v')
     if report:
         cmd += [
-            '--cov-report html:reports/python/coverage',
-            '--cov-report xml:reports/python/coverage.xml',
-            '--junitxml=reports/python/tests.xml'
+            '--cov-report html:reports/coverage',
+            '--cov-report xml:reports/coverage.xml',
+            '--junitxml=reports/tests.xml'
         ]
     with ctx.cd(ROOT):
         ctx.run(' '.join(cmd), pty=True)
@@ -127,7 +129,7 @@ def qa(ctx):
     header(qa.__doc__)
     with ctx.cd(ROOT):
         info('Python Static Analysis')
-        flake8_results = ctx.run('flake8 wapps', pty=True, warn=True)
+        flake8_results = ctx.run('flake8 wapps tests', pty=True, warn=True)
         if flake8_results.failed:
             error('There is some lints to fix')
         else:
@@ -211,11 +213,3 @@ def dist(ctx, buildno=None):
 def all(ctx):
     '''Run tests, reports and packaging'''
     pass
-
-
-@task
-def dronecrypt(ctx):
-    '''Encrypt drone secrets'''
-    header(dronecrypt.__doc__)
-    with ctx.cd(ROOT):
-        ctx.run('drone secure --repo apihackers/wapps --in drone.secrets.yml')

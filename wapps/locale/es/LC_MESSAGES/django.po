@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-08 20:41+0200\n"
+"POT-Creation-Date: 2017-11-12 18:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -227,19 +227,23 @@ msgstr ""
 msgid "Service"
 msgstr ""
 
-#: models/pages.py:45
+#: models/pages.py:43
+msgid "FAQ"
+msgstr ""
+
+#: models/pages.py:46
 msgid "Search engine type"
 msgstr ""
 
-#: models/pages.py:47
+#: models/pages.py:48
 msgid "What does this page represents"
 msgstr ""
 
-#: models/pages.py:56
+#: models/pages.py:57
 msgid "Main image"
 msgstr ""
 
-#: models/pages.py:69
+#: models/pages.py:70
 msgid "Static Page"
 msgstr ""
 

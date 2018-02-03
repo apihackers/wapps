@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-08 20:41+0200\n"
+"POT-Creation-Date: 2017-11-12 18:04+0100\n"
 "PO-Revision-Date: 2016-10-29 16:18+0200\n"
 "Last-Translator: Axel Haustant <noirbizarre@gmail.com>\n"
 "Language: fr\n"
@@ -226,19 +226,23 @@ msgstr "Article"
 msgid "Service"
 msgstr "Service"
 
-#: models/pages.py:45
+#: models/pages.py:43
+msgid "FAQ"
+msgstr ""
+
+#: models/pages.py:46
 msgid "Search engine type"
 msgstr "Type de la recherche"
 
-#: models/pages.py:47
+#: models/pages.py:48
 msgid "What does this page represents"
 msgstr "Ce que cette page représente"
 
-#: models/pages.py:56
+#: models/pages.py:57
 msgid "Main image"
 msgstr "Image principale"
 
-#: models/pages.py:69
+#: models/pages.py:70
 msgid "Static Page"
 msgstr "Page statique"
 

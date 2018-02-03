@@ -6,7 +6,7 @@
 # configure dependency pinning globally
 # default: True
 # allowed: True, False
-# pin: True
+pin: False
 
 # set the default branch
 # default: empty, the default branch on GitHub

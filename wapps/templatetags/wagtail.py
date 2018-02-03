@@ -1,13 +1,12 @@
 import jinja2
 
 from django_jinja import library
-from jinja2.ext import Extension
 from wagtail.wagtailcore.models import Page
 from wagtail.contrib.wagtailroutablepage.templatetags.wagtailroutablepage_tags import (
     routablepageurl as dj_routablepageurl
 )
 
-from wapps.utils import get_image_url, get_site, SettingProxy
+from wapps.utils import get_image_url, get_site
 
 
 @library.global_function
@@ -32,13 +31,6 @@ def imageurl(image, specs):
 @library.global_function
 @jinja2.contextfunction
 def routablepageurl(context, page, name, *args, **kwargs):
-    if not hasattr(context['request'], 'site'):
+    if not hasattr(context['request'], 'site'):  # pragma: nocover
         context['request'].site = get_site(context['request'])
     return dj_routablepageurl(context, page, name, *args, **kwargs)
-
-
-@library.extension
-class WagtailSettings(Extension):
-    def __init__(self, environment):
-        super(WagtailSettings, self).__init__(environment)
-        environment.globals['WAGTAIL_SITE_NAME'] = SettingProxy('WAGTAIL_SITE_NAME')
