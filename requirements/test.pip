@@ -8,5 +8,5 @@ pytest-faker==2.0.0
 pytest-pythonpath==0.7.2
 pytest-sugar==0.9.1
 pytest==3.4.0
-python-dateutil==2.6.1
+python-dateutil==2.7.2
 wagtail-factories==0.3.0
