@@ -5,7 +5,7 @@ django-babel==0.6.2
 django-colorful==1.2
 django-jinja==2.4.1
 django-memoize==2.1.0
-django-model-utils==3.1.1
+django-model-utils==3.1.2
 django-modelcluster==3.1
 psycopg2==2.7.3.2
 requests==2.18.4
