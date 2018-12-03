@@ -1,4 +1,4 @@
-Django==1.11.8
+Django==2.1.4
 Jinja2==2.10
 django-appconf==1.0.2
 django-babel==0.6.2
