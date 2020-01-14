@@ -2,7 +2,7 @@ Faker==0.8.10
 factory-boy==2.10.0
 feedparser==5.2.1
 pytest-cov==2.5.1
-pytest-django==3.1.2
+pytest-django==3.8.0
 pytest-factoryboy==2.0.1
 pytest-faker==2.0.0
 pytest-pythonpath==0.7.2
