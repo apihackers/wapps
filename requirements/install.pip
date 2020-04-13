@@ -1,5 +1,5 @@
 Django==1.11.8
-Jinja2==2.10
+Jinja2==2.11.2
 django-appconf==1.0.2
 django-babel==0.6.2
 django-colorful==1.2
