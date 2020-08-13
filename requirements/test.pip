@@ -1,5 +1,5 @@
 Faker==0.8.10
-factory-boy==2.10.0
+factory-boy==3.0.1
 feedparser==5.2.1
 pytest-cov==2.5.1
 pytest-django==3.1.2
