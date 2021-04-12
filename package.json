@@ -28,7 +28,7 @@
     "slideout": "^1.0.1",
     "velocity-animate": "^1.4.0",
     "vue": "^2.2.4",
-    "vue-awesome-swiper": "^2.3.8",
+    "vue-awesome-swiper": "^4.0.0",
     "vue-template-compiler": "^2.2.4",
     "whatwg-fetch": "^1.0.0"
   },
